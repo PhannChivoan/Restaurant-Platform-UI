@@ -35,6 +35,10 @@ const withBranch = (url) => {
   return `${url}${url.includes("?") ? "&" : "?"}branch_id=${branch}`;
 };
 
+// platform settings and the access-window lockout must not be served from the
+// short-lived response cache, otherwise a stale copy hides a fresh configuration
+const ALWAYS_FRESH = /^(public\/config|access-windows\/status|admin\/bootstrap)/;
+
 const cache = new Map(); // "token|url" -> { data, at }
 const inflight = new Map();
 const copy = (v) => (typeof structuredClone === "function" ? structuredClone(v) : JSON.parse(JSON.stringify(v)));
@@ -60,7 +64,7 @@ export const request = (url = "", method = "", data = {}, options = {}) => {
   const key = isGet ? `${accessToken ?? ""}|${url}` : null;
 
   if (isGet && !options.fresh) {
-    const ttl = ttlFor(url);
+    const ttl = ALWAYS_FRESH.test(url) ? 0 : ttlFor(url);
     const hit = cache.get(key);
     if (ttl > 0 && hit && Date.now() - hit.at < ttl) return Promise.resolve(copy(hit.data));
     const pending = inflight.get(key);
@@ -110,6 +114,15 @@ export const request = (url = "", method = "", data = {}, options = {}) => {
           localStorage.removeItem("profile");
           window.location.href = loginPath;
         }
+        // An access window closed for this role: remember why so the shell can
+        // explain the block instead of showing a silent error.
+        if (error.response.status === 403 && error.response.data?.access_window) {
+          window.dispatchEvent(
+            new CustomEvent("platform:access-window", {
+              detail: error.response.data.access_window,
+            }),
+          );
+        }
         return error.response.data;
       } else {
         return { message: "Network Error" };
@@ -118,7 +131,9 @@ export const request = (url = "", method = "", data = {}, options = {}) => {
     .then((result) => {
       if (isGet) {
         inflight.delete(key);
-        if (ok && ttlFor(url) > 0) cache.set(key, { data: copy(result), at: Date.now() });
+        if (ok && !ALWAYS_FRESH.test(url) && ttlFor(url) > 0) {
+          cache.set(key, { data: copy(result), at: Date.now() });
+        }
       } else if (ok && !options.keepCache) {
         clearApiCache(); // something changed: never serve stale lists after a save
       }

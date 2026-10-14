@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import {
   Avatar,
@@ -39,6 +39,8 @@ import {
 import ModulePage from "../components/ui/ModulePage";
 import TopProgressBar from "../components/ui/TopProgressBar";
 import { request } from "../utils/request";
+import { getBranchId } from "../utils/branchStore";
+import { getPlatformConfig } from "../utils/platformSettings";
 import { Config } from "../utils/config";
 import { palette } from "../constants/theme";
 
@@ -65,6 +67,55 @@ const FEATURED_OPTIONS = [
 ========================================================= */
 
 const API_ORIGIN = Config.BASE_URL.replace(/\/api\/v1\/?$/, "");
+
+const toCategoryOption = (category) => ({
+  value: category.id,
+  label: category.name,
+  restaurant_id: category.restaurant_id,
+  restaurant_name: category.restaurant_name || "",
+  branch_id: category.branch_id ?? null,
+  branch_name: category.branch_name || "",
+  branch_is_main: category.branch_is_main === true,
+  is_active: category.is_active !== false,
+});
+
+// Categories are branch-scoped, so with "All branches" selected the API returns one
+// row per branch and the same name shows up several times (Sakura Sushi House has
+// Daun Penh + BKK1). Keep one row per restaurant/name so the list reads as a single
+// menu. Preference: the branch the admin is working in, then the restaurant's main
+// branch (where new items land when "All branches" is selected), then lowest id.
+const dedupeCategories = (categories, activeBranchId) => {
+  const byName = new Map();
+
+  const rank = (option) => {
+    if (activeBranchId && Number(option.branch_id) === Number(activeBranchId)) return 0;
+    if (option.branch_is_main) return 1;
+    return 2;
+  };
+
+  categories.forEach((category) => {
+    const key = `${category.restaurant_id}::${String(category.name).trim().toLowerCase()}`;
+    const current = byName.get(key);
+
+    if (!current) {
+      byName.set(key, category);
+      return;
+    }
+
+    const currentRank = rank(current);
+    const nextRank = rank(category);
+
+    const better =
+      nextRank < currentRank ||
+      (nextRank === currentRank &&
+        currentRank === 2 &&
+        Number(category.id) < Number(current.id));
+
+    if (better) byName.set(key, category);
+  });
+
+  return [...byName.values()];
+};
 
 const toMediaUrl = (url) => {
   if (!url) return url;
@@ -145,6 +196,7 @@ const ProductPage = () => {
   // ─── Reference data ──────────────────────────────
   const [restaurantOptions, setRestaurantOptions] = useState([]);
   const [categoryOptions, setCategoryOptions] = useState([]);
+  const [referenceLoading, setReferenceLoading] = useState(true);
 
   // ─── Detail drawer state ─────────────────────────
   const [selected, setSelected] = useState(null);
@@ -155,7 +207,50 @@ const ProductPage = () => {
   const [editingItem, setEditingItem] = useState(null);
   const [itemForm] = Form.useForm();
 
+  // Watched so the category dropdown reacts to what is picked in the form.
+  const watchedRestaurantId = Form.useWatch("restaurant_id", itemForm);
+  const watchedCategoryId = Form.useWatch("category_id", itemForm);
   const [submitting, setSubmitting] = useState(false);
+
+  const itemRestaurantId = watchedRestaurantId ?? editingItem?.restaurant_id;
+
+  // Every category the API knows about, grouped per restaurant so the list is
+  // selectable no matter which restaurant (or none) has been chosen above.
+  const groupedCategoryOptions = useMemo(() => {
+    const groups = new Map();
+
+    categoryOptions.forEach((option) => {
+      const groupName = option.restaurant_name || "Unassigned";
+      if (!groups.has(groupName)) groups.set(groupName, []);
+      groups.get(groupName).push({
+        value: option.value,
+        label: [
+          option.is_active ? option.label : `${option.label} (inactive)`,
+          option.branch_name,
+        ]
+          .filter(Boolean)
+          .join(" · "),
+      });
+    });
+
+    return [...groups.entries()].map(([groupName, options]) => ({
+      label: groupName,
+      options,
+    }));
+  }, [categoryOptions]);
+
+  // A category from another restaurant would be saved on the wrong menu, so it is
+  // flagged here and blocked on submit rather than by disabling the dropdown.
+  const mismatchedCategory = useMemo(() => {
+    if (!itemRestaurantId || !watchedCategoryId) return null;
+    return (
+      categoryOptions.find(
+        (option) =>
+          Number(option.value) === Number(watchedCategoryId) &&
+          Number(option.restaurant_id) !== Number(itemRestaurantId),
+      ) || null
+    );
+  }, [categoryOptions, itemRestaurantId, watchedCategoryId]);
 
   /* =========================================================
      DATA LOADING
@@ -204,10 +299,36 @@ const ProductPage = () => {
     }
   };
 
-  const loadReferenceData = async () => {
-    const [restaurantsRes, categoriesRes] = await Promise.all([
-      request("restaurants?limit=100", "GET"),
-      request("menu-categories?limit=200", "GET"),
+  // The categories endpoint caps a page at 100 rows, so every page is walked to
+// make the dropdown complete instead of only showing the first 100.
+const fetchAllCategories = async () => {
+  const collected = [];
+  const pageSize = 100;
+
+  for (let page = 1; page <= 20; page += 1) {
+    const response = await request(
+      `menu-categories?limit=${pageSize}&page=${page}`,
+      "GET",
+      undefined,
+      { fresh: page === 1 },
+    );
+
+    if (!Array.isArray(response?.data) || response.data.length === 0) break;
+
+    collected.push(...response.data);
+
+    if (collected.length >= (response.total || 0)) break;
+  }
+
+  return collected;
+};
+
+const loadReferenceData = async () => {
+    setReferenceLoading(true);
+
+    const [restaurantsRes, categories] = await Promise.all([
+      request("restaurants?limit=200", "GET"),
+      fetchAllCategories(),
     ]);
 
     if (Array.isArray(restaurantsRes?.data)) {
@@ -217,17 +338,14 @@ const ProductPage = () => {
           label: restaurant.name,
         })),
       );
+    } else {
+      message.error(restaurantsRes?.message || "Unable to load restaurants.");
     }
 
-    if (Array.isArray(categoriesRes?.data)) {
-      setCategoryOptions(
-        categoriesRes.data.map((category) => ({
-          value: category.id,
-          label: `${category.name} — ${category.restaurant_name || ""}`,
-          restaurant_id: category.restaurant_id,
-        })),
-      );
-    }
+    setCategoryOptions(
+      dedupeCategories(categories, getBranchId()).map(toCategoryOption),
+    );
+    setReferenceLoading(false);
   };
 
   useEffect(() => {
@@ -303,7 +421,9 @@ const ProductPage = () => {
       itemForm.setFieldsValue({
         is_available: true,
         is_featured: false,
-        prep_time_minutes: 15,
+        // the platform default from /admin/settings
+        prep_time_minutes:
+          getPlatformConfig().default_prep_time_minutes || 15,
       });
     }
 
@@ -315,6 +435,16 @@ const ProductPage = () => {
     try {
       values = await itemForm.validateFields();
     } catch {
+      return;
+    }
+
+    // the API does not check that the category belongs to the restaurant
+    if (mismatchedCategory) {
+      message.error(
+        `"${mismatchedCategory.label}" belongs to ${
+          mismatchedCategory.restaurant_name || "another restaurant"
+        }. Choose a category of the selected restaurant.`,
+      );
       return;
     }
 
@@ -470,7 +600,14 @@ const columns = [
       title: "Category",
       dataIndex: "category_name",
       key: "category_name",
-      render: (value) => value || "-",
+      render: (value) =>
+        value ? (
+          value
+        ) : (
+          <Tag style={{ margin: 0 }} color="orange">
+            Uncategorized
+          </Tag>
+        ),
     },
     {
       title: "Restaurant",
@@ -634,8 +771,14 @@ return (
               allowClear
               showSearch
               optionFilterProp="label"
-              options={categoryOptions}
-              style={{ width: 170 }}
+              options={categoryOptions.map((option) => ({
+                value: option.value,
+                label: [option.label, option.restaurant_name, option.branch_name]
+                  .filter(Boolean)
+                  .join(" — "),
+              }))}
+              loading={referenceLoading}
+              style={{ width: 200 }}
             />
             <Select
               placeholder="Availability"
@@ -749,7 +892,7 @@ return (
             >
               {[
                 { label: "Restaurant", value: selected.restaurant_name },
-                { label: "Category", value: selected.category_name || "-" },
+                { label: "Category", value: selected.category_name || "Uncategorized" },
                 {
                   label: "Price",
                   value:
@@ -846,6 +989,7 @@ return (
                 showSearch
                 optionFilterProp="label"
                 options={restaurantOptions}
+                loading={referenceLoading}
               />
             </Form.Item>
           )}
@@ -853,17 +997,24 @@ return (
             label="Category"
             name="category_id"
             rules={[{ required: true, message: "Please select a category." }]}
+            extra={
+              referenceLoading
+                ? "Loading categories…"
+                : mismatchedCategory
+                  ? `"${mismatchedCategory.label}" belongs to ${mismatchedCategory.restaurant_name || "another restaurant"} — pick one from ${restaurantOptions.find((option) => Number(option.value) === Number(itemRestaurantId))?.label || "the selected restaurant"}.`
+                  : undefined
+            }
           >
             <Select
               placeholder="Select a category"
               showSearch
+              allowClear
               optionFilterProp="label"
-              options={categoryOptions.filter(
-                (option) =>
-                  !editingItem &&
-                  option.restaurant_id === itemForm.getFieldValue("restaurant_id"),
-              )}
-              disabled={editingItem && !selected?.restaurant_id}
+              options={groupedCategoryOptions}
+              loading={referenceLoading}
+              notFoundContent={
+                referenceLoading ? "Loading categories…" : "No categories found"
+              }
             />
           </Form.Item>
           <Form.Item

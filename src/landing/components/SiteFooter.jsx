@@ -1,25 +1,33 @@
 import { Link } from "react-router-dom";
 
+import { getPlatformConfig, platformLogo, platformName } from "../../utils/platformSettings";
+
 const LINK =
   "font-body-md text-body-md text-secondary-fixed-dim hover:text-primary-fixed transition-colors";
 
-const SiteFooter = () => (
-  <footer className="w-full bg-inverse-surface text-inverse-on-surface pt-space-3xl pb-space-2xl">
-    <div className="max-w-[1280px] mx-auto px-margin">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-space-xl pb-space-2xl">
-        <div className="lg:col-span-2 flex flex-col gap-space-md">
-          <div className="flex items-center gap-space-sm">
-            <div className="p-space-xs bg-surface-container-lowest rounded-lg">
-              <img
-                alt="FoodOrder Logo"
-                className="h-7 w-auto object-contain"
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAc0svmMLOnM5DwPaZ31H6ZhB5YIhlaIbwDYQmcWGZatdBoMPiczItKnnwYP4Kc0q0OBhQtguUmM2axWG_eZgXlX5x68Uq_cmPy3cLSYNrx8DbLgYoYA5V42IZNweIOwNO-9NrUl_wco0wTGdvMFdOjhf7Xj914jFBT1g-E3BcHymQPosIpjeT4lEL0GgY-3AquMLZK-z9l_CymYpgWyQDifZn5DdRtg0IpTYxgs_wW"
-              />
+const SiteFooter = () => {
+  const supportEmail = getPlatformConfig().support_email;
+
+  return (
+    <footer className="w-full bg-inverse-surface text-inverse-on-surface pt-space-3xl pb-space-2xl">
+      <div className="max-w-[1280px] mx-auto px-margin">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-space-xl pb-space-2xl">
+          <div className="lg:col-span-2 flex flex-col gap-space-md">
+            <div className="flex items-center gap-space-sm">
+              <div className="p-space-xs bg-surface-container-lowest rounded-lg">
+                <img
+                  alt={`${platformName()} logo`}
+                  className="h-7 w-auto object-contain"
+                  src={
+                    platformLogo() ||
+                    "https://lh3.googleusercontent.com/aida-public/AB6AXuAc0svmMLOnM5DwPaZ31H6ZhB5YIhlaIbwDYQmcWGZatdBoMPiczItKnnwYP4Kc0q0OBhQtguUmM2axWG_eZgXlX5x68Uq_cmPy3cLSYNrx8DbLgYoYA5V42IZNweIOwNO-9NrUl_wco0wTGdvMFdOjhf7Xj914jFBT1g-E3BcHymQPosIpjeT4lEL0GgY-3AquMLZK-z9l_CymYpgWyQDifZn5DdRtg0IpTYxgs_wW"
+                  }
+                />
+              </div>
+              <span className="font-headline-sm text-headline-sm text-inverse-on-surface tracking-tight">
+                {platformName()}
+              </span>
             </div>
-            <span className="font-headline-sm text-headline-sm text-inverse-on-surface tracking-tight">
-              FoodOrder
-            </span>
-          </div>
           <p className="font-body-md text-body-md text-secondary-fixed-dim max-w-sm">
             Delivering fresh cravings and local culinary favorites directly to
             your doorstep in minutes with real-time live tracking.
@@ -79,8 +87,16 @@ const SiteFooter = () => (
             <li><Link to="/about-us" className={LINK}>About Us</Link></li>
             <li><Link to="/services" className={LINK}>Our Services</Link></li>
             <li><Link to="/partner" className={LINK}>Partner Restaurants</Link></li>
-            <li><a href="/rider/register" className={LINK}>Courier Careers</a></li>
+            <li><a className={LINK} href="/rider/register">Courier Careers</a></li>
             <li><Link to="/contact" className={LINK}>Help Center</Link></li>
+            {/* the support address comes from Platform Settings */}
+            {supportEmail && (
+              <li>
+                <a className={LINK} href={`mailto:${supportEmail}`}>
+                  {supportEmail}
+                </a>
+              </li>
+            )}
           </ul>
         </div>
         <div className="flex flex-col gap-space-md">
@@ -115,8 +131,8 @@ const SiteFooter = () => (
       </div>
       <div className="pt-space-lg flex flex-col sm:flex-row items-center justify-between gap-space-md">
         <p className="font-body-sm text-body-sm text-secondary-fixed-dim">
-          © 2025 FoodOrder Technologies Inc. All rights reserved.
-        </p>
+            © {new Date().getFullYear()} {platformName()}. All rights reserved.
+          </p>
         <div className="flex items-center gap-space-lg">
           <a
             className="font-body-sm text-body-sm text-secondary-fixed-dim hover:text-inverse-on-surface transition-colors"
@@ -140,6 +156,7 @@ const SiteFooter = () => (
       </div>
     </div>
   </footer>
-);
+  );
+};
 
 export default SiteFooter;

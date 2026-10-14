@@ -6,7 +6,9 @@ import { palette } from "../../constants/theme";
 import { useNavigate } from "react-router-dom";
 import { loadAdminBootstrap } from "../../utils/adminBootstrap";
 import { getAccessToken } from "../../store/access_token";
-const logo = "/assets/logo/logo.png";
+import { platformLogo } from "../../utils/platformSettings";
+// the uploaded platform logo from /admin/settings wins over the bundled file
+const logo = platformLogo() || "/assets/logo/logo.png";
 const { Sider } = Layout;
 const { Text } = Typography;
 

@@ -30,8 +30,36 @@ import TopProgressBar from "../components/ui/TopProgressBar";
 import { request } from "../utils/request";
 import { Config } from "../utils/config";
 import { palette } from "../constants/theme";
+import { loadPlatformConfig } from "../utils/platformSettings";
 
 const { Text, Title } = Typography;
+
+// what each option actually drives, shown under the field so it is clear the value
+// is applied to the running system and not only stored
+const EFFECTS = {
+  platform_name: "Shown in the dashboard, the storefront header and the partner sign-up page.",
+  support_email: "Contact address used on the storefront footer and support replies.",
+  timezone: "Every date and time in the API, including access window checks.",
+  currency: "Price symbol used across the storefront and dashboard.",
+  prep_time_minutes: "Fallback preparation time when a dish has none of its own.",
+  auto_accept_orders: "New customer orders arrive already accepted instead of pending.",
+  order_alerts: "New-order notifications in the admin bell.",
+  rider_alerts: "Dispatch alerts when an order needs a rider.",
+  refund_alerts: "Alerts for cancelled orders and refund reviews.",
+  commission_rate: "Percentage of the food subtotal kept by the platform on every order.",
+  payment_provider: "Decides which online payment option customers are offered.",
+  cash_on_delivery: "Whether customers may still choose cash on delivery.",
+  auto_settlement: "Marks online orders paid and records the rider payout on delivery.",
+  maintenance_mode: "Blocks new customer orders while operations data stays readable.",
+};
+
+const firstSaveError = (response) => {
+  if (response?.errors) {
+    const first = Object.values(response.errors)[0];
+    if (Array.isArray(first) && first[0]) return first[0];
+  }
+  return response?.message || "Unable to save settings.";
+};
 
 const API_ORIGIN = Config.BASE_URL.replace(/\/api\/v1\/?$/, "");
 
@@ -84,7 +112,7 @@ const SettingHeader = ({ icon: Icon, title, description }) => (
   </Space>
 );
 
-const SettingSwitch = ({ label, description, name, control }) => (
+const SettingSwitch = ({ label, description, name, effect }) => (
   <div
     style={{
       display: "flex",
@@ -99,6 +127,11 @@ const SettingSwitch = ({ label, description, name, control }) => (
       {description && (
         <Text type="secondary" style={{ display: "block", fontSize: 12, marginTop: 1 }}>
           {description}
+        </Text>
+      )}
+      {effect && (
+        <Text type="secondary" style={{ display: "block", fontSize: 11, marginTop: 2 }}>
+          Applies to: {effect}
         </Text>
       )}
     </div>
@@ -176,7 +209,15 @@ const SettingsPage = () => {
   const [brandLogo, setBrandLogo] = useState(null);
   const [brandFavicon, setBrandFavicon] = useState(null);
 
-  const fetchSettings = useCallback(async () => {
+  // the API stores booleans as "true"/"false"; Form.Switch needs a real boolean or
+// every toggle would come back switched on
+const asBool = (value, fallback = false) => {
+  if (value === true || value === false) return value;
+  if (value === null || value === undefined || value === "") return fallback;
+  return ["1", "true", "on", "yes"].includes(String(value).toLowerCase());
+};
+
+const fetchSettings = useCallback(async () => {
     setLoading(true);
     try {
       const res = await request("settings", "GET");
@@ -207,15 +248,15 @@ const SettingsPage = () => {
         timezone: flat.timezone || "Asia/Phnom_Penh",
         currency: flat.currency || "USD",
         prep_time_minutes: String(flat.prep_time_minutes ?? "30"),
-        auto_accept_orders: flat.auto_accept_orders ?? true,
-        order_alerts: flat.order_alerts ?? true,
-        rider_alerts: flat.rider_alerts ?? true,
-        refund_alerts: flat.refund_alerts ?? true,
+        auto_accept_orders: asBool(flat.auto_accept_orders, true),
+        order_alerts: asBool(flat.order_alerts, true),
+        rider_alerts: asBool(flat.rider_alerts, true),
+        refund_alerts: asBool(flat.refund_alerts, true),
         payment_provider: flat.payment_provider || "cod",
         commission_rate: Number(flat.commission_rate ?? 12),
-        cash_on_delivery: flat.cash_on_delivery ?? true,
-        auto_settlement: flat.auto_settlement ?? true,
-        maintenance_mode: flat.maintenance_mode ?? false,
+        cash_on_delivery: asBool(flat.cash_on_delivery, true),
+        auto_settlement: asBool(flat.auto_settlement, true),
+        maintenance_mode: asBool(flat.maintenance_mode, false),
       });
     } catch {
       notification.error({ message: "Failed to load settings" });
@@ -225,7 +266,9 @@ const SettingsPage = () => {
   }, [form, notification]);
 
   useEffect(() => {
-    fetchSettings();
+    // deferred so the state updates happen outside the effect body
+    const timer = setTimeout(() => fetchSettings(), 0);
+    return () => clearTimeout(timer);
   }, [fetchSettings]);
 
   const handleSave = async () => {
@@ -237,11 +280,16 @@ const SettingsPage = () => {
       for (const [key, value] of Object.entries(values)) {
         if (key === "brand_logo" || key === "brand_favicon") continue;
         if (typeof value === "boolean") {
-          formData.append(`settings[${key}]`, value ? "1" : "0");
+          // the API expects a real boolean, not "1"/"0"
+          formData.append(`settings[${key}]`, value ? "true" : "false");
         } else if (value !== null && value !== undefined) {
           formData.append(`settings[${key}]`, value);
         }
       }
+
+      // brand images can be cleared from the upload card
+      if (values.brand_logo?.length === 0) formData.append("remove_brand_logo", "1");
+      if (values.brand_favicon?.length === 0) formData.append("remove_brand_favicon", "1");
 
       const logoFile = (values.brand_logo || []).find((f) => f.originFileObj);
       if (logoFile) formData.append("brand_logo", logoFile.originFileObj);
@@ -252,12 +300,16 @@ const SettingsPage = () => {
       formData.append("_method", "PUT");
 
       const res = await request("settings", "POST", formData);
-      if (res?.settings) {
-        setBrandLogo(res.settings?.general?.brand_logo?.url || null);
-        setBrandFavicon(res.settings?.general?.brand_favicon?.url || null);
-      }
       if (res?.message) {
         notification.success({ message: res.message });
+        // the settings page is not enough: re-read what the API now serves so every
+        // other screen (storefront, orders, branding) picks up the new values
+        await loadPlatformConfig({ force: true });
+        await fetchSettings();
+      } else {
+        notification.error({
+          message: firstSaveError(res) || "Settings could not be saved.",
+        });
       }
     } catch (err) {
       notification.error({
@@ -315,13 +367,13 @@ const SettingsPage = () => {
                 existingUrl={brandFavicon}
                 onRemove={() => setBrandFavicon(null)}
               />
-              <Form.Item label="Platform name" name="platform_name">
+              <Form.Item label="Platform name" name="platform_name" extra={`Applies to: ${EFFECTS.platform_name}`}>
                 <Input placeholder="FoodOrder Platform" />
               </Form.Item>
-              <Form.Item label="Support email" name="support_email">
+              <Form.Item label="Support email" name="support_email" extra={`Applies to: ${EFFECTS.support_email}`}>
                 <Input placeholder="support@foodorder.com" />
               </Form.Item>
-              <Form.Item label="Default timezone" name="timezone">
+              <Form.Item label="Default timezone" name="timezone" extra={`Applies to: ${EFFECTS.timezone}`}>
                 <Select options={TIMEZONE_OPTIONS} />
               </Form.Item>
             </Card>
@@ -334,15 +386,16 @@ const SettingsPage = () => {
               variant="outlined"
               style={{ borderRadius: 2 }}
             >
-              <Form.Item label="Default currency" name="currency">
+              <Form.Item label="Default currency" name="currency" extra={`Applies to: ${EFFECTS.currency}`}>
                 <Select options={CURRENCY_OPTIONS} />
               </Form.Item>
-              <Form.Item label="Preparation time" name="prep_time_minutes">
+              <Form.Item label="Preparation time" name="prep_time_minutes" extra={`Applies to: ${EFFECTS.prep_time_minutes}`}>
                 <Select options={PREP_TIME_OPTIONS} />
               </Form.Item>
               <SettingSwitch
                 label="Auto-accept orders"
                 description="Automatically confirm incoming orders without manual review."
+                effect={EFFECTS.auto_accept_orders}
                 name="auto_accept_orders"
               />
             </Card>
@@ -358,16 +411,19 @@ const SettingsPage = () => {
               <SettingSwitch
                 label="New order alerts"
                 description="Notify when a new order is placed."
+                effect={EFFECTS.order_alerts}
                 name="order_alerts"
               />
               <SettingSwitch
                 label="Rider dispatch alerts"
                 description="Notify when a rider is assigned or status changes."
+                effect={EFFECTS.rider_alerts}
                 name="rider_alerts"
               />
               <SettingSwitch
                 label="Refund approval alerts"
                 description="Notify when a refund request needs review."
+                effect={EFFECTS.refund_alerts}
                 name="refund_alerts"
               />
             </Card>
@@ -383,21 +439,23 @@ const SettingsPage = () => {
               <Form.Item
                 label="Platform commission (%)"
                 name="commission_rate"
-                extra="No subscription: this % is deducted from the food subtotal of every customer order. New partners accept the rate shown at sign-up."
+                extra={`No subscription: this % is deducted from the food subtotal of every customer order. New partners accept the rate shown at sign-up. Applies to: ${EFFECTS.commission_rate}`}
               >
                 <InputNumber min={0} max={50} step={0.5} addonAfter="%" style={{ width: "100%" }} />
               </Form.Item>
-              <Form.Item label="Default payment provider" name="payment_provider">
+              <Form.Item label="Default payment provider" name="payment_provider" extra={`Applies to: ${EFFECTS.payment_provider}`}>
                 <Select options={PAYMENT_PROVIDER_OPTIONS} />
               </Form.Item>
               <SettingSwitch
                 label="Cash on delivery"
                 description="Allow customers to pay with cash upon delivery."
+                effect={EFFECTS.cash_on_delivery}
                 name="cash_on_delivery"
               />
               <SettingSwitch
                 label="Automatic settlement"
                 description="Automatically settle rider earnings after delivery completion."
+                effect={EFFECTS.auto_settlement}
                 name="auto_settlement"
               />
             </Card>
@@ -413,6 +471,9 @@ const SettingsPage = () => {
                 <Text strong style={{ fontSize: 13 }}>Maintenance mode</Text>
                 <Text type="secondary" style={{ display: "block", fontSize: 12 }}>
                   Pause new orders while keeping operations data accessible.
+                </Text>
+                <Text type="secondary" style={{ display: "block", fontSize: 11, marginTop: 2 }}>
+                  Applies to: {EFFECTS.maintenance_mode}
                 </Text>
               </div>
             </div>

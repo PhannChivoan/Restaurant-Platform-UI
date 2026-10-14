@@ -8,12 +8,24 @@ import { useAddresses } from "../context/AddressContext";
 import AddressMapModal from "../components/AddressMapModal";
 import PaymentPanel from "../components/PaymentPanel";
 import { fmt } from "../hooks/useCart";
+import { allowedPaymentMethods, isMaintenanceMode, subscribePlatform } from "../../utils/platformSettings";
 
-const PAYMENTS = [
+const ALL_PAYMENTS = [
   { id: "cash", icon: "payments", title: "Cash on delivery", hint: "Pay the rider when your food arrives" },
   { id: "aba_khqr", icon: "qr_code_scanner", title: "ABA PAY (KHQR)", hint: "Scan the QR with ABA Mobile or any KHQR app" },
   { id: "card", icon: "credit_card", title: "Credit / debit card", hint: "Visa or Mastercard — enter your card details" },
 ];
+
+// "Cash on delivery" and the default payment provider in Platform Settings decide
+// which of these the customer is actually offered.
+const useAvailablePayments = () => {
+  // settings can change while the tab is open, so re-filter when they are saved
+  const [allowed, setAllowed] = useState(() => allowedPaymentMethods());
+
+  useEffect(() => subscribePlatform(() => setAllowed(allowedPaymentMethods())), []);
+
+  return ALL_PAYMENTS.filter((p) => allowed.includes(p.id));
+};
 
 const field =
   "w-full px-space-md py-space-sm bg-surface-container-low rounded-lg font-body-md text-body-md text-on-surface placeholder:text-secondary focus:bg-surface-container-lowest focus:outline-none focus:shadow-[0_0_0_2px_rgba(249,115,22,0.4)] transition-all";
@@ -59,6 +71,16 @@ const CheckoutPage = () => {
   const set = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }));
   const err = (k) => fieldErrors[k]?.[0];
 
+  const PAYMENTS = useAvailablePayments();
+  const maintenance = isMaintenanceMode();
+
+  // keep the chosen method valid when the platform settings change
+  useEffect(() => {
+    if (PAYMENTS.length && !PAYMENTS.some((p) => p.id === form.payment_method)) {
+      setForm((f) => ({ ...f, payment_method: PAYMENTS[0].id }));
+    }
+  }, [PAYMENTS, form.payment_method]);
+
   // Checkout is the one step that needs an account.
   useEffect(() => {
     if (!signedIn) navigate("/login", { replace: true, state: { from: `/checkout/${rid}` } });
@@ -94,6 +116,17 @@ const CheckoutPage = () => {
   const submit = async (e) => {
     e.preventDefault();
     if (busy) return;
+
+    // refuse before the API call when the admin paused ordering
+    if (isMaintenanceMode()) {
+      setFormError("Ordering is paused for maintenance. Please try again shortly.");
+      return;
+    }
+    if (!PAYMENTS.some((p) => p.id === form.payment_method)) {
+      setFormError("That payment method is not available right now.");
+      return;
+    }
+
     setBusy(true);
     setFormError("");
     setFieldErrors({});
@@ -340,7 +373,18 @@ const CheckoutPage = () => {
                   </span>
                 </label>
               ))}
+              {PAYMENTS.length === 0 && (
+                <p className="font-body-sm text-body-sm text-error">
+                  No payment method is available right now. Please contact support.
+                </p>
+              )}
             </div>
+            {/* set by the admin under Settings → Platform Settings */}
+            {maintenance && (
+              <p className="font-body-sm text-body-sm text-error mt-space-sm">
+                Ordering is paused for maintenance. Your cart is saved — please try again shortly.
+              </p>
+            )}
             <Err msg={err("payment_method")} />
           </Card>
         </div>

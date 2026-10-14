@@ -12,6 +12,8 @@ import {
 } from "../../constants/navigation";
 import { getAccessToken } from "../../store/access_token";
 import { useBranchId } from "../../utils/branchStore";
+import useAccessWindow from "../../hooks/useAccessWindow";
+import AccessWindowBlock from "../ui/AccessWindowBlock";
 
 const { Content } = Layout;
 
@@ -27,6 +29,7 @@ const RootLayout = () => {
   const [query, setQuery] = useState("");
   const [notifOpen, setNotifOpen] = useState(false);
   const branchId = useBranchId();
+  const { status: accessWindow, isBlocked, refresh: recheckAccess } = useAccessWindow();
 
   const activeKey = getActiveKeyFromPath(location.pathname);
   const [openKeys, setOpenKeys] = useState(getOpenKeysForActive(activeKey));
@@ -118,7 +121,12 @@ const RootLayout = () => {
                 flex: 1,
               }}
             >
-              <Outlet key={branchId || "all"} />
+              {/* the API refuses operational calls outside the role's window */}
+              {isBlocked ? (
+                <AccessWindowBlock status={accessWindow} onRetry={recheckAccess} />
+              ) : (
+                <Outlet key={branchId || "all"} />
+              )}
             </div>
           </Content>
         </Layout>

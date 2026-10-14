@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import AddressSelector from "./AddressSelector";
 import NotificationBell from "./NotificationBell";
 import { Config } from "../../utils/config";
+import { platformLogo, platformName } from "../../utils/platformSettings";
 
 const API_URL = Config.BASE_URL.replace(/\/+$/, "");
 
@@ -166,13 +167,22 @@ const SiteHeader = () => {
             </span>
           </button>
           <Link to="/" className="flex items-center gap-space-sm">
-            <img
-              alt="FoodOrder Logo"
-              className="h-8 w-auto object-contain"
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuAc0svmMLOnM5DwPaZ31H6ZhB5YIhlaIbwDYQmcWGZatdBoMPiczItKnnwYP4Kc0q0OBhQtguUmM2axWG_eZgXlX5x68Uq_cmPy3cLSYNrx8DbLgYoYA5V42IZNweIOwNO-9NrUl_wco0wTGdvMFdOjhf7Xj914jFBT1g-E3BcHymQPosIpjeT4lEL0GgY-3AquMLZK-z9l_CymYpgWyQDifZn5DdRtg0IpTYxgs_wW"
-            />
+            {/* the logo comes from Platform Settings when one is uploaded */}
+            {platformLogo() ? (
+              <img
+                alt={`${platformName()} logo`}
+                className="h-8 w-auto object-contain"
+                src={platformLogo()}
+              />
+            ) : (
+              <img
+                alt="FoodOrder Logo"
+                className="h-8 w-auto object-contain"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAc0svmMLOnM5DwPaZ31H6ZhB5YIhlaIbwDYQmcWGZatdBoMPiczItKnnwYP4Kc0q0OBhQtguUmM2axWG_eZgXlX5x68Uq_cmPy3cLSYNrx8DbLgYoYA5V42IZNweIOwNO-9NrUl_wco0wTGdvMFdOjhf7Xj914jFBT1g-E3BcHymQPosIpjeT4lEL0GgY-3AquMLZK-z9l_CymYpgWyQDifZn5DdRtg0IpTYxgs_wW"
+              />
+            )}
             <span className="font-headline-sm text-headline-sm text-on-surface tracking-tight">
-              FoodOrder
+              {platformName()}
             </span>
           </Link>
           <div className="hidden xl:block">

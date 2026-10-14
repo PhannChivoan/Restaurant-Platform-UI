@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 
 import {
+  Alert,
   App,
   Button,
   ConfigProvider,
@@ -36,28 +37,29 @@ import ModulePage from "../components/ui/ModulePage";
 import TopProgressBar from "../components/ui/TopProgressBar";
 import { request } from "../utils/request";
 import { palette } from "../constants/theme";
+import useAccessWindow from "../hooks/useAccessWindow";
 
 const { Text } = Typography;
 const { TextArea } = Input;
 
 const DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
+// "applies_to" values are matched against the user roles by AccessWindowService,
+// so the labels here have to stay in sync with that map.
 const APPLIES_TO_OPTIONS = [
   { value: "Kitchen Staff", label: "Kitchen Staff" },
   { value: "Delivery Rider", label: "Delivery Rider" },
   { value: "Restaurant Owner", label: "Restaurant Owner" },
-  { value: "All Staff", label: "All Staff" },
+  { value: "All Staff", label: "All Staff (every non-customer role)" },
   { value: "Platform Admin", label: "Platform Admin" },
 ];
 
-const DAY_COLORS = {
-  Mon: palette.info,
-  Tue: palette.success,
-  Wed: "#7C3AED",
-  Thu: palette.warning,
-  Fri: palette.danger,
-  Sat: "#DB2777",
-  Sun: "#0891B2",
+const ROLE_LABELS = {
+  kitchen_staff: "Kitchen Staff",
+  rider: "Delivery Rider",
+  restaurant_owner: "Restaurant Owner",
+  admin: "Platform Admin",
+  super_admin: "Platform Admin",
 };
 
 const firstSaveError = (response) => {
@@ -70,6 +72,7 @@ const firstSaveError = (response) => {
 
 const AccessWindowsPage = () => {
   const { notification } = App.useApp();
+  const { status: myStatus, isBlocked, refresh: recheckAccess } = useAccessWindow();
 
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
@@ -337,15 +340,25 @@ const AccessWindowsPage = () => {
     {
       title: "Status",
       key: "is_active",
-      width: 90,
+      width: 150,
       align: "center",
       render: (_, row) => (
-        <Tag
-          color={row.is_active ? "success" : "default"}
-          style={{ margin: 0, borderRadius: 2, fontSize: 11, fontWeight: 500 }}
-        >
-          {row.is_active ? "Active" : "Inactive"}
-        </Tag>
+        <Space size={4}>
+          <Tag
+            color={row.is_active ? "success" : "default"}
+            style={{ margin: 0, borderRadius: 2, fontSize: 11, fontWeight: 500 }}
+          >
+            {row.is_active ? "Active" : "Inactive"}
+          </Tag>
+          {row.is_active && (
+            <Tag
+              color={row.is_open ? "green" : "orange"}
+              style={{ margin: 0, borderRadius: 2, fontSize: 11, fontWeight: 500 }}
+            >
+              {row.is_open ? "Open now" : "Closed now"}
+            </Tag>
+          )}
+        </Space>
       ),
     },
     {
@@ -404,9 +417,51 @@ const AccessWindowsPage = () => {
     >
       <TopProgressBar active={loading || refreshing} label="Access windows loading" />
 
+      {/* the state of the signed-in role: inside its window, or locked out by it */}
+      {myStatus?.is_restricted && (
+        <Alert
+          type={isBlocked ? "warning" : "success"}
+          showIcon
+          style={{ marginBottom: 16, borderRadius: 2 }}
+          message={
+            <Space align="center" size={8} wrap>
+              <Text strong style={{ fontSize: 13 }}>
+                {ROLE_LABELS[myStatus.role] || myStatus.role}:{" "}
+                {isBlocked ? "outside its access window" : "inside its access window"}
+              </Text>
+              <Text type="secondary" style={{ fontSize: 12 }}>
+                {isBlocked
+                  ? "Operational modules are blocked until the window opens."
+                  : "You can work normally until the window closes."}
+              </Text>
+              <Button size="small" icon={<RefreshCw size={13} />} onClick={recheckAccess}>
+                Re-check
+              </Button>
+            </Space>
+          }
+          description={
+            <Space size={6} wrap>
+              {myStatus.windows?.map((w) => (
+                <Tag
+                  key={w.id}
+                  color={w.is_open ? "success" : "default"}
+                  style={{ margin: 0, fontSize: 11 }}
+                >
+                  {w.label}: {w.days?.join(", ")} {w.start_time}–{w.end_time}
+                  {w.is_open ? " (open now)" : ""}
+                </Tag>
+              ))}
+              <Text type="secondary" style={{ fontSize: 11 }}>
+                Times are in {myStatus.timezone}.
+              </Text>
+            </Space>
+          }
+        />
+      )}
+
       <ModulePage
         title="Access Time Windows"
-        description="Define time-based access windows that control when roles can perform operational tasks."
+        description="A window defines WHEN a role may work. A role with at least one active window is locked out of the operational modules outside every one of its windows; a role with no window is never restricted."
         icon={Clock}
         stats={[
           {
@@ -773,14 +828,6 @@ const AccessWindowsPage = () => {
             />
           </Form.Item>
 
-          <Form.Item label="Applies To" name="applies_to">
-            <Select
-              placeholder="Select role"
-              allowClear
-              options={APPLIES_TO_OPTIONS}
-            />
-          </Form.Item>
-
           <Form.Item label="Description" name="description">
             <TextArea
               rows={2}
@@ -789,7 +836,24 @@ const AccessWindowsPage = () => {
             />
           </Form.Item>
 
-          <Form.Item label="Status" name="is_active" valuePropName="checked">
+          <Form.Item
+            label="Applies To"
+            name="applies_to"
+            extra="The role locked to this window. Outside it, that role cannot use the operational modules. Leave empty to only document the window."
+          >
+            <Select
+              placeholder="Select role"
+              allowClear
+              options={APPLIES_TO_OPTIONS}
+            />
+          </Form.Item>
+
+          <Form.Item
+            name="is_active"
+            label="Status"
+            valuePropName="checked"
+            extra="An inactive window never blocks anyone."
+          >
             <Switch checkedChildren="Active" unCheckedChildren="Inactive" />
           </Form.Item>
         </Form>
