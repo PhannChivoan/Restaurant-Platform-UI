@@ -2,8 +2,9 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import AddressSelector from "./AddressSelector";
 import NotificationBell from "./NotificationBell";
+import { Config } from "../../utils/config";
 
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8000/api/v1";
+const API_URL = Config.BASE_URL.replace(/\/+$/, "");
 
 // Keys we check for the token. Add yours here if your login uses a different one.
 const TOKEN_KEYS = ["token", "access_token", "auth_token"];

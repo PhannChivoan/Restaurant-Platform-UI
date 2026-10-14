@@ -4,6 +4,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import CartItemList from "../components/CartItemList";
 import AddressSelector from "../components/AddressSelector";
 import CartSwitcher from "../components/CartSwitcher";
+import { Config } from "../../utils/config";
 import useCart, { fmt } from "../hooks/useCart";
 import {
   fetchPublicRestaurants,
@@ -13,7 +14,7 @@ import {
 } from "../api/publicApi";
 
 // Browsing is public; only checkout needs a customer login (see placeCartOrder).
-const FILE_BASE = import.meta.env?.VITE_STORAGE_URL || "/storage";
+const FILE_BASE = import.meta.env?.VITE_STORAGE_URL || `${Config.BASE_URL.replace(/\/api\/v1\/?$/, "")}/storage`;
 const PLACEHOLDER =
   "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='240'><rect width='100%' height='100%' fill='%23eee'/></svg>";
 

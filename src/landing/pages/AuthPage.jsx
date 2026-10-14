@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { Config } from "../../utils/config";
 
 /* ───────────────────────── API ───────────────────────── */
-const API = import.meta.env?.VITE_API_URL || "/api/v1";
+const API = Config.BASE_URL.replace(/\/+$/, ""); // paths below start with "/"
 const AFTER_AUTH_PATH = "/order/restaurant"; // <- change to your shop page route
 
 async function authRequest(path, body) {
