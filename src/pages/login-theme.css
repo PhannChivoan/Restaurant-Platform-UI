@@ -1,0 +1,11 @@
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Be+Vietnam+Pro:wght@400;500;600&display=swap");
+
+/* Admin login: same fonts and orange accent as the customer site */
+.fo-login, .fo-login input, .fo-login button { font-family: "Be Vietnam Pro", ui-sans-serif, system-ui, sans-serif; }
+.fo-login h1, .fo-login h2, .fo-login .fo-display { font-family: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif; }
+.fo-login .ant-input-affix-wrapper, .fo-login .ant-input { border-radius: 12px; }
+.fo-login .ant-input-affix-wrapper:hover, .fo-login .ant-input-affix-wrapper-focused, .fo-login .ant-input:hover, .fo-login .ant-input:focus {
+  border-color: #f97316;
+  box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.15);
+}
+.fo-login .ant-checkbox-checked .ant-checkbox-inner { background-color: #f97316; border-color: #f97316; }

@@ -1,0 +1,127 @@
+/*
+ * Landing design tokens for Tailwind v4.
+ * The landing pages were exported with a pre-built stylesheet (landing.css, Tailwind v3), which only contains the
+ * classes the original HTML used. Registering the same tokens here lets Tailwind v4 generate any token class
+ * (p-space-xl, text-headline-md, bg-surface-container-low/40 ...) used by newer pages.
+ * Colors that the admin theme (index.css) already defines are left alone so the admin look never changes.
+ */
+@theme {
+  --color-on-error-container: #93000a;
+  --color-on-background: #0b1c30;
+  --color-on-primary-fixed: #341100;
+  --color-surface-bright: #f8f9ff;
+  --color-outline: #8c7164;
+  --color-error-container: #ffdad6;
+  --color-on-primary: #ffffff;
+  --color-surface: #f8f9ff;
+  --color-primary-fixed: #ffdbca;
+  --color-surface-container-low: #eff4ff;
+  --color-on-primary-fixed-variant: #783200;
+  --color-on-secondary-fixed: #131b2e;
+  --color-surface-variant: #d3e4fe;
+  --color-on-secondary: #ffffff;
+  --color-error: #ba1a1a;
+  --color-surface-tint: #9d4300;
+  --color-on-primary-container: #582200;
+  --color-surface-container-high: #dce9ff;
+  --color-on-tertiary-fixed: #002113;
+  --color-primary-container: #f97316;
+  --color-on-tertiary-fixed-variant: #005236;
+  --color-outline-variant: #e0c0b1;
+  --color-surface-container-lowest: #ffffff;
+  --color-on-error: #ffffff;
+  --color-inverse-surface: #213145;
+  --color-tertiary-container: #00b07a;
+  --color-on-secondary-fixed-variant: #3f465c;
+  --color-primary-fixed-dim: #ffb690;
+  --color-on-surface-variant: #584237;
+  --color-secondary-fixed-dim: #bec6e0;
+  --color-on-tertiary-container: #003b26;
+  --color-on-secondary-container: #5c647a;
+  --color-surface-container: #e5eeff;
+  --color-tertiary-fixed-dim: #4edea3;
+  --color-on-tertiary: #ffffff;
+  --color-inverse-primary: #ffb690;
+  --color-surface-dim: #cbdbf5;
+  --color-on-surface: #0b1c30;
+  --color-inverse-on-surface: #eaf1ff;
+  --color-secondary-container: #dae2fd;
+  --color-secondary-fixed: #dae2fd;
+  --color-tertiary-fixed: #6ffbbe;
+  --color-tertiary: #006c49;
+  --color-surface-container-highest: #d3e4fe;
+  --spacing-gutter: 1.5rem;
+  --spacing-space-md: 1rem;
+  --spacing-space-xl: 2.5rem;
+  --spacing-space-3xl: 6rem;
+  --spacing-space-2xl: 4rem;
+  --spacing-gutter-sm: 1rem;
+  --spacing-space-sm: 0.5rem;
+  --spacing-margin: 2rem;
+  --spacing-space-lg: 1.5rem;
+  --spacing-space-xs: 0.25rem;
+  --spacing-margin-mobile: 1rem;
+  --font-headline-sm: "Plus Jakarta Sans", sans-serif;
+  --font-body-md: "Be Vietnam Pro", sans-serif;
+  --font-headline-xl: "Plus Jakarta Sans", sans-serif;
+  --font-label-lg: "Plus Jakarta Sans", sans-serif;
+  --font-headline-xl-mobile: "Plus Jakarta Sans", sans-serif;
+  --font-body-lg: "Be Vietnam Pro", sans-serif;
+  --font-label-md: "Plus Jakarta Sans", sans-serif;
+  --font-display-hero-mobile: "Plus Jakarta Sans", sans-serif;
+  --font-body-sm: "Be Vietnam Pro", sans-serif;
+  --font-display-hero: "Plus Jakarta Sans", sans-serif;
+  --font-label-sm: "Plus Jakarta Sans", sans-serif;
+  --font-headline-lg: "Plus Jakarta Sans", sans-serif;
+  --font-headline-md: "Plus Jakarta Sans", sans-serif;
+  --text-headline-sm: 18px;
+  --text-headline-sm--line-height: 26px;
+  --text-headline-sm--font-weight: 600;
+  --text-body-md: 15px;
+  --text-body-md--line-height: 24px;
+  --text-body-md--font-weight: 400;
+  --text-headline-xl: 40px;
+  --text-headline-xl--line-height: 48px;
+  --text-headline-xl--font-weight: 700;
+  --text-label-lg: 15px;
+  --text-label-lg--line-height: 20px;
+  --text-label-lg--font-weight: 600;
+  --text-headline-xl-mobile: 28px;
+  --text-headline-xl-mobile--line-height: 36px;
+  --text-headline-xl-mobile--font-weight: 700;
+  --text-body-lg: 18px;
+  --text-body-lg--line-height: 28px;
+  --text-body-lg--font-weight: 400;
+  --text-label-md: 13px;
+  --text-label-md--line-height: 18px;
+  --text-label-md--font-weight: 600;
+  --text-display-hero-mobile: 36px;
+  --text-display-hero-mobile--line-height: 44px;
+  --text-display-hero-mobile--font-weight: 800;
+  --text-body-sm: 13px;
+  --text-body-sm--line-height: 20px;
+  --text-body-sm--font-weight: 400;
+  --text-display-hero: 56px;
+  --text-display-hero--line-height: 64px;
+  --text-display-hero--font-weight: 800;
+  --text-label-sm: 11px;
+  --text-label-sm--line-height: 14px;
+  --text-label-sm--font-weight: 700;
+  --text-headline-lg: 28px;
+  --text-headline-lg--line-height: 36px;
+  --text-headline-lg--font-weight: 700;
+  --text-headline-md: 22px;
+  --text-headline-md--line-height: 30px;
+  --text-headline-md--font-weight: 600;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* indeterminate top loading bar (runs left to right) */
+@keyframes loadbar {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(340%); }
+}

@@ -1,0 +1,1316 @@
+/*
+ * shop.css — utilities used by ShopPage.jsx that are missing from the compiled landing CSS
+ * (e.g. sm:grid-cols-5, lg:grid-cols-10, xl:grid-cols-3, lg:w-auto, md:self-auto, ...).
+ *
+ * Generated with Tailwind 3.4.19 and the same theme as the HTML (colors, spacing, fonts).
+ * Every rule is scoped under `.shop-page` (the class on ShopPage's <main>), so it can never
+ * override or collide with the rest of your site. No base/reset styles are included.
+ *
+ * Import it AFTER your main landing css:
+ *   import "./landing.css";
+ *   import "./shop.css";
+ */
+.shop-page .pointer-events-none {
+  pointer-events: none
+}
+
+.shop-page .absolute {
+  position: absolute
+}
+
+.shop-page .relative {
+  position: relative
+}
+
+.shop-page .-bottom-20 {
+  bottom: -5rem
+}
+
+.shop-page .-right-20 {
+  right: -5rem
+}
+
+.shop-page .bottom-space-xs {
+  bottom: 0.25rem
+}
+
+.shop-page .left-1\/2 {
+  left: 50%
+}
+
+.shop-page .left-space-md {
+  left: 1rem
+}
+
+.shop-page .left-space-xs {
+  left: 0.25rem
+}
+
+.shop-page .right-space-sm {
+  right: 0.5rem
+}
+
+.shop-page .right-space-xs {
+  right: 0.25rem
+}
+
+.shop-page .top-0 {
+  top: 0px
+}
+
+.shop-page .top-1\/2 {
+  top: 50%
+}
+
+.shop-page .top-space-xs {
+  top: 0.25rem
+}
+
+.shop-page .-z-10 {
+  z-index: -10
+}
+
+.shop-page .z-10 {
+  z-index: 10
+}
+
+.shop-page .mx-auto {
+  margin-left: auto;
+  margin-right: auto
+}
+
+.shop-page .mb-1 {
+  margin-bottom: 0.25rem
+}
+
+.shop-page .mb-2 {
+  margin-bottom: 0.5rem
+}
+
+.shop-page .mb-space-md {
+  margin-bottom: 1rem
+}
+
+.shop-page .mb-space-sm {
+  margin-bottom: 0.5rem
+}
+
+.shop-page .mb-space-xs {
+  margin-bottom: 0.25rem
+}
+
+.shop-page .ml-space-sm {
+  margin-left: 0.5rem
+}
+
+.shop-page .mt-0\.5 {
+  margin-top: 0.125rem
+}
+
+.shop-page .mt-1 {
+  margin-top: 0.25rem
+}
+
+.shop-page .mt-space-md {
+  margin-top: 1rem
+}
+
+.shop-page .mt-space-sm {
+  margin-top: 0.5rem
+}
+
+.shop-page .mt-space-xs {
+  margin-top: 0.25rem
+}
+
+.shop-page .block {
+  display: block
+}
+
+.shop-page .flex {
+  display: flex
+}
+
+.shop-page .inline-flex {
+  display: inline-flex
+}
+
+.shop-page .grid {
+  display: grid
+}
+
+.shop-page .aspect-\[16\/10\] {
+  aspect-ratio: 16/10
+}
+
+.shop-page .h-12 {
+  height: 3rem
+}
+
+.shop-page .h-14 {
+  height: 3.5rem
+}
+
+.shop-page .h-4 {
+  height: 1rem
+}
+
+.shop-page .h-8 {
+  height: 2rem
+}
+
+.shop-page .h-9 {
+  height: 2.25rem
+}
+
+.shop-page .h-96 {
+  height: 24rem
+}
+
+.shop-page .h-\[360px\] {
+  height: 360px
+}
+
+.shop-page .h-full {
+  height: 100%
+}
+
+.shop-page .w-12 {
+  width: 3rem
+}
+
+.shop-page .w-14 {
+  width: 3.5rem
+}
+
+.shop-page .w-4 {
+  width: 1rem
+}
+
+.shop-page .w-8 {
+  width: 2rem
+}
+
+.shop-page .w-9 {
+  width: 2.25rem
+}
+
+.shop-page .w-96 {
+  width: 24rem
+}
+
+.shop-page .w-\[1200px\] {
+  width: 1200px
+}
+
+.shop-page .w-full {
+  width: 100%
+}
+
+.shop-page .w-max {
+  width: -moz-max-content;
+  width: max-content
+}
+
+.shop-page .min-w-0 {
+  min-width: 0px
+}
+
+.shop-page .max-w-3xl {
+  max-width: 48rem
+}
+
+.shop-page .max-w-\[1280px\] {
+  max-width: 1280px
+}
+
+.shop-page .max-w-xl {
+  max-width: 36rem
+}
+
+.shop-page .flex-1 {
+  flex: 1 1 0%
+}
+
+.shop-page .flex-shrink-0 {
+  flex-shrink: 0
+}
+
+.shop-page .-translate-x-1\/2 {
+  --tw-translate-x: -50%;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))
+}
+
+.shop-page .-translate-y-1\/2 {
+  --tw-translate-y: -50%;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))
+}
+
+.shop-page .cursor-not-allowed {
+  cursor: not-allowed
+}
+
+.shop-page .cursor-pointer {
+  cursor: pointer
+}
+
+.shop-page .appearance-none {
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none
+}
+
+.shop-page .grid-cols-1 {
+  grid-template-columns: repeat(1, minmax(0, 1fr))
+}
+
+.shop-page .grid-cols-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr))
+}
+
+.shop-page .flex-col {
+  flex-direction: column
+}
+
+.shop-page .flex-wrap {
+  flex-wrap: wrap
+}
+
+.shop-page .items-start {
+  align-items: flex-start
+}
+
+.shop-page .items-center {
+  align-items: center
+}
+
+.shop-page .justify-center {
+  justify-content: center
+}
+
+.shop-page .justify-between {
+  justify-content: space-between
+}
+
+.shop-page .gap-0\.5 {
+  gap: 0.125rem
+}
+
+.shop-page .gap-1 {
+  gap: 0.25rem
+}
+
+.shop-page .gap-1\.5 {
+  gap: 0.375rem
+}
+
+.shop-page .gap-2 {
+  gap: 0.5rem
+}
+
+.shop-page .gap-space-lg {
+  gap: 1.5rem
+}
+
+.shop-page .gap-space-md {
+  gap: 1rem
+}
+
+.shop-page .gap-space-sm {
+  gap: 0.5rem
+}
+
+.shop-page .gap-space-xl {
+  gap: 2.5rem
+}
+
+.shop-page .gap-space-xs {
+  gap: 0.25rem
+}
+
+.shop-page .self-start {
+  align-self: flex-start
+}
+
+.shop-page .overflow-hidden {
+  overflow: hidden
+}
+
+.shop-page .overflow-x-auto {
+  overflow-x: auto
+}
+
+.shop-page .truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap
+}
+
+.shop-page .text-nowrap {
+  text-wrap: nowrap
+}
+
+.shop-page .rounded {
+  border-radius: 0.25rem
+}
+
+.shop-page .rounded-2xl {
+  border-radius: 1rem
+}
+
+.shop-page .rounded-full {
+  border-radius: 9999px
+}
+
+.shop-page .rounded-lg {
+  border-radius: 0.5rem
+}
+
+.shop-page .rounded-xl {
+  border-radius: 0.75rem
+}
+
+.shop-page .bg-amber-100 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(254 243 199 / var(--tw-bg-opacity, 1))
+}
+
+.shop-page .bg-amber-500 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(245 158 11 / var(--tw-bg-opacity, 1))
+}
+
+.shop-page .bg-emerald-100 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(209 250 229 / var(--tw-bg-opacity, 1))
+}
+
+.shop-page .bg-emerald-50 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(236 253 245 / var(--tw-bg-opacity, 1))
+}
+
+.shop-page .bg-emerald-500 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(16 185 129 / var(--tw-bg-opacity, 1))
+}
+
+.shop-page .bg-emerald-600 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(5 150 105 / var(--tw-bg-opacity, 1))
+}
+
+.shop-page .bg-emerald-700 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(4 120 87 / var(--tw-bg-opacity, 1))
+}
+
+.shop-page .bg-green-100 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(220 252 231 / var(--tw-bg-opacity, 1))
+}
+
+.shop-page .bg-inverse-surface {
+  --tw-bg-opacity: 1;
+  background-color: rgb(33 49 69 / var(--tw-bg-opacity, 1))
+}
+
+.shop-page .bg-inverse-surface\/85 {
+  background-color: rgb(33 49 69 / 0.85)
+}
+
+.shop-page .bg-orange-100 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 237 213 / var(--tw-bg-opacity, 1))
+}
+
+.shop-page .bg-orange-50 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 247 237 / var(--tw-bg-opacity, 1))
+}
+
+.shop-page .bg-primary-container {
+  --tw-bg-opacity: 1;
+  background-color: rgb(249 115 22 / var(--tw-bg-opacity, 1))
+}
+
+.shop-page .bg-primary-container\/15 {
+  background-color: rgb(249 115 22 / 0.15)
+}
+
+.shop-page .bg-primary-fixed {
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 219 202 / var(--tw-bg-opacity, 1))
+}
+
+.shop-page .bg-red-100 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(254 226 226 / var(--tw-bg-opacity, 1))
+}
+
+.shop-page .bg-rose-100 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 228 230 / var(--tw-bg-opacity, 1))
+}
+
+.shop-page .bg-rose-600 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(225 29 72 / var(--tw-bg-opacity, 1))
+}
+
+.shop-page .bg-secondary-container {
+  --tw-bg-opacity: 1;
+  background-color: rgb(218 226 253 / var(--tw-bg-opacity, 1))
+}
+
+.shop-page .bg-stone-200 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(231 229 228 / var(--tw-bg-opacity, 1))
+}
+
+.shop-page .bg-surface {
+  --tw-bg-opacity: 1;
+  background-color: rgb(248 249 255 / var(--tw-bg-opacity, 1))
+}
+
+.shop-page .bg-surface-container {
+  --tw-bg-opacity: 1;
+  background-color: rgb(229 238 255 / var(--tw-bg-opacity, 1))
+}
+
+.shop-page .bg-surface-container-high {
+  --tw-bg-opacity: 1;
+  background-color: rgb(220 233 255 / var(--tw-bg-opacity, 1))
+}
+
+.shop-page .bg-surface-container-low {
+  --tw-bg-opacity: 1;
+  background-color: rgb(239 244 255 / var(--tw-bg-opacity, 1))
+}
+
+.shop-page .bg-surface-container-lowest {
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1))
+}
+
+.shop-page .bg-surface-container-lowest\/10 {
+  background-color: rgb(255 255 255 / 0.1)
+}
+
+.shop-page .bg-surface-container-lowest\/20 {
+  background-color: rgb(255 255 255 / 0.2)
+}
+
+.shop-page .bg-surface-container-lowest\/90 {
+  background-color: rgb(255 255 255 / 0.9)
+}
+
+.shop-page .bg-surface-container-lowest\/95 {
+  background-color: rgb(255 255 255 / 0.95)
+}
+
+.shop-page .bg-teal-100 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(204 251 241 / var(--tw-bg-opacity, 1))
+}
+
+.shop-page .bg-yellow-100 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(254 249 195 / var(--tw-bg-opacity, 1))
+}
+
+.shop-page .bg-gradient-to-b {
+  background-image: linear-gradient(to bottom, var(--tw-gradient-stops))
+}
+
+.shop-page .bg-gradient-to-br {
+  background-image: linear-gradient(to bottom right, var(--tw-gradient-stops))
+}
+
+.shop-page .bg-gradient-to-r {
+  background-image: linear-gradient(to right, var(--tw-gradient-stops))
+}
+
+.shop-page .from-primary-container {
+  --tw-gradient-from: #f97316 var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(249 115 22 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to)
+}
+
+.shop-page .from-primary-container\/10 {
+  --tw-gradient-from: rgb(249 115 22 / 0.1) var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(249 115 22 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to)
+}
+
+.shop-page .from-surface-container-highest {
+  --tw-gradient-from: #d3e4fe var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(211 228 254 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to)
+}
+
+.shop-page .via-surface-container-high\/20 {
+  --tw-gradient-to: rgb(220 233 255 / 0)  var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), rgb(220 233 255 / 0.2) var(--tw-gradient-via-position), var(--tw-gradient-to)
+}
+
+.shop-page .via-surface-container-low {
+  --tw-gradient-to: rgb(239 244 255 / 0)  var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), #eff4ff var(--tw-gradient-via-position), var(--tw-gradient-to)
+}
+
+.shop-page .to-primary {
+  --tw-gradient-to: #9d4300 var(--tw-gradient-to-position)
+}
+
+.shop-page .to-surface-container {
+  --tw-gradient-to: #e5eeff var(--tw-gradient-to-position)
+}
+
+.shop-page .to-transparent {
+  --tw-gradient-to: transparent var(--tw-gradient-to-position)
+}
+
+.shop-page .object-cover {
+  -o-object-fit: cover;
+     object-fit: cover
+}
+
+.shop-page .p-1 {
+  padding: 0.25rem
+}
+
+.shop-page .p-1\.5 {
+  padding: 0.375rem
+}
+
+.shop-page .p-2 {
+  padding: 0.5rem
+}
+
+.shop-page .p-3 {
+  padding: 0.75rem
+}
+
+.shop-page .p-space-lg {
+  padding: 1.5rem
+}
+
+.shop-page .p-space-md {
+  padding: 1rem
+}
+
+.shop-page .p-space-sm {
+  padding: 0.5rem
+}
+
+.shop-page .p-space-xl {
+  padding: 2.5rem
+}
+
+.shop-page .px-1\.5 {
+  padding-left: 0.375rem;
+  padding-right: 0.375rem
+}
+
+.shop-page .px-2 {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem
+}
+
+.shop-page .px-2\.5 {
+  padding-left: 0.625rem;
+  padding-right: 0.625rem
+}
+
+.shop-page .px-3 {
+  padding-left: 0.75rem;
+  padding-right: 0.75rem
+}
+
+.shop-page .px-margin {
+  padding-left: 2rem;
+  padding-right: 2rem
+}
+
+.shop-page .px-space-lg {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem
+}
+
+.shop-page .px-space-md {
+  padding-left: 1rem;
+  padding-right: 1rem
+}
+
+.shop-page .px-space-sm {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem
+}
+
+.shop-page .px-space-xl {
+  padding-left: 2.5rem;
+  padding-right: 2.5rem
+}
+
+.shop-page .py-0\.5 {
+  padding-top: 0.125rem;
+  padding-bottom: 0.125rem
+}
+
+.shop-page .py-1 {
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem
+}
+
+.shop-page .py-1\.5 {
+  padding-top: 0.375rem;
+  padding-bottom: 0.375rem
+}
+
+.shop-page .py-2 {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem
+}
+
+.shop-page .py-3\.5 {
+  padding-top: 0.875rem;
+  padding-bottom: 0.875rem
+}
+
+.shop-page .py-space-md {
+  padding-top: 1rem;
+  padding-bottom: 1rem
+}
+
+.shop-page .py-space-sm {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem
+}
+
+.shop-page .py-space-xs {
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem
+}
+
+.shop-page .pb-space-3xl {
+  padding-bottom: 6rem
+}
+
+.shop-page .pb-space-lg {
+  padding-bottom: 1.5rem
+}
+
+.shop-page .pb-space-sm {
+  padding-bottom: 0.5rem
+}
+
+.shop-page .pb-space-xs {
+  padding-bottom: 0.25rem
+}
+
+.shop-page .pl-12 {
+  padding-left: 3rem
+}
+
+.shop-page .pr-10 {
+  padding-right: 2.5rem
+}
+
+.shop-page .pr-space-md {
+  padding-right: 1rem
+}
+
+.shop-page .pt-20 {
+  padding-top: 5rem
+}
+
+.shop-page .pt-space-md {
+  padding-top: 1rem
+}
+
+.shop-page .pt-space-sm {
+  padding-top: 0.5rem
+}
+
+.shop-page .pt-space-xl {
+  padding-top: 2.5rem
+}
+
+.shop-page .pt-space-xs {
+  padding-top: 0.25rem
+}
+
+.shop-page .text-center {
+  text-align: center
+}
+
+.shop-page .font-body-lg {
+  font-family: Be Vietnam Pro
+}
+
+.shop-page .font-body-md {
+  font-family: Be Vietnam Pro
+}
+
+.shop-page .font-body-sm {
+  font-family: Be Vietnam Pro
+}
+
+.shop-page .font-headline-sm {
+  font-family: Plus Jakarta Sans
+}
+
+.shop-page .font-headline-xl {
+  font-family: Plus Jakarta Sans
+}
+
+.shop-page .font-label-lg {
+  font-family: Plus Jakarta Sans
+}
+
+.shop-page .font-label-md {
+  font-family: Plus Jakarta Sans
+}
+
+.shop-page .font-label-sm {
+  font-family: Plus Jakarta Sans
+}
+
+.shop-page .text-\[11px\] {
+  font-size: 11px
+}
+
+.shop-page .text-\[12px\] {
+  font-size: 12px
+}
+
+.shop-page .text-\[14px\] {
+  font-size: 14px
+}
+
+.shop-page .text-\[16px\] {
+  font-size: 16px
+}
+
+.shop-page .text-\[18px\] {
+  font-size: 18px
+}
+
+.shop-page .text-\[20px\] {
+  font-size: 20px
+}
+
+.shop-page .text-\[24px\] {
+  font-size: 24px
+}
+
+.shop-page .text-base {
+  font-size: 1rem;
+  line-height: 1.5rem
+}
+
+.shop-page .text-body-lg {
+  font-size: 18px;
+  line-height: 28px;
+  font-weight: 400
+}
+
+.shop-page .text-body-md {
+  font-size: 15px;
+  line-height: 24px;
+  font-weight: 400
+}
+
+.shop-page .text-body-sm {
+  font-size: 13px;
+  line-height: 20px;
+  font-weight: 400
+}
+
+.shop-page .text-headline-sm {
+  font-size: 18px;
+  line-height: 26px;
+  font-weight: 600
+}
+
+.shop-page .text-headline-xl {
+  font-size: 40px;
+  line-height: 48px;
+  font-weight: 700
+}
+
+.shop-page .text-label-lg {
+  font-size: 15px;
+  line-height: 20px;
+  font-weight: 600
+}
+
+.shop-page .text-label-md {
+  font-size: 13px;
+  line-height: 18px;
+  font-weight: 600
+}
+
+.shop-page .text-label-sm {
+  font-size: 11px;
+  line-height: 14px;
+  font-weight: 700
+}
+
+.shop-page .text-lg {
+  font-size: 1.125rem;
+  line-height: 1.75rem
+}
+
+.shop-page .text-xs {
+  font-size: 0.75rem;
+  line-height: 1rem
+}
+
+.shop-page .font-bold {
+  font-weight: 700
+}
+
+.shop-page .font-semibold {
+  font-weight: 600
+}
+
+.shop-page .uppercase {
+  text-transform: uppercase
+}
+
+.shop-page .tracking-tight {
+  letter-spacing: -0.025em
+}
+
+.shop-page .tracking-wide {
+  letter-spacing: 0.025em
+}
+
+.shop-page .tracking-wider {
+  letter-spacing: 0.05em
+}
+
+.shop-page .text-amber-500 {
+  --tw-text-opacity: 1;
+  color: rgb(245 158 11 / var(--tw-text-opacity, 1))
+}
+
+.shop-page .text-amber-700 {
+  --tw-text-opacity: 1;
+  color: rgb(180 83 9 / var(--tw-text-opacity, 1))
+}
+
+.shop-page .text-emerald-500 {
+  --tw-text-opacity: 1;
+  color: rgb(16 185 129 / var(--tw-text-opacity, 1))
+}
+
+.shop-page .text-emerald-600 {
+  --tw-text-opacity: 1;
+  color: rgb(5 150 105 / var(--tw-text-opacity, 1))
+}
+
+.shop-page .text-emerald-700 {
+  --tw-text-opacity: 1;
+  color: rgb(4 120 87 / var(--tw-text-opacity, 1))
+}
+
+.shop-page .text-green-800 {
+  --tw-text-opacity: 1;
+  color: rgb(22 101 52 / var(--tw-text-opacity, 1))
+}
+
+.shop-page .text-inverse-on-surface {
+  --tw-text-opacity: 1;
+  color: rgb(234 241 255 / var(--tw-text-opacity, 1))
+}
+
+.shop-page .text-on-primary {
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity, 1))
+}
+
+.shop-page .text-on-surface {
+  --tw-text-opacity: 1;
+  color: rgb(11 28 48 / var(--tw-text-opacity, 1))
+}
+
+.shop-page .text-on-surface-variant {
+  --tw-text-opacity: 1;
+  color: rgb(88 66 55 / var(--tw-text-opacity, 1))
+}
+
+.shop-page .text-orange-700 {
+  --tw-text-opacity: 1;
+  color: rgb(194 65 12 / var(--tw-text-opacity, 1))
+}
+
+.shop-page .text-primary {
+  --tw-text-opacity: 1;
+  color: rgb(157 67 0 / var(--tw-text-opacity, 1))
+}
+
+.shop-page .text-primary-container {
+  --tw-text-opacity: 1;
+  color: rgb(249 115 22 / var(--tw-text-opacity, 1))
+}
+
+.shop-page .text-primary-fixed {
+  --tw-text-opacity: 1;
+  color: rgb(255 219 202 / var(--tw-text-opacity, 1))
+}
+
+.shop-page .text-red-700 {
+  --tw-text-opacity: 1;
+  color: rgb(185 28 28 / var(--tw-text-opacity, 1))
+}
+
+.shop-page .text-rose-500 {
+  --tw-text-opacity: 1;
+  color: rgb(244 63 94 / var(--tw-text-opacity, 1))
+}
+
+.shop-page .text-rose-600 {
+  --tw-text-opacity: 1;
+  color: rgb(225 29 72 / var(--tw-text-opacity, 1))
+}
+
+.shop-page .text-secondary {
+  --tw-text-opacity: 1;
+  color: rgb(86 94 116 / var(--tw-text-opacity, 1))
+}
+
+.shop-page .text-secondary-fixed-dim {
+  --tw-text-opacity: 1;
+  color: rgb(190 198 224 / var(--tw-text-opacity, 1))
+}
+
+.shop-page .text-stone-800 {
+  --tw-text-opacity: 1;
+  color: rgb(41 37 36 / var(--tw-text-opacity, 1))
+}
+
+.shop-page .text-teal-700 {
+  --tw-text-opacity: 1;
+  color: rgb(15 118 110 / var(--tw-text-opacity, 1))
+}
+
+.shop-page .text-tertiary-container {
+  --tw-text-opacity: 1;
+  color: rgb(0 176 122 / var(--tw-text-opacity, 1))
+}
+
+.shop-page .text-tertiary-fixed {
+  --tw-text-opacity: 1;
+  color: rgb(111 251 190 / var(--tw-text-opacity, 1))
+}
+
+.shop-page .text-yellow-700 {
+  --tw-text-opacity: 1;
+  color: rgb(161 98 7 / var(--tw-text-opacity, 1))
+}
+
+.shop-page .accent-primary-container {
+  accent-color: #f97316
+}
+
+.shop-page .opacity-50 {
+  opacity: 0.5
+}
+
+.shop-page .opacity-90 {
+  opacity: 0.9
+}
+
+.shop-page .shadow-\[0_1px_2px_0_rgb\(0_0_0\/0\.05\)\] {
+  --tw-shadow: 0 1px 2px 0 rgb(0 0 0/0.05);
+  --tw-shadow-colored: 0 1px 2px 0 var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)
+}
+
+.shop-page .shadow-\[0_20px_25px_-5px_rgb\(0_0_0\/0\.1\)\2c 0_8px_10px_-6px_rgb\(0_0_0\/0\.1\)\] {
+  --tw-shadow: 0 20px 25px -5px rgb(0 0 0/0.1),0 8px 10px -6px rgb(0 0 0/0.1);
+  --tw-shadow-colored: 0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)
+}
+
+.shop-page .shadow-\[0_4px_12px_rgba\(249\2c 115\2c 22\2c 0\.25\)\] {
+  --tw-shadow: 0 4px 12px rgba(249,115,22,0.25);
+  --tw-shadow-colored: 0 4px 12px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)
+}
+
+.shop-page .shadow-\[0_4px_16px_rgba\(249\2c 115\2c 22\2c 0\.35\)\] {
+  --tw-shadow: 0 4px 16px rgba(249,115,22,0.35);
+  --tw-shadow-colored: 0 4px 16px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)
+}
+
+.shop-page .shadow-\[0_4px_24px_rgba\(11\2c 28\2c 48\2c 0\.06\)\] {
+  --tw-shadow: 0 4px 24px rgba(11,28,48,0.06);
+  --tw-shadow-colored: 0 4px 24px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)
+}
+
+.shop-page .shadow-\[0_4px_6px_-1px_rgb\(0_0_0\/0\.1\)\2c 0_2px_4px_-2px_rgb\(0_0_0\/0\.1\)\] {
+  --tw-shadow: 0 4px 6px -1px rgb(0 0 0/0.1),0 2px 4px -2px rgb(0 0 0/0.1);
+  --tw-shadow-colored: 0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)
+}
+
+.shop-page .shadow-\[inset_0_2px_4px_0_rgb\(0_0_0\/0\.05\)\] {
+  --tw-shadow: inset 0 2px 4px 0 rgb(0 0 0/0.05);
+  --tw-shadow-colored: inset 0 2px 4px 0 var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)
+}
+
+.shop-page .ring {
+  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(3px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000)
+}
+
+.shop-page .blur-3xl {
+  --tw-blur: blur(64px);
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)
+}
+
+.shop-page .backdrop-blur-md {
+  --tw-backdrop-blur: blur(12px);
+  -webkit-backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
+  backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)
+}
+
+.shop-page .transition-all {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms
+}
+
+.shop-page .transition-colors {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms
+}
+
+.shop-page .transition-transform {
+  transition-property: transform;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms
+}
+
+.shop-page .duration-300 {
+  transition-duration: 300ms
+}
+
+.shop-page .\[scrollbar-width\:none\] {
+  scrollbar-width: none
+}
+
+.shop-page .placeholder\:text-secondary::-moz-placeholder {
+  --tw-text-opacity: 1;
+  color: rgb(86 94 116 / var(--tw-text-opacity, 1))
+}
+
+.shop-page .placeholder\:text-secondary::placeholder {
+  --tw-text-opacity: 1;
+  color: rgb(86 94 116 / var(--tw-text-opacity, 1))
+}
+
+.shop-page .hover\:-translate-y-1:hover {
+  --tw-translate-y: -0.25rem;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))
+}
+
+.shop-page .hover\:bg-primary:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(157 67 0 / var(--tw-bg-opacity, 1))
+}
+
+.shop-page .hover\:bg-primary-container:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(249 115 22 / var(--tw-bg-opacity, 1))
+}
+
+.shop-page .hover\:bg-surface-bright:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(248 249 255 / var(--tw-bg-opacity, 1))
+}
+
+.shop-page .hover\:bg-surface-container:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(229 238 255 / var(--tw-bg-opacity, 1))
+}
+
+.shop-page .hover\:bg-surface-container-low:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(239 244 255 / var(--tw-bg-opacity, 1))
+}
+
+.shop-page .hover\:bg-surface-container-lowest\/20:hover {
+  background-color: rgb(255 255 255 / 0.2)
+}
+
+.shop-page .hover\:text-on-primary:hover {
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity, 1))
+}
+
+.shop-page .hover\:text-on-surface:hover {
+  --tw-text-opacity: 1;
+  color: rgb(11 28 48 / var(--tw-text-opacity, 1))
+}
+
+.shop-page .hover\:text-primary-container:hover {
+  --tw-text-opacity: 1;
+  color: rgb(249 115 22 / var(--tw-text-opacity, 1))
+}
+
+.shop-page .hover\:underline:hover {
+  text-decoration-line: underline
+}
+
+.shop-page .hover\:shadow-\[0_20px_25px_-5px_rgb\(0_0_0\/0\.1\)\2c 0_8px_10px_-6px_rgb\(0_0_0\/0\.1\)\]:hover {
+  --tw-shadow: 0 20px 25px -5px rgb(0 0 0/0.1),0 8px 10px -6px rgb(0 0 0/0.1);
+  --tw-shadow-colored: 0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)
+}
+
+.shop-page .hover\:shadow-\[0_4px_6px_-1px_rgb\(0_0_0\/0\.1\)\2c 0_2px_4px_-2px_rgb\(0_0_0\/0\.1\)\]:hover {
+  --tw-shadow: 0 4px 6px -1px rgb(0 0 0/0.1),0 2px 4px -2px rgb(0 0 0/0.1);
+  --tw-shadow-colored: 0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)
+}
+
+.shop-page .focus\:bg-surface-container-lowest:focus {
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1))
+}
+
+.shop-page .focus\:outline-none:focus {
+  outline: 2px solid transparent;
+  outline-offset: 2px
+}
+
+.shop-page :is(.group:hover .group-hover\:scale-105) {
+  --tw-scale-x: 1.05;
+  --tw-scale-y: 1.05;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))
+}
+
+.shop-page :is(.group:hover .group-hover\:scale-110) {
+  --tw-scale-x: 1.1;
+  --tw-scale-y: 1.1;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))
+}
+
+.shop-page :is(.group:hover .group-hover\:text-primary) {
+  --tw-text-opacity: 1;
+  color: rgb(157 67 0 / var(--tw-text-opacity, 1))
+}
+
+@media (min-width: 640px) {
+  .shop-page .sm\:w-auto {
+    width: auto
+  }
+
+  .shop-page .sm\:flex-none {
+    flex: none
+  }
+
+  .shop-page .sm\:grid-cols-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr))
+  }
+
+  .shop-page .sm\:grid-cols-5 {
+    grid-template-columns: repeat(5, minmax(0, 1fr))
+  }
+
+  .shop-page .sm\:flex-row {
+    flex-direction: row
+  }
+
+  .shop-page .sm\:flex-nowrap {
+    flex-wrap: nowrap
+  }
+
+  .shop-page .sm\:items-center {
+    align-items: center
+  }
+
+  .shop-page .sm\:gap-2 {
+    gap: 0.5rem
+  }
+
+  .shop-page .sm\:gap-space-sm {
+    gap: 0.5rem
+  }
+
+  .shop-page .sm\:p-space-md {
+    padding: 1rem
+  }
+}
+
+@media (min-width: 768px) {
+  .shop-page .md\:grid-cols-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr))
+  }
+
+  .shop-page .md\:flex-row {
+    flex-direction: row
+  }
+
+  .shop-page .md\:items-end {
+    align-items: flex-end
+  }
+
+  .shop-page .md\:items-center {
+    align-items: center
+  }
+
+  .shop-page .md\:self-auto {
+    align-self: auto
+  }
+}
+
+@media (min-width: 1024px) {
+  .shop-page .lg\:col-span-1 {
+    grid-column: span 1 / span 1
+  }
+
+  .shop-page .lg\:col-span-3 {
+    grid-column: span 3 / span 3
+  }
+
+  .shop-page .lg\:w-auto {
+    width: auto
+  }
+
+  .shop-page .lg\:grid-cols-10 {
+    grid-template-columns: repeat(10, minmax(0, 1fr))
+  }
+
+  .shop-page .lg\:grid-cols-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr))
+  }
+
+  .shop-page .lg\:flex-row {
+    flex-direction: row
+  }
+
+  .shop-page .lg\:p-space-2xl {
+    padding: 4rem
+  }
+}
+
+@media (min-width: 1280px) {
+  .shop-page .xl\:grid-cols-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr))
+  }
+}
+
+.shop-page .\[\&\:\:-webkit-scrollbar\]\:hidden::-webkit-scrollbar {
+  display: none
+}
