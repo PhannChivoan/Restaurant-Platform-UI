@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from "react";
+import useScrollReveal from "../hooks/useScrollReveal";
 
 const HomePage = () => {
+  useScrollReveal();
   const [address, setAddress] = useState(
     "742 Evergreen Terrace, San Francisco",
   );
@@ -209,7 +211,7 @@ const HomePage = () => {
         </section>
         {/* STATS BAR (Style from Branch Operations Reference) */}
         <section className="w-full bg-surface-container-low py-space-lg">
-          <div className="max-w-[1280px] mx-auto px-margin">
+          <div className="max-w-[1280px] mx-auto px-margin" data-reveal>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-space-md">
               {/* Stat 1 */}
               <div className="bg-surface-container-lowest p-space-lg rounded-2xl shadow-sm flex flex-col justify-between">
@@ -586,7 +588,7 @@ const HomePage = () => {
         </section>
         {/* ABOUT US / BRAND STORY SECTION */}
         <section className="w-full py-space-3xl bg-surface">
-          <div className="max-w-[1280px] mx-auto px-margin">
+          <div className="max-w-[1280px] mx-auto px-margin" data-reveal>
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-space-2xl items-center">
               {/* Visual Story Mosaic */}
               <div className="lg:col-span-6 relative">

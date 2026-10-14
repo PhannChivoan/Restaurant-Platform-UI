@@ -1,6 +1,88 @@
+import { useEffect, useRef } from "react";
 import CountUp from "../components/CountUp";
+import useScrollReveal from "../hooks/useScrollReveal";
+
+// Team photos live in /public/assets/team (served from the site root on Vercel).
+// Drop a file with the name below into that folder; until then placeholder.svg is shown.
+const PLACEHOLDER = "/assets/team/placeholder.svg";
+const TEAM = [
+  {
+    name: "Phann Chivoan",
+    role: "Project Lead",
+    photo: "/assets/team/phann-chivoan.jpg",
+    bio: "Leads the FoodOrder project from idea to launch. Keeps the customer site, the rider app, and the admin dashboard working together as one platform, and makes sure every feature fits how real restaurants and diners order.",
+  },
+  {
+    name: "Roeung Nak",
+    role: "Backend Developer",
+    photo: "/assets/team/roeung-nak.jpg",
+    bio: "Builds the server side that powers every order: accounts and roles, restaurants and branches, carts, checkout, and the secure API that the website and apps rely on, backed by a MySQL database.",
+  },
+  {
+    name: "Tha Mom",
+    role: "UI/UX Designer",
+    photo: "/assets/team/tha-mom.jpg",
+    bio: "Shapes how FoodOrder looks and feels, from colors and typography to the steps a customer follows when ordering. Tests each screen so that ordering food takes as few taps as possible.",
+  },
+  {
+    name: "Roeung Srey Den",
+    role: "Frontend Developer",
+    photo: "/assets/team/roeung-srey-den.jpg",
+    bio: "Turns the design into the pages customers see: browsing restaurants, choosing dishes, the cart, and checkout. Focuses on a fast, clean experience that works on both phones and desktops.",
+  },
+  {
+    name: "Rous Pisey",
+    role: "UI/UX Designer",
+    photo: "/assets/team/rous-pisey.jpg",
+    bio: "Designs the screens for restaurant owners, riders, and administrators, from the dashboard and kitchen queue to the rider app, so every role finds what it needs quickly and with little training.",
+  },
+  {
+    name: "Khun LeapHeng",
+    role: "QA & Documentation",
+    photo: "/assets/team/khun-leapheng.jpg",
+    bio: "Tests every flow from order to delivery, reports problems early, and writes the guides and presentations that explain how restaurants, riders, and administrators use the system.",
+  },
+];
+
+// a missing photo falls back to the placeholder (once, so it can never loop)
+const showPlaceholder = (e) => {
+  if (e.currentTarget.dataset.fallback) return;
+  e.currentTarget.dataset.fallback = "1";
+  e.currentTarget.src = PLACEHOLDER;
+};
 
 const AboutPage = () => {
+  useScrollReveal();
+  const teamRef = useRef(null);
+
+  // Team row: moves one card every few seconds and loops; stops while the visitor is touching or hovering it
+  useEffect(() => {
+    const el = teamRef.current;
+    if (!el || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    let paused = false;
+    const pause = () => (paused = true);
+    const resume = () => (paused = false);
+    const events = ["mouseenter", "touchstart", "focusin", "pointerdown"];
+    const events2 = ["mouseleave", "touchend", "focusout", "pointerup"];
+    events.forEach((n) => el.addEventListener(n, pause, { passive: true }));
+    events2.forEach((n) => el.addEventListener(n, resume, { passive: true }));
+
+    const timer = setInterval(() => {
+      if (paused || document.hidden) return;
+      const card = el.firstElementChild;
+      if (!card) return;
+      const step = card.getBoundingClientRect().width + parseFloat(getComputedStyle(el).columnGap || 0);
+      const atEnd = el.scrollLeft + el.clientWidth >= el.scrollWidth - 4;
+      el.scrollTo({ left: atEnd ? 0 : el.scrollLeft + step, behavior: "smooth" });
+    }, 3000);
+
+    return () => {
+      clearInterval(timer);
+      events.forEach((n) => el.removeEventListener(n, pause));
+      events2.forEach((n) => el.removeEventListener(n, resume));
+    };
+  }, []);
+
   return (
     <main className="w-full pt-20 bg-surface">
       <div className="flex flex-col w-full">
@@ -140,7 +222,7 @@ const AboutPage = () => {
         </section>
         {/* Impact & Growth Counters */}
         <section className="w-full py-space-2xl bg-surface-container-low">
-          <div className="max-w-[1280px] mx-auto px-margin">
+          <div className="max-w-[1280px] mx-auto px-margin" data-reveal>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-space-lg">
               {/* Stat 1 */}
               <div className="bg-surface-container-lowest p-space-xl rounded-xl shadow-sm hover:shadow-md transition-shadow flex flex-col gap-space-sm">
@@ -241,7 +323,7 @@ const AboutPage = () => {
         </section>
         {/* Company Mission & Core Values */}
         <section className="w-full py-space-3xl bg-surface" id="mission">
-          <div className="max-w-[1280px] mx-auto px-margin">
+          <div className="max-w-[1280px] mx-auto px-margin" data-reveal>
             <div className="flex flex-col items-center text-center gap-space-sm max-w-3xl mx-auto mb-space-2xl">
               <span className="font-label-md text-label-md font-bold text-primary tracking-widest uppercase bg-primary-fixed/40 px-space-md py-space-xs rounded-full">
                 Foundation &amp; Principles
@@ -348,7 +430,7 @@ const AboutPage = () => {
           className="w-full py-space-3xl bg-surface-container-low"
           id="timeline"
         >
-          <div className="max-w-[1280px] mx-auto px-margin">
+          <div className="max-w-[1280px] mx-auto px-margin" data-reveal>
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-space-md mb-space-2xl">
               <div className="flex flex-col gap-space-xs">
                 <span className="font-label-md text-label-md font-bold text-primary-container tracking-widest uppercase">
@@ -478,120 +560,57 @@ const AboutPage = () => {
             </div>
           </div>
         </section>
-        {/* Leadership & Team Grid */}
+        {/* Team: six members, scrolls sideways */}
         <section className="w-full py-space-3xl bg-surface">
-          <div className="max-w-[1280px] mx-auto px-margin">
+          <div className="max-w-[1280px] mx-auto px-margin" data-reveal>
             <div className="flex flex-col items-center text-center gap-space-xs max-w-2xl mx-auto mb-space-2xl">
               <span className="font-label-md text-label-md font-bold text-secondary uppercase tracking-widest">
-                The Innovators
+                The Team
               </span>
               <h2 className="font-headline-xl text-headline-xl text-on-surface font-extrabold">
-                Leadership Backing Our Mission
+                Meet the People Behind FoodOrder
               </h2>
               <p className="font-body-md text-body-md text-secondary">
-                Decades of combined expertise spanning high-frequency supply
-                chains, culinary hospitality, and cloud algorithms.
+                Six team members who designed, built, and tested the platform
+                together. Swipe or scroll to meet everyone.
               </p>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-space-lg">
-              {/* Leader 1 */}
-              <div className="bg-surface-container-lowest rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all group">
-                <div className="relative h-64 overflow-hidden bg-surface-container-high">
-                  <img
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    data-alt="Professional modern studio headshot of a friendly female CEO and tech founder in a navy blazer against a minimalist warm beige backdrop, natural lighting, high resolution, soft portrait style."
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuCK0AJee2sXEanYV4ew-veId2ABcisEtnR03mdrD5j6MkWiR3-80x-PkI1Iy81rY1Bh07rH1EhvzJXvJXF1AYns4UdHapWgJDRo8QsVWwygHtwbneJh78ZiZs9Bbhz3UqOZAvI3e1AX-NvuoXu1ph5NaUNDGwern_oJu6s3Xh8t7Vn7GtKHDkJu513zRlDF_2ZXnHquuC62nW5Tnizaf4p0JjG4bXo90qsvcaH8NX6_"
-                  />
-                  <div className="absolute bottom-3 left-3 bg-on-background/80 backdrop-blur-sm text-inverse-on-surface px-space-sm py-space-xs rounded-md text-label-sm font-semibold">
-                    Co-Founder &amp; CEO
+            <div
+              ref={teamRef}
+              className="flex gap-space-lg overflow-x-auto snap-x snap-mandatory pb-space-md -mx-1 px-1"
+            >
+              {TEAM.map((m) => (
+                <div
+                  key={m.name}
+                  className="snap-start shrink-0 w-[260px] sm:w-[280px] bg-surface-container-lowest rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all group"
+                >
+                  <div className="relative h-64 overflow-hidden bg-surface-container-high">
+                    <img
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      alt={m.name}
+                      src={m.photo}
+                      loading="lazy"
+                      onError={showPlaceholder}
+                    />
+                    <div className="absolute bottom-3 left-3 bg-on-background/80 backdrop-blur-sm text-inverse-on-surface px-space-sm py-space-xs rounded-md text-label-sm font-semibold">
+                      {m.role}
+                    </div>
+                  </div>
+                  <div className="p-space-lg flex flex-col gap-space-xs">
+                    <h4 className="font-headline-sm text-headline-sm text-on-surface font-bold">
+                      {m.name}
+                    </h4>
+                    <p className="font-body-sm text-body-sm text-on-surface-variant">
+                      {m.bio}
+                    </p>
                   </div>
                 </div>
-                <div className="p-space-lg flex flex-col gap-space-xs">
-                  <h4 className="font-headline-sm text-headline-sm text-on-surface font-bold">
-                    Elena Vance
-                  </h4>
-                  <p className="font-body-sm text-body-sm text-on-surface-variant">
-                    Former hyper-growth marketplace operator. Champion for fair
-                    restaurant profit margins and decentralized tenant
-                    architecture.
-                  </p>
-                </div>
-              </div>
-              {/* Leader 2 */}
-              <div className="bg-surface-container-lowest rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all group">
-                <div className="relative h-64 overflow-hidden bg-surface-container-high">
-                  <img
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    data-alt="Professional modern studio portrait of an Asian male Co-Founder and Chief Technology Officer wearing a charcoal sweater smiling warmly, neutral urban office background with soft bokeh."
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuAHmFcE1pZupFM0u6uN7WHUDuVEC9I5E6P-oyrD2WeRAkpbr0-daWGqfJwPa1xj_WDiFV5yj4QyOoS_TjddwdPXxXKOnarHGFNnHlTWFA9WAbcYlPaPM4Z9sFyv2kThRrcJFV0CnoD6R_qvkQDw2K-CExziNC4vrZk1UiL28tfMH_NDYl18DXPezX3tY4fe8QgtjXlGkSxdGSnLjfHbeAqXqyagN0GG6lPlsXL15qwN"
-                  />
-                  <div className="absolute bottom-3 left-3 bg-on-background/80 backdrop-blur-sm text-inverse-on-surface px-space-sm py-space-xs rounded-md text-label-sm font-semibold">
-                    Co-Founder &amp; CTO
-                  </div>
-                </div>
-                <div className="p-space-lg flex flex-col gap-space-xs">
-                  <h4 className="font-headline-sm text-headline-sm text-on-surface font-bold">
-                    Marcus Chen
-                  </h4>
-                  <p className="font-body-sm text-body-sm text-on-surface-variant">
-                    Ex-Autonomous Logistics lead. Architected FoodOrder's
-                    micro-routing routing algorithms and low-latency courier
-                    telemetry.
-                  </p>
-                </div>
-              </div>
-              {/* Leader 3 */}
-              <div className="bg-surface-container-lowest rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all group">
-                <div className="relative h-64 overflow-hidden bg-surface-container-high">
-                  <img
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    data-alt="Professional portrait of an African American male Head of Global Logistics wearing an eco-friendly dark green smart polo shirt, confident posture, soft sunlight studio setting."
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuBNCxcMeZTtV2SLPbblNz50unTBcpGC9Z0NiwIoO5xlAZ5xR_MAGYLx7gJFXVKZQWcFFmpPlUFNBRq8Kd4Z5YcLivRJfQyC0skYv46lmbffp4XmeNsJLb7J14WY7ufV5rPfCSXLC1goF-w4N7YADnrQjxqC29pbgjklzZFkbqPsbpq9xSNqtulW0OCSOGDXWrmp9yZFTgKAl0HwuUkXL-slZaWNv38VEsFRLs70q-vB"
-                  />
-                  <div className="absolute bottom-3 left-3 bg-on-background/80 backdrop-blur-sm text-inverse-on-surface px-space-sm py-space-xs rounded-md text-label-sm font-semibold">
-                    Head of Logistics &amp; Fleet
-                  </div>
-                </div>
-                <div className="p-space-lg flex flex-col gap-space-xs">
-                  <h4 className="font-headline-sm text-headline-sm text-on-surface font-bold">
-                    Tariq Adeleke
-                  </h4>
-                  <p className="font-body-sm text-body-sm text-on-surface-variant">
-                    Pioneered the urban e-bike delivery incentive program and
-                    centralized dark store logistics across 30+ regional
-                    markets.
-                  </p>
-                </div>
-              </div>
-              {/* Leader 4 */}
-              <div className="bg-surface-container-lowest rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all group">
-                <div className="relative h-64 overflow-hidden bg-surface-container-high">
-                  <img
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    data-alt="Warm professional portrait of a Hispanic female VP of Merchant Growth in a terracotta textured top against a bright sunlit minimalist architectural background, smiling with approachable executive confidence."
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuCtbw8lp4wqc5NlTBYrgwwAMaZLxEgp_DP3N5gEDaWkRAnJc0adEVDXl329hayTcNjN4Gf3K8e96Kmk5f5sdtrAM2Dvl8uOa54NALlpNMVEPKX2D72s_uxUGhUYZGpHKTEL5niw2-TliioOpGuJAI4Djff6t7bc3sx1vTDAaTpqbmUjIkzUnekoXkAfY6nyFx0dLvfgHV7q_yLX8ATZqJsFofE5LP4-XaE-XfFNbdIJ"
-                  />
-                  <div className="absolute bottom-3 left-3 bg-on-background/80 backdrop-blur-sm text-inverse-on-surface px-space-sm py-space-xs rounded-md text-label-sm font-semibold">
-                    VP of Merchant Growth
-                  </div>
-                </div>
-                <div className="p-space-lg flex flex-col gap-space-xs">
-                  <h4 className="font-headline-sm text-headline-sm text-on-surface font-bold">
-                    Sofia Morales
-                  </h4>
-                  <p className="font-body-sm text-body-sm text-on-surface-variant">
-                    Advocate for family-owned restaurants and culinary
-                    incubators. Over 15 years running regional culinary
-                    associations.
-                  </p>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
-        </section>
-        {/* Community & Sustainability Pledge */}
+        </section>        {/* Community & Sustainability Pledge */}
         <section className="w-full py-space-2xl bg-surface-container-lowest">
-          <div className="max-w-[1280px] mx-auto px-margin">
+          <div className="max-w-[1280px] mx-auto px-margin" data-reveal>
             <div className="relative rounded-3xl overflow-hidden bg-surface-container-high p-space-xl sm:p-space-2xl">
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-space-xl items-center relative z-10">
                 <div className="lg:col-span-7 flex flex-col gap-space-md">
@@ -648,7 +667,7 @@ const AboutPage = () => {
         </section>
         {/* Interactive Dual Call to Action */}
         <section className="w-full py-space-3xl bg-surface">
-          <div className="max-w-[1280px] mx-auto px-margin">
+          <div className="max-w-[1280px] mx-auto px-margin" data-reveal>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-space-xl">
               {/* Career Banner */}
               <div className="relative bg-inverse-surface text-inverse-on-surface rounded-3xl p-space-2xl overflow-hidden flex flex-col justify-between shadow-xl">
