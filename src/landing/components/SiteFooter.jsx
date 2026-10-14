@@ -1,3 +1,8 @@
+import { Link } from "react-router-dom";
+
+const LINK =
+  "font-body-md text-body-md text-secondary-fixed-dim hover:text-primary-fixed transition-colors";
+
 const SiteFooter = () => (
   <footer className="w-full bg-inverse-surface text-inverse-on-surface pt-space-3xl pb-space-2xl">
     <div className="max-w-[1280px] mx-auto px-margin">
@@ -59,21 +64,11 @@ const SiteFooter = () => (
             Popular Cuisines
           </h4>
           <ul className="flex flex-col gap-space-sm">
-            <li className="font-body-md text-body-md text-secondary-fixed-dim hover:text-primary-fixed transition-colors cursor-pointer">
-              Italian &amp; Pizza
-            </li>
-            <li className="font-body-md text-body-md text-secondary-fixed-dim hover:text-primary-fixed transition-colors cursor-pointer">
-              Burgers &amp; Grills
-            </li>
-            <li className="font-body-md text-body-md text-secondary-fixed-dim hover:text-primary-fixed transition-colors cursor-pointer">
-              Japanese &amp; Sushi
-            </li>
-            <li className="font-body-md text-body-md text-secondary-fixed-dim hover:text-primary-fixed transition-colors cursor-pointer">
-              Healthy Bowls &amp; Salad
-            </li>
-            <li className="font-body-md text-body-md text-secondary-fixed-dim hover:text-primary-fixed transition-colors cursor-pointer">
-              Desserts &amp; Bakery
-            </li>
+            <li><Link to="/order" className={LINK}>Italian &amp; Pizza</Link></li>
+            <li><Link to="/order" className={LINK}>Burgers &amp; Grills</Link></li>
+            <li><Link to="/order" className={LINK}>Japanese &amp; Sushi</Link></li>
+            <li><Link to="/order" className={LINK}>Healthy Bowls &amp; Salad</Link></li>
+            <li><Link to="/order" className={LINK}>Desserts &amp; Bakery</Link></li>
           </ul>
         </div>
         <div className="flex flex-col gap-space-md">
@@ -81,21 +76,11 @@ const SiteFooter = () => (
             Quick Links
           </h4>
           <ul className="flex flex-col gap-space-sm">
-            <li className="font-body-md text-body-md text-secondary-fixed-dim hover:text-primary-fixed transition-colors cursor-pointer">
-              About Us
-            </li>
-            <li className="font-body-md text-body-md text-secondary-fixed-dim hover:text-primary-fixed transition-colors cursor-pointer">
-              Partner Restaurants
-            </li>
-            <li className="font-body-md text-body-md text-secondary-fixed-dim hover:text-primary-fixed transition-colors cursor-pointer">
-              Courier Careers
-            </li>
-            <li className="font-body-md text-body-md text-secondary-fixed-dim hover:text-primary-fixed transition-colors cursor-pointer">
-              Gift Cards
-            </li>
-            <li className="font-body-md text-body-md text-secondary-fixed-dim hover:text-primary-fixed transition-colors cursor-pointer">
-              Help Center
-            </li>
+            <li><Link to="/about-us" className={LINK}>About Us</Link></li>
+            <li><Link to="/services" className={LINK}>Our Services</Link></li>
+            <li><Link to="/partner" className={LINK}>Partner Restaurants</Link></li>
+            <li><a href="/rider/register" className={LINK}>Courier Careers</a></li>
+            <li><Link to="/contact" className={LINK}>Help Center</Link></li>
           </ul>
         </div>
         <div className="flex flex-col gap-space-md">

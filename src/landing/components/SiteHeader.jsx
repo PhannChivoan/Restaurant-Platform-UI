@@ -49,6 +49,7 @@ const SiteHeader = () => {
   const [token, setToken] = useState(readToken);
   const [user, setUser] = useState(null);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false); // hamburger menu (phones and tablets)
   const menuRef = useRef(null);
   const isLoggedIn = !!token;
 
@@ -58,6 +59,7 @@ const SiteHeader = () => {
   useEffect(() => {
     syncToken();
     setMenuOpen(false);
+    setMobileOpen(false);
   }, [pathname, syncToken]);
 
   // 2) Re-check on custom event (same tab) and storage event (other tabs)
@@ -98,6 +100,13 @@ const SiteHeader = () => {
       cancelled = true;
     };
   }, [token]);
+
+  useEffect(() => {
+    if (!mobileOpen) return;
+    const onKey = (e) => e.key === "Escape" && setMobileOpen(false);
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [mobileOpen]);
 
   // Close dropdown on outside click or Escape
   useEffect(() => {
@@ -143,7 +152,19 @@ const SiteHeader = () => {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-surface-container-lowest/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]">
       <div className="h-20 max-w-[1280px] mx-auto px-margin flex items-center justify-between gap-gutter">
-        <div className="flex items-center gap-space-lg">
+        <div className="flex items-center gap-space-sm lg:gap-space-lg">
+          <button
+            type="button"
+            onClick={() => setMobileOpen((o) => !o)}
+            aria-label={mobileOpen ? "Close menu" : "Open menu"}
+            aria-expanded={mobileOpen}
+            aria-controls="mobile-nav"
+            className="lg:hidden flex h-10 w-10 items-center justify-center rounded-full text-on-surface hover:bg-surface-container-low transition-colors"
+          >
+            <span className="material-symbols-outlined text-[26px]">
+              {mobileOpen ? "close" : "menu"}
+            </span>
+          </button>
           <Link to="/" className="flex items-center gap-space-sm">
             <img
               alt="FoodOrder Logo"
@@ -318,6 +339,59 @@ const SiteHeader = () => {
           </div>
         )}
       </div>
+
+      {/* Mobile / tablet menu */}
+      {mobileOpen && (
+        <nav
+          id="mobile-nav"
+          className="lg:hidden border-t border-black/5 bg-surface-container-lowest shadow-[0_12px_24px_rgba(0,0,0,0.08)] max-h-[calc(100vh-5rem)] overflow-y-auto"
+        >
+          <div className="max-w-[1280px] mx-auto px-margin py-space-sm flex flex-col">
+            {[
+              ["home", "/", "Home", "home"],
+              ["order", "/order", "Order", "restaurant"],
+              ["services", "/services", "Services", "room_service"],
+              ["about-us", "/about-us", "About Us", "info"],
+              ["contact", "/contact", "Contact", "mail"],
+            ].map(([key, to, label, icon]) => (
+              <Link
+                key={key}
+                to={to}
+                onClick={() => setMobileOpen(false)}
+                aria-current={active === key ? "page" : undefined}
+                className={`flex items-center gap-space-sm py-space-sm font-label-lg text-label-lg border-b border-black/5 ${
+                  active === key ? "text-primary-container font-bold" : "text-on-surface"
+                }`}
+              >
+                <span className="material-symbols-outlined text-[22px]">{icon}</span>
+                {label}
+              </Link>
+            ))}
+            <Link
+              to="/partner"
+              onClick={() => setMobileOpen(false)}
+              className="flex items-center gap-space-sm py-space-sm font-label-lg text-label-lg text-on-surface border-b border-black/5"
+            >
+              <span className="material-symbols-outlined text-[22px]">handshake</span>
+              Partner with us
+            </Link>
+            {isLoggedIn && (
+              <Link
+                to="/orders"
+                onClick={() => setMobileOpen(false)}
+                className="flex items-center gap-space-sm py-space-sm font-label-lg text-label-lg text-on-surface border-b border-black/5"
+              >
+                <span className="material-symbols-outlined text-[22px]">receipt_long</span>
+                My orders
+              </Link>
+            )}
+            {/* the delivery address picker is hidden in the top bar on small screens */}
+            <div className="py-space-sm xl:hidden">
+              <AddressSelector compact />
+            </div>
+          </div>
+        </nav>
+      )}
     </header>
   );
 };

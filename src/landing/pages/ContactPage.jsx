@@ -1,8 +1,58 @@
 import { useState } from "react";
+import { Config } from "../../utils/config";
 
 const ContactPage = () => {
   const [category, setCategory] = useState("General Inquiry");
   const [sent, setSent] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [sendError, setSendError] = useState("");
+
+  // Posts the form to the API, which emails it to the site owner
+  const submitContact = async (e) => {
+    e.preventDefault();
+    if (sending) return;
+    const form = e.currentTarget;
+    const val = (id) => form.querySelector(`#${id}`)?.value.trim() ?? "";
+    setSending(true);
+    setSendError("");
+    setSent(false);
+    // never wait forever: give up after 25 s with a readable message
+    const abort = new AbortController();
+    const timer = setTimeout(() => abort.abort(), 25000);
+    try {
+      const res = await fetch(`${Config.BASE_URL}contact`, {
+        signal: abort.signal,
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          category,
+          name: val("fullName"),
+          email: val("emailAddr"),
+          phone: val("phoneNum") || null,
+          order_id: val("orderId") || null,
+          subject: val("subjectLine"),
+          message: val("messageBody"),
+        }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        throw new Error(
+          (data.errors && Object.values(data.errors).flat()[0]) || data.message || "Could not send your message.",
+        );
+      }
+      setSent(true);
+      form.reset();
+    } catch (err) {
+      setSendError(
+        err.name === "AbortError"
+          ? "The server took too long to answer. Please try again in a moment."
+          : err.message || "Could not send your message.",
+      );
+    } finally {
+      clearTimeout(timer);
+      setSending(false);
+    }
+  };
   const [openFaq, setOpenFaq] = useState(null);
 
   return (
@@ -299,10 +349,7 @@ const ContactPage = () => {
                 <form
                   className="flex flex-col gap-space-md"
                   id="contactForm"
-                  onSubmit={(e) => {
-                    e.preventDefault();
-                    setSent(true);
-                  }}
+                  onSubmit={submitContact}
                 >
                   <input
                     id="selectedCategory"
@@ -449,13 +496,19 @@ const ContactPage = () => {
                     <button
                       className="inline-flex items-center justify-center gap-space-sm bg-primary-container hover:bg-primary text-on-primary font-label-lg text-label-lg px-space-xl py-space-sm rounded-lg shadow-md hover:shadow-lg transition-all transform active:scale-95"
                       type="submit"
+                      disabled={sending}
                     >
-                      <span>Send Message</span>
-                      <span className="material-symbols-outlined text-[20px]">
-                        send
+                      <span>{sending ? "Sending…" : "Send Message"}</span>
+                      <span className={`material-symbols-outlined text-[20px] ${sending ? "animate-spin" : ""}`}>
+                        {sending ? "progress_activity" : "send"}
                       </span>
                     </button>
                   </div>
+                  {sendError && (
+                    <p className="font-body-sm text-body-sm text-error" role="alert">
+                      {sendError}
+                    </p>
+                  )}
                   <div
                     id="formSuccess"
                     className={
@@ -468,8 +521,8 @@ const ContactPage = () => {
                       check_circle
                     </span>
                     <p className="font-body-md text-body-md">
-                      Your ticket has been dispatched! A support specialist is
-                      reviewing your note now.
+                      Thank you! Your message has been sent and we will reply to
+                      your email soon.
                     </p>
                   </div>
                 </form>
