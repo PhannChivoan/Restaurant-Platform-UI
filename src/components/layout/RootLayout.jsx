@@ -62,6 +62,7 @@ const RootLayout = () => {
   return (
     <ConfigProvider theme={antdTheme}>
       <Layout
+        className="admin-shell"
         style={{
           minHeight: "100vh",
           background: palette.bgSubtle,
@@ -104,14 +105,15 @@ const RootLayout = () => {
 
           <Content
             style={{
-              padding: isMobile ? "16px" : "24px",
+              padding: isMobile ? "16px" : "28px 32px",
               background: palette.bgSubtle,
-              minHeight: "calc(100vh - 60px)",
+              minHeight: "calc(100vh - 64px)",
               display: "flex",
               flexDirection: "column",
             }}
           >
             <div
+              className="admin-page"
               style={{
                 flex: 1,
               }}

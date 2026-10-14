@@ -187,9 +187,11 @@ const Header = ({
   return (
     <div
       style={{
-        height: 60,
-        padding: "0 16px",
-        background: palette.bgHeader,
+        height: 64,
+        padding: "0 24px",
+        background: "rgba(255, 255, 255, 0.86)",
+        backdropFilter: "saturate(180%) blur(12px)",
+        WebkitBackdropFilter: "saturate(180%) blur(12px)",
         borderBottom: `1px solid ${palette.border}`,
         display: "flex",
         alignItems: "center",
@@ -209,7 +211,7 @@ const Header = ({
         />
         <div
           className="header-title"
-          style={{ fontSize: 14, fontWeight: 600, color: palette.ink }}
+          style={{ fontSize: 17, fontWeight: 650, letterSpacing: "-0.02em", color: palette.ink }}
         >
           {getPageTitle()}
         </div>
@@ -227,11 +229,11 @@ const Header = ({
           onChange={(e) => setQuery(e.target.value)}
           disabled={!searchEnabled}
           style={{
-            width: 220,
-            background: palette.bgHeader,
-            border: `1px solid ${palette.border}`,
+            width: 240,
+            background: palette.bgSubtle,
+            border: "1px solid transparent",
             fontSize: 13,
-            borderRadius: 6,
+            borderRadius: 10,
           }}
           className="header-search"
         />
@@ -254,7 +256,7 @@ const Header = ({
             >
               <div style={{ padding: "14px 16px" }}>
                 <Text
-                  style={{ fontSize: 14, fontWeight: 600, color: palette.ink }}
+                  style={{ fontSize: 17, fontWeight: 650, letterSpacing: "-0.02em", color: palette.ink }}
                 >
                   Notifications
                 </Text>
@@ -354,7 +356,7 @@ const Header = ({
           menu={{ items: userMenuItems, onClick: handleUserMenu }}
           trigger={["click"]}
         >
-          <Button type="text" style={{ height: 44, padding: "4px 8px" }}>
+          <Button type="text" style={{ height: 46, padding: "4px 10px", borderRadius: 12 }}>
             <Space size={8}>
               {userAvatar ? (
                 <Avatar

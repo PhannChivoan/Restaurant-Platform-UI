@@ -36,7 +36,7 @@ const ModulePage = ({
         position: "relative",
         display: "flex",
         flexDirection: "column",
-        gap: 10,
+        gap: 16,
         minHeight: "auto",
         width: "100%",
       }}
@@ -44,11 +44,11 @@ const ModulePage = ({
       <div>
         <Space align="center" size={10}>
           {Icon && <Icon size={22} color={palette.primary} strokeWidth={1.8} />}
-          <Title level={3} style={{ margin: 0 }}>
+          <Title level={3} style={{ margin: 0, letterSpacing: "-0.02em" }}>
             {title}
           </Title>
         </Space>
-        <Paragraph style={{ color: palette.muted, margin: "8px 0 0" }}>
+        <Paragraph style={{ color: palette.muted, margin: "6px 0 0", maxWidth: 720 }}>
           {description}
         </Paragraph>
       </div>
@@ -60,8 +60,8 @@ const ModulePage = ({
               variant="outlined"
               style={{
                 height: "100%",
-                borderRadius: 2,
-                borderColor: stat.color ? `${stat.color}45` : undefined,
+                borderRadius: 14,
+                borderColor: stat.color ? `${stat.color}30` : undefined,
               }}
             >
               <div style={{ position: "relative", minHeight: 72 }}>
@@ -76,7 +76,7 @@ const ModulePage = ({
                       position: "absolute",
                       top: 0,
                       right: 0,
-                      borderRadius: 2,
+                      borderRadius: 10,
                       color: stat.color || palette.primary,
                       background: stat.iconBackground || palette.primaryLight,
                     }}
@@ -109,7 +109,7 @@ const ModulePage = ({
       </Row>
 
       {columns.length > 0 && (
-        <Card variant="outlined" style={{ borderRadius: 2 }}>
+        <Card variant="outlined" style={{ borderRadius: 14 }}>
           {toolbar && <div style={{ marginBottom: 10 }}>{toolbar}</div>}
           {error && (
             <Paragraph type="danger" style={{ marginTop: 0 }}>
@@ -119,15 +119,15 @@ const ModulePage = ({
           <ConfigProvider
             theme={{
               token: {
-                borderRadius: 2,
+                borderRadius: 10,
                 colorBgContainer: palette.bg,
                 colorBorder: palette.border,
               },
               components: {
                 Table: {
-                  headerBg: "#f57c00",
-                  headerColor: "#fff",
-                  headerBorderRadius: 0,
+                  headerBg: "#F8FAFC",
+                  headerColor: palette.muted,
+                  headerBorderRadius: 12,
                 },
               },
             }}
@@ -158,7 +158,7 @@ const ModulePage = ({
       )}
 
       {error && !columns.length > 0 && (
-        <Card variant="outlined" style={{ borderRadius: 2 }}>
+        <Card variant="outlined" style={{ borderRadius: 14 }}>
           <Paragraph type="danger" style={{ marginTop: 0 }}>
             {error}
           </Paragraph>

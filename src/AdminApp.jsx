@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
+import "./admin.css";
 import { lazy, Suspense, useEffect } from "react";
 import { App as AntdApp } from "antd";
 

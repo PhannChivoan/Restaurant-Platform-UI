@@ -1,0 +1,133 @@
+/* Web admin look: warm, clean, soft cards. Loaded only with the admin app. */
+:root {
+  --admin-bg: #f5f6f8;
+  --admin-border: #e9ecf1;
+  --admin-ink: #0f172a;
+  --admin-muted: #64748b;
+  --admin-brand: #f97316;
+  --admin-shadow: 0 1px 2px rgba(16, 24, 40, 0.04), 0 1px 3px rgba(16, 24, 40, 0.05);
+  --admin-shadow-hover: 0 6px 20px rgba(16, 24, 40, 0.08);
+}
+
+body {
+  background: var(--admin-bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4,
+.ant-typography h1, .ant-typography h2, .ant-typography h3 {
+  letter-spacing: -0.02em;
+}
+
+/* ---- cards */
+.ant-card {
+  border-radius: 14px !important;
+  border: 1px solid var(--admin-border) !important;
+  box-shadow: var(--admin-shadow);
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+.ant-card-hoverable:hover { box-shadow: var(--admin-shadow-hover); }
+.ant-card .ant-card-head {
+  border-bottom: 1px solid #f0f2f5;
+  min-height: 52px;
+}
+.ant-card .ant-card-head-title { font-weight: 600; letter-spacing: -0.01em; }
+
+/* ---- statistics */
+.ant-statistic .ant-statistic-title {
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--admin-muted);
+  margin-bottom: 6px;
+}
+.ant-statistic .ant-statistic-content {
+  font-size: 26px;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+}
+
+/* ---- tables */
+.ant-table-wrapper .ant-table { background: transparent; }
+.ant-table-wrapper .ant-table-container { border-radius: 12px; overflow: hidden; }
+.ant-table-wrapper .ant-table-thead > tr > th,
+.ant-table-wrapper .ant-table-thead > tr > td {
+  background: #f8fafc !important;
+  color: var(--admin-muted) !important;
+  font-size: 11.5px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border-bottom: 1px solid var(--admin-border) !important;
+}
+.ant-table-wrapper .ant-table-thead > tr > th::before { display: none !important; }
+.ant-table-wrapper .ant-table-tbody > tr > td { border-bottom: 1px solid #f0f2f5; }
+.ant-table-wrapper .ant-table-tbody > tr:last-child > td { border-bottom: none; }
+.ant-table-wrapper .ant-table-tbody > tr.ant-table-row:hover > td { background: #fafafb !important; }
+.ant-pagination .ant-pagination-item,
+.ant-pagination .ant-pagination-prev .ant-pagination-item-link,
+.ant-pagination .ant-pagination-next .ant-pagination-item-link { border-radius: 8px; }
+
+/* ---- tags: soft pills */
+.ant-tag {
+  border-radius: 999px;
+  padding: 1px 10px;
+  font-weight: 500;
+  font-size: 12px;
+  border-color: transparent;
+}
+
+/* ---- buttons & fields */
+.ant-btn { border-radius: 10px; font-weight: 500; box-shadow: none; }
+.ant-btn-primary { box-shadow: 0 2px 8px rgba(249, 115, 22, 0.28); }
+.ant-btn-primary:hover { box-shadow: 0 4px 14px rgba(249, 115, 22, 0.34); }
+.ant-btn-default, .ant-btn-dashed { border-color: #e1e5eb; }
+.ant-input, .ant-input-affix-wrapper, .ant-input-number, .ant-picker,
+.ant-select .ant-select-selector, .ant-input-number-affix-wrapper {
+  border-radius: 10px !important;
+}
+.ant-input-affix-wrapper, .ant-input, .ant-picker, .ant-select-single .ant-select-selector {
+  border-color: #e1e5eb;
+}
+.ant-input:focus, .ant-input-affix-wrapper-focused, .ant-picker-focused {
+  box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.14) !important;
+}
+
+/* ---- overlays */
+.ant-modal .ant-modal-content { border-radius: 18px; padding: 24px; box-shadow: 0 24px 60px rgba(16, 24, 40, 0.18); }
+.ant-modal .ant-modal-header { margin-bottom: 16px; }
+.ant-modal .ant-modal-title { font-weight: 650; letter-spacing: -0.01em; }
+.ant-drawer .ant-drawer-header { border-bottom: 1px solid #f0f2f5; }
+.ant-dropdown .ant-dropdown-menu,
+.ant-select-dropdown { border-radius: 12px; padding: 6px; border: 1px solid var(--admin-border); }
+.ant-dropdown .ant-dropdown-menu .ant-dropdown-menu-item { border-radius: 8px; }
+.ant-select-dropdown .ant-select-item { border-radius: 8px; }
+.ant-tabs .ant-tabs-tab { font-weight: 500; }
+.ant-segmented { border-radius: 10px; }
+.ant-alert { border-radius: 12px; }
+
+/* ---- page frame */
+.admin-shell .admin-page {
+  max-width: 1680px;
+  margin: 0 auto;
+  width: 100%;
+  animation: admin-rise 0.28s ease both;
+}
+@keyframes admin-rise {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .admin-shell .admin-page { animation: none; }
+}
+
+/* ---- scrollbars */
+.admin-shell *::-webkit-scrollbar { width: 10px; height: 10px; }
+.admin-shell *::-webkit-scrollbar-thumb {
+  background: #d5dae3;
+  border-radius: 999px;
+  border: 3px solid transparent;
+  background-clip: padding-box;
+}
+.admin-shell *::-webkit-scrollbar-thumb:hover { background: #b9c1ce; background-clip: padding-box; border: 3px solid transparent; }
+.admin-shell *::-webkit-scrollbar-track { background: transparent; }

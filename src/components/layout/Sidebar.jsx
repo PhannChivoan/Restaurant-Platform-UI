@@ -120,7 +120,6 @@ useEffect(() => {
         style={{
           height: 35,
           marginTop: 20,
-
           display: "flex",
           alignItems: "center",
           padding: sidebarCollapsed ? "0 16px" : "0 24px",
@@ -145,7 +144,7 @@ useEffect(() => {
 
       <div
         style={{
-          padding: sidebarCollapsed ? "16px 8px" : "16px 12px",
+          padding: sidebarCollapsed ? "18px 8px" : "20px 14px",
           flex: 1,
           overflowY: "auto",
         }}
@@ -154,13 +153,13 @@ useEffect(() => {
           <Text
             style={{
               fontSize: 11,
-              fontWeight: 500,
-              paddingLeft: 10,
+              fontWeight: 600,
+              paddingLeft: 12,
               display: "block",
-              marginBottom: 8,
-              color: palette.sidebarMuted,
+              marginBottom: 10,
+              color: "#64748b",
               textTransform: "uppercase",
-              letterSpacing: 0.5,
+              letterSpacing: 1,
             }}
           >
             Workspace
@@ -242,7 +241,7 @@ useEffect(() => {
           bottom: 0,
           zIndex: 100,
           background: palette.sidebarBg,
-          boxShadow: "2px 0 8px rgba(0,0,0,0.04)",
+          boxShadow: "1px 0 0 rgba(255,255,255,0.04)",
           borderRight: "none",
         }}
       >
@@ -275,22 +274,25 @@ useEffect(() => {
         {`
           .mono-menu .ant-menu-item,
           .mono-menu .ant-menu-submenu-title {
-            border-radius: 6px !important;
+            border-radius: 10px !important;
             margin: 2px 0 !important;
+            height: 40px !important;
+            line-height: 40px !important;
             width: 100% !important;
             box-sizing: border-box !important;
-            transition: background 0.15s ease !important;
+            transition: background 0.18s ease, color 0.18s ease !important;
           }
           .mono-menu .ant-menu-item,
           .mono-menu .ant-menu-submenu-title,
           .mono-menu .ant-menu-item .ant-menu-title-content,
           .mono-menu .ant-menu-submenu-title .ant-menu-title-content {
-            color: ${palette.inkInverse} !important;
+            color: #cbd5e1 !important;
+            font-weight: 450;
           }
           .mono-menu .ant-menu-item .anticon,
           .mono-menu .ant-menu-submenu-title .anticon,
           .mono-menu .ant-menu-submenu-arrow {
-            color: ${palette.faint} !important;
+            color: #7c8aa0 !important;
           }
           .mono-menu .ant-menu-item .ant-menu-title-content,
           .mono-menu .ant-menu-submenu-title .ant-menu-title-content {
@@ -301,30 +303,50 @@ useEffect(() => {
           }
           .mono-menu .ant-menu-item:hover,
           .mono-menu .ant-menu-submenu-title:hover {
-            background: rgba(255, 255, 255, 0.08) !important;
-            color: ${palette.inkInverse} !important;
+            background: rgba(255, 255, 255, 0.07) !important;
           }
+          .mono-menu .ant-menu-item:hover .ant-menu-title-content,
+          .mono-menu .ant-menu-submenu-title:hover .ant-menu-title-content {
+            color: #ffffff !important;
+          }
+          /* open group: its children sit on a thin rail */
+          .mono-menu .ant-menu-sub.ant-menu-inline {
+            background: transparent !important;
+            margin: 2px 0 6px 18px;
+            padding-left: 6px;
+            border-left: 1px solid rgba(255, 255, 255, 0.09);
+          }
+          .mono-menu .ant-menu-sub .ant-menu-item {
+            height: 36px !important;
+            line-height: 36px !important;
+            padding-left: 14px !important;
+            font-size: 13px;
+          }
+          /* current page: warm tint, orange text, no hard block */
           .mono-menu .ant-menu-item-selected {
-            background: ${palette.primaryLight} !important;
-            color: ${palette.primaryHover} !important;
-            font-weight: 500;
-            border-left: 2px solid ${palette.primary} !important;
-            padding-left: 22px !important;
+            background: rgba(249, 115, 22, 0.16) !important;
+            font-weight: 600;
+            box-shadow: inset 3px 0 0 ${palette.primary};
           }
           .mono-menu .ant-menu-item-selected .ant-menu-title-content,
           .mono-menu .ant-menu-item-selected .anticon {
-            color: ${palette.primaryHover} !important;
+            color: #fdba74 !important;
           }
           .mono-menu .ant-menu-item::after {
             display: none !important;
           }
+          .mono-menu .ant-menu-submenu-selected > .ant-menu-submenu-title .ant-menu-title-content {
+            color: #ffffff !important;
+          }
           .ant-menu-inline-collapsed .ant-menu-item {
-            padding: 0 8px !important;
+            padding: 0 !important;
+            display: flex;
+            align-items: center;
+            justify-content: center;
           }
           .ant-menu-inline-collapsed .ant-menu-item-selected {
-            padding-left: 8px !important;
-          }
-          @media (max-width: 991px) {
+            box-shadow: none;
+          }          @media (max-width: 991px) {
             .desktop-sidebar {
               display: none !important;
             }

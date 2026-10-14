@@ -2,7 +2,7 @@ export const palette = {
   // Layout
   bg: "#FFFFFF",
   bgHeader: "#FFFFFF",
-  bgSubtle: "#F8FAFC",
+  bgSubtle: "#F5F6F8",
 
   // Sidebar
   sidebarBg: "#0F172A",
@@ -23,7 +23,7 @@ export const palette = {
   primaryDark: "#C2410C",
 
   // Borders
-  border: "#E2E8F0",
+  border: "#E9ECF1",
   borderStrong: "#CBD5E1",
 
   // Text
@@ -55,8 +55,13 @@ export const antdTheme = {
     colorBgContainer: palette.bgHeader,
     colorBgLayout: palette.bgSubtle,
     fontFamily: fontSans,
-    borderRadius: 8,
-    controlHeight: 36,
+    borderRadius: 10,
+    borderRadiusLG: 14,
+    borderRadiusSM: 8,
+    controlHeight: 38,
+    fontSize: 14,
+    colorTextHeading: palette.ink,
+    boxShadowSecondary: "0 12px 32px rgba(16, 24, 40, 0.12)",
   },
   components: {
     Menu: {
@@ -72,8 +77,20 @@ export const antdTheme = {
       iconSize: 16,
       fontSize: 13.5,
     },
-    Button: { controlHeight: 36, fontWeight: 500 },
-    Input: { controlHeight: 36 },
+    Button: { controlHeight: 38, fontWeight: 500, primaryShadow: "0 2px 8px rgba(249, 115, 22, 0.28)" },
+    Input: { controlHeight: 38 },
+    Select: { controlHeight: 38 },
+    Card: { headerFontSize: 15, paddingLG: 20 },
+    Table: {
+      headerBg: "#F8FAFC",
+      headerColor: palette.muted,
+      headerSplitColor: "transparent",
+      rowHoverBg: "#FAFAFB",
+      borderColor: "#EEF0F4",
+      cellPaddingBlockSM: 10,
+    },
+    Modal: { titleFontSize: 17 },
+    Tag: { defaultBg: "#F5F6F8" },
     Badge: { colorError: palette.danger },
   },
 };
