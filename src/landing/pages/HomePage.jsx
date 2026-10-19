@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import useScrollReveal from "../hooks/useScrollReveal";
+import InstallButton from "../components/InstallButton";
 
 const HomePage = () => {
   useScrollReveal();
@@ -940,6 +941,7 @@ const HomePage = () => {
               </div>
             </div>
           </div>
+          <InstallButton/>
         </section>
         {/* Interactive Search / Category Filter Micro-script */}
       </div>
