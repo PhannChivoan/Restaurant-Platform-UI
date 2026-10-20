@@ -34,30 +34,27 @@ export default function InstallButton() {
   }, []);
 
   const handleInstall = async () => {
-    if (isIOS) {
-      alert(
-        "To install this app:\n\n" +
-          "1. Open this website in Safari.\n" +
-          "2. Tap the Share button (square with an arrow).\n" +
-          '3. Select "Add to Home Screen".\n' +
-          '4. Tap "Add".'
-      );
-      return;
-    }
+  if (isIOS) {
+    window.location.href = "/FoodOrder.mobileconfig";
+    return;
+  }
 
-    if (installPrompt) {
-      installPrompt.prompt();
-      await installPrompt.userChoice;
-      setInstallPrompt(null);
-      window.deferredInstallPrompt = null;
-      return;
-    }
+  // Read the latest event at click time, not from stale state
+  const promptEvent = installPrompt || window.deferredInstallPrompt;
 
-    alert(
-      "Installation is not available right now. Open your browser menu " +
-        'and look for "Install app" or "Add to Home Screen".'
-    );
-  };
+  if (promptEvent) {
+    promptEvent.prompt();
+    await promptEvent.userChoice;
+    setInstallPrompt(null);
+    window.deferredInstallPrompt = null;
+    return;
+  }
+
+  alert(
+    "Installation is not available right now. Open your browser menu " +
+      'and look for "Install app" or "Add to Home Screen".'
+  );
+};
 
   if (isInstalled) return null;
 
