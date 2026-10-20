@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 
 import { getPlatformConfig, platformLogo, platformName } from "../../utils/platformSettings";
+import InstallButton from "./InstallButton";
 
 const LINK =
   "font-body-md text-body-md text-secondary-fixed-dim hover:text-primary-fixed transition-colors";
@@ -33,38 +34,8 @@ const SiteFooter = () => {
             your doorstep in minutes with real-time live tracking.
           </p>
           <div className="flex flex-wrap items-center gap-space-md pt-space-sm">
-            <a
-              className="inline-flex items-center gap-space-sm bg-on-background px-space-md py-space-xs rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.3)] hover:bg-inverse-surface transition-colors"
-              href="#"
-            >
-              <span className="material-symbols-outlined text-inverse-on-surface text-[26px]">
-                phone_iphone
-              </span>
-              <div className="flex flex-col text-left">
-                <span className="font-label-sm text-label-sm text-secondary-fixed-dim uppercase tracking-wider">
-                  Download on the
-                </span>
-                <span className="font-label-lg text-label-lg text-inverse-on-surface">
-                  App Store
-                </span>
-              </div>
-            </a>
-            <a
-              className="inline-flex items-center gap-space-sm bg-on-background px-space-md py-space-xs rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.3)] hover:bg-inverse-surface transition-colors"
-              href="#"
-            >
-              <span className="material-symbols-outlined text-inverse-on-surface text-[26px]">
-                play_arrow
-              </span>
-              <div className="flex flex-col text-left">
-                <span className="font-label-sm text-label-sm text-secondary-fixed-dim uppercase tracking-wider">
-                  GET IT ON
-                </span>
-                <span className="font-label-lg text-label-lg text-inverse-on-surface">
-                  Google Play
-                </span>
-              </div>
-            </a>
+            <InstallButton platform="ios" />
+            <InstallButton platform="android" />
           </div>
         </div>
         <div className="flex flex-col gap-space-md">

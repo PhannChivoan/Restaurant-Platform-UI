@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import useScrollReveal from "../hooks/useScrollReveal";
-import InstallButton from "../components/InstallButton";
 
 const HomePage = () => {
   useScrollReveal();
@@ -941,18 +940,6 @@ const HomePage = () => {
               </div>
             </div>
           </div>
-          <InstallButton/>
-
-          <a
-            href="/FoodOrder.mobileconfig"
-            style={{
-              background: "linear-gradient(135deg, #ff4d4d, #dc2626)",
-              color: "#fff", padding: "14px 28px", borderRadius: 12,
-              fontWeight: 600, textDecoration: "none", display: "inline-block",
-            }}
-          >
-            Install App
-          </a>
         </section>
         {/* Interactive Search / Category Filter Micro-script */}
       </div>
