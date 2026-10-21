@@ -1,3 +1,4 @@
+import { formatMoney } from "../utils/platformSettings";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   Button,
@@ -62,11 +63,7 @@ const { RangePicker } = DatePicker;
    HELPERS
 ========================================================= */
 
-const formatCurrency = (value) =>
-  `$${Number(value || 0).toLocaleString("en-US", {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  })}`;
+const formatCurrency = (value) => formatMoney(value);
 
 const formatDate = (date) =>
   date ? dayjs(date).format("DD MMM YYYY, HH:mm") : "-";
@@ -276,7 +273,7 @@ const OrderDetailDrawer = ({ order, open, onClose, loading, onAction, actionLoad
                         if (Array.isArray(mods) && mods.length > 0) {
                           return (
                             <div style={{ fontSize: 10, color: palette.faint, marginTop: 2 }}>
-                              {mods.map((m) => `${m.modifier || m.name || ""}${m.price ? ` (+$${Number(m.price).toFixed(2)})` : ""}`).join(", ")}
+                              {mods.map((m) => `${m.modifier || m.name || ""}${m.price ? ` (+${formatMoney(Number(m.price))})` : ""}`).join(", ")}
                             </div>
                           );
                         }
@@ -331,8 +328,8 @@ const OrderDetailDrawer = ({ order, open, onClose, loading, onAction, actionLoad
                 <Space size={4}>
                   <Wallet size={12} color={palette.faint} />
                   <Text type="secondary" style={{ fontSize: 12 }}>Method:</Text>
-                  <Tag color={order.payment_method === "cash" ? "green" : order.payment_method === "card" ? "blue" : "default"} style={{ margin: 0, borderRadius: 2 }}>
-                    {order.payment_method || "-"}
+                  <Tag color={order.payment_method === "cash" ? "green" : order.payment_method === "card" ? "blue" : order.payment_method === "pickup" ? "orange" : "default"} style={{ margin: 0, borderRadius: 2 }}>
+                    {order.payment_method === "pickup" ? "Pickup" : order.payment_method || "-"}
                   </Tag>
                 </Space>
                 <Tag color={order.is_paid ? "green" : "orange"} style={{ margin: 0, borderRadius: 2, fontWeight: 600 }}>
@@ -608,6 +605,7 @@ const PendingOrdersPage = () => {
       accept: `orders/${orderId}/accept`,
       startPreparing: `orders/${orderId}/prepare`,
       markReady: `orders/${orderId}/ready`,
+      pickedUp: `orders/${orderId}/picked-up`,
       cancel: `orders/${orderId}/cancel`,
     };
 
@@ -616,7 +614,7 @@ const PendingOrdersPage = () => {
     setActionLoading(null);
 
     if (res && !res.message) {
-      const labels = { accept: "accepted", startPreparing: "preparing", markReady: "marked ready", cancel: "cancelled" };
+      const labels = { accept: "accepted", startPreparing: "preparing", markReady: "marked ready", pickedUp: "marked as picked up", cancel: "cancelled" };
       message.success(`Order ${labels[action]}`);
       setRefreshKey((k) => k + 1);
       if (drawerOpen && selectedOrder?.id === orderId) {
@@ -834,6 +832,9 @@ const PendingOrdersPage = () => {
               ...(record.status === "preparing" ? [
                 { key: "ready", label: "Mark Ready", icon: <CheckCircle2 size={13} /> },
               ] : []),
+              ...(record.status === "ready" && record.payment_method === "pickup" ? [
+                { key: "pickedUp", label: "Mark picked up", icon: <CheckCircle2 size={13} /> },
+              ] : []),
               ...(!["delivered", "cancelled", "rejected"].includes(record.status) ? [
                 { key: "cancel", label: "Cancel", icon: <XCircle size={13} />, danger: true },
               ] : []),
@@ -845,6 +846,7 @@ const PendingOrdersPage = () => {
               else if (key === "reject") handleAction("reject", record.id);
               else if (key === "prepare") handleAction("startPreparing", record.id);
               else if (key === "ready") handleAction("markReady", record.id);
+              else if (key === "pickedUp") handleAction("pickedUp", record.id);
               else if (key === "cancel") handleAction("cancel", record.id);
               else if (key === "view") openOrder(record);
             },

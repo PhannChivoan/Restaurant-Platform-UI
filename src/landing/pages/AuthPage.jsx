@@ -147,7 +147,7 @@ const AuthPage = () => {
                 className="absolute inset-0 bg-cover bg-center"
                 style={{
                   backgroundImage:
-                    "url('https://lh3.googleusercontent.com/aida-public/AB6AXuBX1DG3p496DhtNSC3lEZVCEyBkPQidPYwVh1kDVCECDi_n051MXbpPUQaHsPx0oKJuIF3zG1_E2pVD7AmMdVcu6qLDshqxh0rwnu_KbhNpYVxqMgLLLY-AUFGyPwlQC6Q4QReig-US2iTYPdP2WBWP50WKkh4hi2tw0N91r8fwneEHZQO9_sV2LBLiMgt2DbMCC9IGF8rxa5-oYQaTpBmUPvC94eP9Ih8AFnfuqbeI')",
+                    "url('/assets/cambodia/auth-hero.jpg'), url('https://lh3.googleusercontent.com/aida-public/AB6AXuBX1DG3p496DhtNSC3lEZVCEyBkPQidPYwVh1kDVCECDi_n051MXbpPUQaHsPx0oKJuIF3zG1_E2pVD7AmMdVcu6qLDshqxh0rwnu_KbhNpYVxqMgLLLY-AUFGyPwlQC6Q4QReig-US2iTYPdP2WBWP50WKkh4hi2tw0N91r8fwneEHZQO9_sV2LBLiMgt2DbMCC9IGF8rxa5-oYQaTpBmUPvC94eP9Ih8AFnfuqbeI')",
                 }}
               ></div>
               <div className="absolute inset-0 bg-gradient-to-t from-inverse-surface via-on-primary-fixed/70 to-on-primary-fixed/40"></div>
@@ -161,7 +161,7 @@ const AuthPage = () => {
                   </span>
                 </div>
                 <span className="font-label-sm text-label-sm text-secondary-fixed-dim font-mono">
-                  v4.8 • SF BAY
+                  v4.8 • PHNOM PENH
                 </span>
               </div>
               <div className="relative z-10 flex flex-col gap-space-md">
@@ -176,7 +176,7 @@ const AuthPage = () => {
                     </span>
                   ))}
                   <span className="font-label-md text-label-md text-inverse-on-surface ml-space-xs">
-                    4.9/5 from 250k+ foodies
+                    4.9/5 from 25k+ foodies
                   </span>
                 </div>
                 <h2 className="font-headline-xl text-headline-xl text-inverse-on-surface leading-tight">
@@ -301,7 +301,7 @@ const AuthPage = () => {
                           <input
                             className={inputCls}
                             id="input-name"
-                            placeholder="Alex Morgan"
+                            placeholder="Sokha Chan"
                             type="text"
                             required
                             value={form.name}
@@ -350,7 +350,7 @@ const AuthPage = () => {
                       <input
                         className={inputCls}
                         id="input-email"
-                        placeholder="alex.morgan@domain.com"
+                        placeholder="sokha.chan@example.com"
                         required
                         type="email"
                         autoComplete="email"

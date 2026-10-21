@@ -43,11 +43,11 @@ const SiteFooter = () => {
             Popular Cuisines
           </h4>
           <ul className="flex flex-col gap-space-sm">
-            <li><Link to="/order" className={LINK}>Italian &amp; Pizza</Link></li>
-            <li><Link to="/order" className={LINK}>Burgers &amp; Grills</Link></li>
-            <li><Link to="/order" className={LINK}>Japanese &amp; Sushi</Link></li>
-            <li><Link to="/order" className={LINK}>Healthy Bowls &amp; Salad</Link></li>
-            <li><Link to="/order" className={LINK}>Desserts &amp; Bakery</Link></li>
+            <li><Link to="/order" className={LINK}>Amok & Curries</Link></li>
+            <li><Link to="/order" className={LINK}>Khmer BBQ & Grills</Link></li>
+            <li><Link to="/order" className={LINK}>Kuy Teav & Noodles</Link></li>
+            <li><Link to="/order" className={LINK}>Fresh Rolls & Salads</Link></li>
+            <li><Link to="/order" className={LINK}>Khmer Desserts & Bakery</Link></li>
           </ul>
         </div>
         <div className="flex flex-col gap-space-md">

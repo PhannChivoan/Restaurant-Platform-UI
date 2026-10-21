@@ -1,15 +1,20 @@
+import { formatMoney } from "../../utils/platformSettings";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 import { useCartStore } from "../context/CartContext";
+import { cartRequest } from "../api/cartApi";
+import { getCustomerToken } from "../api/publicApi";
+import { clearPromo, setPromo, usePromoFor } from "../promoStore";
 
-export const fmt = (n) => `$${n.toFixed(2)}`;
+export const fmt = (n) => `${formatMoney(n)}`;
 
 const label = (i) => (i.options?.length ? `${i.name} (${i.options.join(", ")})` : i.name);
 
 /**
  * Sidebar view of the multi-cart store: `items` and the totals belong to the ACTIVE cart
  * (the restaurant being browsed / last added to). All carts are in `carts`.
- * The promo code is display-only; the server prices the order.
+ * A promo code belongs to ONE cart: the server checks it, and the other carts neither show a discount
+ * nor offer the promo box (see promoStore).
  */
 export default function useCart() {
   const store = useCartStore();
@@ -17,9 +22,11 @@ export default function useCart() {
 
   const active = carts.find((c) => c.restaurant.id === activeId) ?? carts[0] ?? null;
 
-  const [discount, setDiscount] = useState(0);
-  const [voucherVisible, setVoucherVisible] = useState(false);
+  const { applied, blocked } = usePromoFor(active?.restaurant.id ?? null);
+  const discount = applied?.discount ?? 0;
+  const voucherVisible = Boolean(applied);
   const [promoInput, setPromoInput] = useState("");
+  const [promoError, setPromoError] = useState("");
   const [bounce, setBounce] = useState(false);
   const timers = useRef([]);
 
@@ -28,16 +35,25 @@ export default function useCart() {
     return () => list.forEach(clearTimeout);
   }, []);
 
-  const applyPromoWith = useCallback((raw) => {
-    const val = (raw || "").trim().toUpperCase();
-    if (val === "") {
-      setDiscount(0);
-      setVoucherVisible(false);
-    } else {
-      setDiscount(val === "HUNGRY5" ? 5.0 : 2.0);
-      setVoucherVisible(true);
-    }
-  }, []);
+  const applyPromoWith = useCallback(
+    async (raw) => {
+      const code = (raw || "").trim().toUpperCase();
+      setPromoError("");
+      if (!code || !active) return;
+      if (!getCustomerToken()) {
+        setPromoError("Sign in to use a promo code.");
+        return;
+      }
+      try {
+        const r = await cartRequest(`cart/${active.restaurant.id}/coupon`, "POST", { code });
+        setPromo({ restaurantId: active.restaurant.id, code: r.code, name: r.name, discount: r.discount });
+        setPromoInput("");
+      } catch (err) {
+        setPromoError(err.message);
+      }
+    },
+    [active],
+  );
 
   const applyPromo = (code) => {
     setPromoInput(code);
@@ -92,6 +108,10 @@ export default function useCart() {
     voucherVisible,
     promoInput,
     setPromoInput,
+    promoBlocked: blocked,
+    promoCode: applied?.code ?? "",
+    promoError,
+    removePromo: clearPromo,
     status: "idle",
     bounce,
     applyPromo,

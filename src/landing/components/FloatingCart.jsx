@@ -34,7 +34,7 @@ const FloatingCart = () => {
   };
 
   return (
-    <div className="fixed right-4 bottom-4 sm:right-6 sm:bottom-6 z-50 flex flex-col items-end gap-space-sm">
+    <div className="fixed right-4 bottom-20 sm:right-6 sm:bottom-20 lg:bottom-6 z-50 flex flex-col items-end gap-space-sm">
       {open && (
         <div className="w-[min(92vw,380px)] max-h-[70vh] overflow-y-auto bg-surface-container-lowest rounded-2xl shadow-2xl border border-surface-container-low p-space-md flex flex-col gap-space-md">
           <div className="flex items-center justify-between">

@@ -468,6 +468,18 @@ const KitchenPage = () => {
                       Mark ready
                     </Button>
                   )}
+                  {row.status === "ready" && row.payment_method === "pickup" && (
+                    <Button
+                      size="small"
+                      type="primary"
+                      icon={<PackageCheck size={14} />}
+                      loading={actionOrderId === row.id}
+                      onClick={() => updateOrder(row.id, "picked-up")}
+                      style={{ borderRadius: 2 }}
+                    >
+                      Mark picked up
+                    </Button>
+                  )}
                   <Dropdown
                     trigger={["click"]}
                     menu={{

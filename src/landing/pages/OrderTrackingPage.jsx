@@ -6,6 +6,8 @@ import { getCustomerToken } from "../api/publicApi";
 import TrackingMap from "../components/TrackingMap";
 import { fmt } from "../hooks/useCart";
 import { STATUS_LABEL } from "../api/orderStatus";
+import ReviewBox from "../components/ReviewBox";
+import { useI18n } from "../i18n";
 
 const STEPS = [
   ["placed", "Order placed", "receipt_long"],
@@ -16,7 +18,17 @@ const STEPS = [
   ["delivered", "Delivered", "task_alt"],
 ];
 
+// pickup orders: no driver, the customer collects at the restaurant
+const PICKUP_STEPS = [
+  ["placed", "Order placed", "receipt_long"],
+  ["accepted", "Restaurant accepted", "storefront"],
+  ["preparing", "Preparing your food", "skillet"],
+  ["ready", "Ready - come and collect it", "takeout_dining"],
+  ["delivered", "Picked up", "task_alt"],
+];
+
 const stepIndex = (o) => {
+  if (o.pickup) return o.status === "delivered" ? 4 : { pending: 0, accepted: 1, preparing: 2, ready: 3 }[o.status] ?? 0;
   if (o.status === "delivered") return 5;
   if (o.status === "dispatched") return o.timeline.picked_up ? 4 : 3;
   return { pending: 0, accepted: 1, preparing: 2, ready: 3 }[o.status] ?? 0;
@@ -26,6 +38,7 @@ const clock = (iso) => (iso ? new Date(iso).toLocaleTimeString([], { hour: "2-di
 
 // Foodpanda-style order tracking: status steps, estimated arrival, driver and a live map.
 const OrderTrackingPage = () => {
+  const { t } = useI18n();
   const { id } = useParams();
   const navigate = useNavigate();
   const signedIn = Boolean(getCustomerToken());
@@ -33,6 +46,8 @@ const OrderTrackingPage = () => {
   const [error, setError] = useState("");
   const [route, setRoute] = useState(null); // { km, min } still to travel
   const [now, setNow] = useState(() => Date.now()); // ticks so the arrival clock stays right
+  const [reloadKey, setReloadKey] = useState(0);
+  const [reordering, setReordering] = useState(false);
 
   useEffect(() => {
     const t = setInterval(() => setNow(Date.now()), 30000);
@@ -56,7 +71,7 @@ const OrderTrackingPage = () => {
       alive = false;
       clearInterval(poll);
     };
-  }, [signedIn, id]);
+  }, [signedIn, id, reloadKey]);
 
   const wrap = (children) => (
     <main className="w-full pt-20 bg-surface">
@@ -81,18 +96,39 @@ const OrderTrackingPage = () => {
   }
 
   const idx = stepIndex(o);
+  const steps = o.pickup ? PICKUP_STEPS : STEPS;
   const closed = o.status === "cancelled" || o.status === "rejected";
   const done = o.status === "delivered";
   const onTheWay = o.status === "dispatched" && o.timeline.picked_up;
 
   // minutes until the food arrives: cooking left + travel (+ a few minutes for pickup if not collected yet)
   const travel = route?.min ?? null;
-  const eta = closed || done || travel === null ? null : o.eta.prep_remaining_minutes + travel + (onTheWay ? 0 : 4);
+  // the live route (map) is the most exact; before it is known, use the server estimate
+  const eta = closed || done
+    ? null
+    : o.pickup
+      ? o.eta.minutes ?? null
+      : travel !== null
+      ? o.eta.prep_remaining_minutes + travel + (onTheWay ? 0 : 4)
+      : o.eta.minutes ?? null;
   const arrival = eta ? new Date(now + eta * 60000).toISOString() : null;
+
+  const reorder = async () => {
+    setReordering(true);
+    try {
+      await cartRequest(`my/orders/${o.id}/reorder`, "POST");
+      navigate(`/checkout/${o.restaurant.id}`);
+    } catch (e) {
+      setError(e.message);
+    } finally {
+      setReordering(false);
+    }
+  };
 
   const headline = closed
     ? o.status === "rejected" ? "The restaurant couldn't accept your order" : "Order cancelled"
-    : done ? "Delivered — enjoy your meal!"
+    : done ? (o.pickup ? "Picked up — enjoy your meal!" : "Delivered — enjoy your meal!")
+    : o.pickup && o.status === "ready" ? "Your order is ready — come and collect it"
     : onTheWay ? "Your driver is on the way"
     : o.status === "dispatched" ? "A driver is heading to the restaurant"
     : o.status === "ready" ? "Your order is ready"
@@ -120,20 +156,48 @@ const OrderTrackingPage = () => {
             </div>
             {eta !== null && (
               <div className="text-right shrink-0">
-                <p className="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant">Estimated arrival</p>
+                <p className="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant">{t("track.eta", "Estimated arrival")}</p>
                 <p className="font-headline-lg text-headline-lg font-bold text-primary tabular-nums">{clock(arrival)}</p>
-                <p className="font-body-sm text-body-sm text-on-surface-variant">in about {eta} min</p>
+                <p className="font-body-sm text-body-sm text-on-surface-variant">{t("track.inAbout", "in about")} {eta} {t("track.min", "min")}</p>
               </div>
             )}
           </div>
 
-          {!closed && (
+          {!closed && o.pickup && (
+            <section className="bg-surface-container-lowest rounded-2xl shadow-sm p-space-lg flex items-start gap-space-md">
+              <span className="w-12 h-12 rounded-full bg-primary-container/15 flex items-center justify-center shrink-0">
+                <span className="material-symbols-outlined text-primary-container text-[26px]">storefront</span>
+              </span>
+              <div>
+                <h2 className="font-headline-sm text-headline-sm font-bold text-on-surface">Pickup at the restaurant</h2>
+                <p className="font-body-md text-body-md text-on-surface-variant">
+                  {o.restaurant.name}
+                  {o.branch ? ` · ${o.branch.name}` : ""}
+                </p>
+                {o.branch?.address && <p className="font-body-sm text-body-sm text-on-surface-variant">{o.branch.address}</p>}
+                {o.branch?.phone && <p className="font-body-sm text-body-sm text-on-surface-variant">{o.branch.phone}</p>}
+                <p className="font-body-sm text-body-sm text-on-surface-variant mt-1">Pay at the counter when you collect your order.</p>
+                {o.branch?.lat && o.branch?.lng && (
+                  <a
+                    className="inline-block mt-2 text-primary font-bold hover:underline"
+                    target="_blank"
+                    rel="noreferrer"
+                    href={`https://www.google.com/maps/dir/?api=1&destination=${o.branch.lat},${o.branch.lng}`}
+                  >
+                    Get directions
+                  </a>
+                )}
+              </div>
+            </section>
+          )}
+
+          {!closed && !o.pickup && (
             <div className="h-[22rem] sm:h-[28rem] rounded-2xl overflow-hidden shadow-sm border border-surface-container-low">
               <TrackingMap branch={o.branch} dropoff={o.dropoff} rider={o.rider} status={o.status} onRoute={setRoute} />
             </div>
           )}
 
-          {!closed && o.branch && o.dropoff && (!o.branch.lat || !o.dropoff.lat) && (
+          {!closed && !o.pickup && o.branch && o.dropoff && (!o.branch.lat || !o.dropoff.lat) && (
             <p className="font-body-sm text-body-sm text-on-surface-variant">Map positions aren&apos;t available for this order.</p>
           )}
         </div>
@@ -143,7 +207,7 @@ const OrderTrackingPage = () => {
           {!closed && (
             <section className="bg-surface-container-lowest rounded-2xl shadow-sm p-space-lg">
               <ol className="flex flex-col">
-                {STEPS.map(([key, label, ic], i) => {
+                {steps.map(([key, label, ic], i) => {
                   const reached = i <= idx;
                   const t = o.timeline[key];
                   return (
@@ -156,7 +220,7 @@ const OrderTrackingPage = () => {
                         >
                           <span className="material-symbols-outlined text-[20px]">{reached && i < idx ? "check" : ic}</span>
                         </span>
-                        {i < STEPS.length - 1 && <span className={`w-0.5 flex-1 min-h-6 ${i < idx ? "bg-primary-container" : "bg-surface-container-high"}`} />}
+                        {i < steps.length - 1 && <span className={`w-0.5 flex-1 min-h-6 ${i < idx ? "bg-primary-container" : "bg-surface-container-high"}`} />}
                       </div>
                       <div className="pb-space-md">
                         <p className={`font-label-md text-label-md ${reached ? "font-bold text-on-surface" : "text-secondary"}`}>{label}</p>
@@ -167,6 +231,33 @@ const OrderTrackingPage = () => {
                 })}
               </ol>
             </section>
+          )}
+
+          {o.refund && (
+            <section className="bg-tertiary/10 rounded-2xl p-space-md flex items-start gap-space-sm">
+              <span className="material-symbols-outlined text-tertiary">payments</span>
+              <div>
+                <p className="font-label-lg text-label-lg font-bold text-on-surface">
+                  {t("track.refunded", "Refunded")} {fmt(o.refund.amount)}
+                </p>
+                {o.refund.reason && <p className="font-body-sm text-body-sm text-on-surface-variant">{o.refund.reason}</p>}
+              </div>
+            </section>
+          )}
+
+          {(o.can_review || o.review) && (
+            <ReviewBox orderId={o.id} review={o.review} onDone={() => setReloadKey((k) => k + 1)} />
+          )}
+
+          {(done || closed) && (
+            <button
+              type="button"
+              onClick={reorder}
+              disabled={reordering}
+              className="px-space-lg py-2.5 rounded-xl border border-primary-container text-primary font-label-md text-label-md font-bold hover:bg-primary-container/10 disabled:opacity-60"
+            >
+              {reordering ? "…" : t("orders.again", "Order again")}
+            </button>
           )}
 
           {o.rider && !closed && (
@@ -191,7 +282,7 @@ const OrderTrackingPage = () => {
           )}
 
           <section className="bg-surface-container-lowest rounded-2xl shadow-sm p-space-lg flex flex-col gap-space-sm">
-            <h2 className="font-headline-sm text-headline-sm font-bold text-on-surface">Order details</h2>
+            <h2 className="font-headline-sm text-headline-sm font-bold text-on-surface">{t("track.details", "Order details")}</h2>
             {o.items.map((i, k) => (
               <div key={k} className="flex justify-between gap-2">
                 <div className="min-w-0">
@@ -202,11 +293,11 @@ const OrderTrackingPage = () => {
               </div>
             ))}
             <div className="flex justify-between border-t border-surface-container-low pt-space-sm font-headline-sm text-headline-sm font-bold text-on-surface">
-              <span>Total</span>
+              <span>{t("track.total", "Total")}</span>
               <span>{fmt(o.total)}</span>
             </div>
             <p className="font-body-sm text-body-sm text-on-surface-variant">
-              {o.payment_method === "cash" ? "Cash on delivery" : o.payment_method === "aba_khqr" ? "ABA PAY (KHQR)" : "Card"}
+              {o.payment_method === "cash" ? "Cash on delivery" : o.payment_method === "aba_khqr" ? "ABA PAY (KHQR)" : o.payment_method === "pickup" ? "Pickup at the restaurant" : "Card"}
               {o.is_paid ? " · paid" : ""}
             </p>
             {o.dropoff && (

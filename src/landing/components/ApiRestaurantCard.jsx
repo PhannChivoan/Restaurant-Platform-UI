@@ -1,5 +1,7 @@
 ﻿import { Link } from "react-router-dom";
 
+import FavoriteButton from "./FavoriteButton";
+
 // Store card (same look as the static cards in data/restaurantCards.jsx).
 // Opens the store page, which is public; only checkout needs a login.
 const ApiRestaurantCard = ({ restaurant: r }) => {
@@ -25,6 +27,7 @@ const ApiRestaurantCard = ({ restaurant: r }) => {
             <span className="material-symbols-outlined text-[56px]">restaurant</span>
           </div>
         )}
+        <FavoriteButton restaurantId={r.id} className="absolute top-2 right-2" />
         <div className="absolute bottom-2 right-2 bg-surface-container-lowest/95 backdrop-blur-sm px-2.5 py-1 rounded-full flex items-center gap-1 shadow-sm">
           <span className="material-symbols-outlined text-primary-container text-[16px]">schedule</span>
           <span className="font-label-sm text-label-sm font-bold text-on-surface">

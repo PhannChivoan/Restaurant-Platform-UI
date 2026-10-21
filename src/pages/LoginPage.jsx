@@ -33,6 +33,7 @@ export default function LoginPage() {
   // ===============================
   const [status, setStatus] = useState(() => (getAccessToken() ? "success" : "idle"));
   const [errorMessage, setErrorMessage] = useState("");
+  const [needOtp, setNeedOtp] = useState(false); // the account has two-factor sign-in on
   const [form] = Form.useForm();
   const navigate = useNavigate();
 
@@ -49,9 +50,11 @@ export default function LoginPage() {
         email: values.email.trim(),
         password: values.password,
         remember_me: values.keepSignedIn,
+        otp: values.otp ? String(values.otp).trim() : undefined,
       });
 
       if (!response?.token) {
+        if (response?.two_factor_required) setNeedOtp(true);
         const validationErrors = response?.errors || {};
         const fieldErrors = Object.entries(validationErrors).map(([name, messages]) => ({
           name,
@@ -118,6 +121,16 @@ export default function LoginPage() {
               >
                 <Input.Password placeholder="Your password" size="large" autoComplete="current-password" visibilityToggle style={{ height: 50 }} />
               </Form.Item>
+
+              {needOtp && (
+                <Form.Item
+                  label={<span style={{ fontWeight: 600, color: c.ink }}>Authenticator code</span>}
+                  name="otp"
+                  rules={[{ required: true, message: "Enter the 6-digit code from your authenticator app." }]}
+                >
+                  <Input placeholder="123456" size="large" inputMode="numeric" maxLength={6} autoComplete="one-time-code" autoFocus style={{ height: 50, letterSpacing: 6 }} />
+                </Form.Item>
+              )}
 
               <Form.Item name="keepSignedIn" valuePropName="checked" style={{ marginBottom: 22 }}>
                 <Checkbox style={{ color: c.muted }}>Keep me signed in on this device</Checkbox>

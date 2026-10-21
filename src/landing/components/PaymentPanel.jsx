@@ -23,6 +23,13 @@ const PaymentPanel = ({ order, method, onPaid, onCancel }) => {
   const [left, setLeft] = useState(QR_SECONDS);
   const [leavingNow, setLeavingNow] = useState(false);
   const leaving = useRef(false);
+  // the parent passes new callbacks on every render: keep the latest in refs so the countdown is never restarted
+  const onPaidRef = useRef(onPaid);
+  const onCancelRef = useRef(onCancel);
+  useEffect(() => {
+    onPaidRef.current = onPaid;
+    onCancelRef.current = onCancel;
+  });
 
   useEffect(() => {
     let alive = true;
@@ -48,14 +55,13 @@ const PaymentPanel = ({ order, method, onPaid, onCancel }) => {
     setLeavingNow(true);
     try {
       const res = await cartRequest(`payments/orders/${order.id}/cancel`, "POST");
-      if (res.paid) return onPaid(order); // paid in the last second
-      onCancel(res);
-    } catch (e) {
-      leaving.current = false;
-      setLeavingNow(false);
-      setError(e.message);
+      if (res.paid) return onPaidRef.current(order); // paid in the last second
+      onCancelRef.current(res);
+    } catch {
+      // the order could not be cancelled here: still go back to checkout, the server cart is re-read there
+      onCancelRef.current(null);
     }
-  }, [order, onPaid, onCancel]);
+  }, [order]);
 
   // qr: ask PayWay (through our server) every 3 s until it approves
   useEffect(() => {
@@ -63,13 +69,13 @@ const PaymentPanel = ({ order, method, onPaid, onCancel }) => {
     const timer = setInterval(async () => {
       try {
         const s = await cartRequest(`payments/orders/${order.id}/status`);
-        if (s.paid) onPaid(order);
+        if (s.paid) onPaidRef.current(order);
       } catch {
         /* keep trying */
       }
     }, 3000);
     return () => clearInterval(timer);
-  }, [info, order, onPaid]);
+  }, [info, order]);
 
   // qr: 1-minute countdown from a fixed deadline, then back to checkout
   useEffect(() => {

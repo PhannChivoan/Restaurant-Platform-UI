@@ -173,8 +173,9 @@ const AboutPage = () => {
                   <div className="relative rounded-2xl overflow-hidden shadow-2xl bg-surface-container-lowest">
                     <img
                       className="w-full h-[460px] object-cover"
-                      data-alt="A smiling diverse team of passionate professional chefs and electric scooter couriers collaborating outside a sunlit artisan neighborhood kitchen with fresh vegetable crates and clean thermal delivery backpacks under natural golden hour light, architectural photography."
-                      src="https://lh3.googleusercontent.com/aida-public/AB6AXuAVBX2ADyyldgogUWuOsetQR8dqRTw0wjlGlctVd-9OPqGipPjG5fyCH216arFaJl79cVJM-Ziu9yTmoeWxSRME4vyXnlFqZtNepmXuhDaqfEGvvSlGrW3ljvocTW8ECzlK4lOrgW2JKV-5FwYxLApQ5s1RYyd2158POs1n3gxTVIi1sJ9ooJKLOgFQ5-HVLTdK19zQ0Pw1lQambzzsSkWbLrt2bUO5xuiPnx_pJC_5"
+                      data-alt="The FoodOrder team with Cambodian chefs and motorbike couriers outside a neighborhood kitchen in Phnom Penh, with fresh vegetable crates and orange delivery bags in warm golden-hour light."
+                      src="/assets/cambodia/about-team.jpg"
+                    onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = "https://lh3.googleusercontent.com/aida-public/AB6AXuAVBX2ADyyldgogUWuOsetQR8dqRTw0wjlGlctVd-9OPqGipPjG5fyCH216arFaJl79cVJM-Ziu9yTmoeWxSRME4vyXnlFqZtNepmXuhDaqfEGvvSlGrW3ljvocTW8ECzlK4lOrgW2JKV-5FwYxLApQ5s1RYyd2158POs1n3gxTVIi1sJ9ooJKLOgFQ5-HVLTdK19zQ0Pw1lQambzzsSkWbLrt2bUO5xuiPnx_pJC_5"; }}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-on-background/70 via-transparent to-transparent"></div>
                     <div className="absolute bottom-6 left-6 right-6 p-space-md bg-surface-container-lowest/95 backdrop-blur-md rounded-xl shadow-lg flex items-center justify-between">
@@ -211,7 +212,7 @@ const AboutPage = () => {
                         Hyper-Local Pride
                       </span>
                       <span className="font-body-sm text-body-sm text-on-surface-variant">
-                        Empowering mom-and-pop
+                        Empowering family-run kitchens
                       </span>
                     </div>
                   </div>
@@ -243,7 +244,7 @@ const AboutPage = () => {
                   </span>
                 </div>
                 <h3 className="font-headline-sm text-headline-sm text-on-surface font-bold">
-                  Active Metro Cities
+                  Cities & Provinces Served
                 </h3>
                 <p className="font-body-sm text-body-sm text-secondary">
                   Dense micro-hubs operating with unified algorithmic logistics.
@@ -271,7 +272,7 @@ const AboutPage = () => {
                   Partner Merchants
                 </h3>
                 <p className="font-body-sm text-body-sm text-secondary">
-                  From Michelin-starred kitchens to independent local bakeries.
+                  From riverside restaurants to family-run noodle stalls and local bakeries.
                 </p>
               </div>
               {/* Stat 3 */}
@@ -283,14 +284,14 @@ const AboutPage = () => {
                 </div>
                 <div className="flex items-baseline gap-1 mt-space-xs">
                   <span className="font-headline-xl text-headline-xl text-on-surface font-extrabold tracking-tight">
-                    5M+
+                    250K+
                   </span>
                 </div>
                 <h3 className="font-headline-sm text-headline-sm text-on-surface font-bold">
                   Meals Delivered
                 </h3>
                 <p className="font-body-sm text-body-sm text-secondary">
-                  Consistently maintaining a 98.4% on-time threshold nationwide.
+                  Consistently maintaining a 98.4% on-time threshold across Cambodia.
                 </p>
               </div>
               {/* Stat 4 */}
@@ -305,7 +306,7 @@ const AboutPage = () => {
                     target={38500}
                     className="font-headline-xl text-headline-xl text-on-surface font-extrabold tracking-tight counter-val"
                   >
-                    38,500
+                    1,200
                   </CountUp>
                   <span className="font-headline-xl text-headline-xl text-primary-container font-extrabold">
                     +
@@ -384,7 +385,7 @@ const AboutPage = () => {
                     100% carbon-neutral delivery target supported with
                     zero-emission electric fleet subsidies, intelligent
                     micro-fulfillment zones, and battery-swapping infrastructure
-                    across active metros.
+                    across our active cities.
                   </p>
                 </div>
                 <div className="pt-space-lg mt-space-md flex items-center gap-space-xs text-tertiary font-label-md text-label-md font-bold">
@@ -455,11 +456,10 @@ const AboutPage = () => {
                   </span>
                   <div className="w-8 h-1 bg-primary-container rounded-full"></div>
                   <h4 className="font-headline-sm text-headline-sm text-on-surface font-bold">
-                    The San Francisco Pilot
+                    The Phnom Penh Pilot
                   </h4>
                   <p className="font-body-sm text-body-sm text-on-surface-variant">
-                    Founded alongside 20 neighborhood restaurants in the Mission
-                    District seeking fair delivery commissions.
+                    Founded alongside 20 neighborhood restaurants in Boeung Keng Kang seeking fair delivery commissions.
                   </p>
                 </div>
                 <div className="pt-space-md flex items-center gap-space-xs text-secondary font-label-sm text-label-sm">
@@ -524,15 +524,14 @@ const AboutPage = () => {
                     Enterprise Multi-Branch
                   </h4>
                   <p className="font-body-sm text-body-sm text-on-surface-variant">
-                    Scaled to 50+ regional hubs, launching franchise chain
-                    controls and unified culinary POS integrations.
+                    Scaled to 9 cities and provinces, launching multi-branch chain controls and unified restaurant POS integrations.
                   </p>
                 </div>
                 <div className="pt-space-md flex items-center gap-space-xs text-secondary font-label-sm text-label-sm">
                   <span className="material-symbols-outlined text-[16px]">
                     domain
                   </span>
-                  <span>50+ Cities Nationwide</span>
+                  <span>9 Cities & Provinces</span>
                 </div>
               </div>
               {/* 2025 */}
@@ -543,18 +542,17 @@ const AboutPage = () => {
                   </span>
                   <div className="w-8 h-1 bg-primary rounded-full"></div>
                   <h4 className="font-headline-sm text-headline-sm text-on-surface font-bold">
-                    5M Orders &amp; Full Eco Fleet
+                    250K Orders & E-Bike Fleet
                   </h4>
                   <p className="font-body-sm text-body-sm text-on-surface-variant">
-                    Surpassed 5 million orders milestone powered by our 38,500+
-                    electrified courier fleet nationwide.
+                    Surpassed 250,000 orders, powered by our 1,200+ courier fleet of motorbikes, e-bikes and tuk-tuks across Cambodia.
                   </p>
                 </div>
                 <div className="pt-space-md flex items-center gap-space-xs text-primary font-label-sm text-label-sm font-bold">
                   <span className="material-symbols-outlined text-[16px]">
                     celebration
                   </span>
-                  <span>5M+ Meals milestone</span>
+                  <span>250K+ Meals milestone</span>
                 </div>
               </div>
             </div>
@@ -623,13 +621,10 @@ const AboutPage = () => {
                     </span>
                   </div>
                   <h2 className="font-headline-xl text-headline-xl text-on-surface font-extrabold tracking-tight">
-                    Giving Back: Zero Food Waste &amp; 250,000+ Meals Donated
+                    Giving Back: Zero Food Waste & 25,000+ Meals Donated
                   </h2>
                   <p className="font-body-lg text-body-lg text-on-surface-variant leading-relaxed">
-                    Delivery should enrich communities, not overwhelm them with
-                    waste. Through our neighborhood surplus routing protocol,
-                    unsold daily inventory is routed directly to certified food
-                    banks before end-of-shift.
+                    Delivery should enrich communities, not overwhelm them with waste. Through our neighborhood surplus routing protocol, unsold daily inventory is routed directly to partner charities and pagoda kitchens before end-of-shift.
                   </p>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-space-md pt-space-xs">
                     <div className="bg-surface-container-lowest/80 backdrop-blur-sm p-space-md rounded-xl">
@@ -637,8 +632,7 @@ const AboutPage = () => {
                         250,000+
                       </span>
                       <p className="font-body-sm text-body-sm text-secondary font-medium">
-                        Nutritious meals diverted to local shelters and soup
-                        kitchens.
+                        Nutritious meals diverted to pagoda kitchens and local shelters.
                       </p>
                     </div>
                     <div className="bg-surface-container-lowest/80 backdrop-blur-sm p-space-md rounded-xl">
@@ -656,8 +650,9 @@ const AboutPage = () => {
                   <div className="rounded-2xl overflow-hidden shadow-xl bg-surface-container-lowest">
                     <img
                       className="w-full h-80 object-cover"
-                      data-alt="Volunteer delivery couriers and restaurant owners packing nutritious wholesome meals into eco-friendly recycled craft paper boxes at a sunny community food bank kitchen, warm documentary photography style."
-                      src="https://lh3.googleusercontent.com/aida-public/AB6AXuAoMgGJqKbgw8-9YL3u-U7s7hP7PQ6mqOLx6XSIsMj2zlMUjU7cd1GtBPYuoqDT8gGU27TzCLuzxkjvDrSLyB7PJbmqlFecD-ZkB6HpZZqwsfGK2AEqSJqCvuJZ5e_jce_4AN-q5xag3t8f1vqAk4Xvl2dIJVLnSGj5hj5PQozobX8pcFCPNe-YIbHmjHAGQpwexqntdSQshwXPZhatVVOeLnQJuvE_d4wdZ59lH-iI"
+                      data-alt="Volunteer couriers and restaurant owners packing nutritious meals into recycled paper boxes at a pagoda community kitchen in Cambodia, warm documentary photography style."
+                      src="/assets/cambodia/about-community.jpg"
+                    onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = "https://lh3.googleusercontent.com/aida-public/AB6AXuAoMgGJqKbgw8-9YL3u-U7s7hP7PQ6mqOLx6XSIsMj2zlMUjU7cd1GtBPYuoqDT8gGU27TzCLuzxkjvDrSLyB7PJbmqlFecD-ZkB6HpZZqwsfGK2AEqSJqCvuJZ5e_jce_4AN-q5xag3t8f1vqAk4Xvl2dIJVLnSGj5hj5PQozobX8pcFCPNe-YIbHmjHAGQpwexqntdSQshwXPZhatVVOeLnQJuvE_d4wdZ59lH-iI"; }}
                     />
                   </div>
                 </div>
@@ -682,7 +677,7 @@ const AboutPage = () => {
                     We're Growing Fast
                   </span>
                   <h3 className="font-headline-lg text-headline-lg font-bold text-inverse-on-surface">
-                    Want to join our mission? We're hiring nationwide.
+                    Want to join our mission? We're hiring across Cambodia.
                   </h3>
                   <p className="font-body-md text-body-md text-secondary-fixed-dim">
                     Explore open roles across logistics engineering, partner

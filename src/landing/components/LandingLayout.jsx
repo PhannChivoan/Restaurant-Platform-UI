@@ -7,6 +7,7 @@ import SiteFooter from "./SiteFooter";
 import FloatingCart from "./FloatingCart";
 import { CartProvider } from "../context/CartContext";
 import { AddressProvider } from "../context/AddressContext";
+import { startTranslator } from "../translate";
 
 const BODY_CLASSES = [
   "bg-surface",
@@ -23,6 +24,9 @@ const LandingLayout = () => {
     return () => document.body.classList.remove(...BODY_CLASSES);
   }, []);
 
+  // Khmer: translate the page text while the storefront is open
+  useEffect(() => startTranslator(), []);
+
   return (
     <CartProvider>
       <AddressProvider>
@@ -30,6 +34,8 @@ const LandingLayout = () => {
       <SiteHeader />
       <Outlet />
       <SiteFooter />
+      {/* room for the bottom tab bar on phones */}
+      <div className="h-16 lg:hidden" aria-hidden="true" />
       <FloatingCart />
       </AddressProvider>
     </CartProvider>

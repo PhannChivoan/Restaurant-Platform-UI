@@ -4,7 +4,7 @@ import useScrollReveal from "../hooks/useScrollReveal";
 const HomePage = () => {
   useScrollReveal();
   const [address, setAddress] = useState(
-    "742 Evergreen Terrace, San Francisco",
+    "No. 12, Street 51, Boeung Keng Kang 1, Phnom Penh",
   );
   const [sent, setSent] = useState(false);
   const formRef = useRef(null);
@@ -19,7 +19,7 @@ const HomePage = () => {
     setAddress("Detecting current GPS location...");
     timers.current.push(
       setTimeout(
-        () => setAddress("Mission District, San Francisco, CA (Verified)"),
+        () => setAddress("Boeung Keng Kang 1, Phnom Penh (Verified)"),
         600,
       ),
     );
@@ -50,7 +50,7 @@ const HomePage = () => {
                 <div className="inline-flex items-center gap-space-xs bg-surface-container-lowest px-space-md py-space-xs rounded-full shadow-sm w-fit">
                   <span className="w-2.5 h-2.5 rounded-full bg-primary-container animate-ping"></span>
                   <span className="font-label-md text-label-md text-on-surface">
-                    Now delivering in 50+ major cities
+                    Now delivering in Phnom Penh, Siem Reap & Battambang
                   </span>
                 </div>
                 <h1 className="font-display-hero text-display-hero text-on-surface font-extrabold tracking-tight leading-tight">
@@ -141,7 +141,7 @@ const HomePage = () => {
                         4.9 / 5
                       </span>
                       <span className="font-body-sm text-body-sm text-secondary">
-                        2.4M Reviews
+                        120K Reviews
                       </span>
                     </div>
                   </div>
@@ -152,8 +152,9 @@ const HomePage = () => {
                 <div className="relative w-full max-w-[460px] aspect-square rounded-3xl overflow-hidden shadow-2xl bg-surface-container">
                   <img
                     className="w-full h-full object-cover"
-                    data-alt="Vibrant top-down food delivery feast spread featuring gourmet artisan smash burger with melted cheddar, golden crispy seasoned fries, fresh basil margherita pizza, and poke salad bowl in warm appetizing studio lighting on clean modern tabletop."
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuD2x8MQHhUZXc9gJM7RapRATKBKYRC-37ug8uwx_LfRDsjoT1A7mPap-6ea3EPS-Vyz7ofoJ9TtXEdvW_-bEoX08jQpeCKx9574Kdo899fMw7CF8GEYAZownkMyWwtl8JCG1EBLfrYFgydnWKDlSJzvA4KB-bhHUvutC59pccmaG3uvPWcB0awXRSTN4KYX7lh1Mz_yvCaxXeujmrtWMkbCohE4fgdLsraJ-MCAb2at"
+                    data-alt="Overhead spread of Cambodian dishes: fish amok steamed in banana leaf, beef lok lak with lime-and-pepper dip, grilled pork with rice, fresh spring rolls and an iced coffee on a wooden table, warm studio lighting."
+                    src="/assets/cambodia/home-hero.jpg"
+                    onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = "https://lh3.googleusercontent.com/aida-public/AB6AXuD2x8MQHhUZXc9gJM7RapRATKBKYRC-37ug8uwx_LfRDsjoT1A7mPap-6ea3EPS-Vyz7ofoJ9TtXEdvW_-bEoX08jQpeCKx9574Kdo899fMw7CF8GEYAZownkMyWwtl8JCG1EBLfrYFgydnWKDlSJzvA4KB-bhHUvutC59pccmaG3uvPWcB0awXRSTN4KYX7lh1Mz_yvCaxXeujmrtWMkbCohE4fgdLsraJ-MCAb2at"; }}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-on-background/70 via-transparent to-transparent"></div>
                   <div className="absolute bottom-space-lg left-space-lg right-space-lg text-on-primary">
@@ -161,11 +162,10 @@ const HomePage = () => {
                       Daily Special
                     </span>
                     <h3 className="font-headline-lg text-headline-lg font-bold leading-tight">
-                      Artisan Wood-Fired Feast
+                      Fish Amok Feast
                     </h3>
                     <p className="font-body-sm text-body-sm text-surface-variant line-clamp-1">
-                      Free garlic dipping sauce &amp; zero delivery surcharge
-                      today.
+                      Free chili-lime dipping sauce & zero delivery surcharge today.
                     </p>
                   </div>
                 </div>
@@ -225,7 +225,7 @@ const HomePage = () => {
                 </div>
                 <div className="mt-space-md">
                   <span className="font-display-hero text-display-hero-mobile lg:text-display-hero text-on-surface font-extrabold tracking-tight">
-                    54
+                    9
                   </span>
                   <div className="flex items-center gap-1 text-tertiary font-label-sm text-label-sm mt-space-xs">
                     <span className="material-symbols-outlined text-[14px]">
@@ -247,7 +247,7 @@ const HomePage = () => {
                 </div>
                 <div className="mt-space-md">
                   <span className="font-display-hero text-display-hero-mobile lg:text-display-hero text-on-surface font-extrabold tracking-tight">
-                    15,820
+                    1,280
                   </span>
                   <div className="flex items-center gap-1 text-tertiary font-label-sm text-label-sm mt-space-xs">
                     <span className="material-symbols-outlined text-[14px]">
@@ -285,13 +285,13 @@ const HomePage = () => {
                 </div>
                 <div className="mt-space-md">
                   <span className="font-display-hero text-display-hero-mobile lg:text-display-hero text-on-surface font-extrabold tracking-tight">
-                    38,500
+                    1,200
                   </span>
                   <div className="flex items-center gap-1 text-tertiary font-label-sm text-label-sm mt-space-xs">
                     <span className="material-symbols-outlined text-[14px]">
                       electric_bolt
                     </span>
-                    <span className="">42% EV &amp; e-bikes</span>
+                    <span className="">70% motorbikes & tuk-tuks</span>
                   </div>
                 </div>
               </div>
@@ -346,7 +346,7 @@ const HomePage = () => {
                   </span>
                 </div>
                 <span className="font-headline-sm text-headline-sm text-on-surface group-hover:text-primary-container transition-colors">
-                  Burgers
+                  Khmer BBQ
                 </span>
                 <span className="font-body-sm text-body-sm text-secondary">
                   120+ places
@@ -363,7 +363,7 @@ const HomePage = () => {
                   </span>
                 </div>
                 <span className="font-headline-sm text-headline-sm text-on-surface group-hover:text-primary-container transition-colors">
-                  Pizza
+                  Fish Amok
                 </span>
                 <span className="font-body-sm text-body-sm text-secondary">
                   95+ places
@@ -380,7 +380,7 @@ const HomePage = () => {
                   </span>
                 </div>
                 <span className="font-headline-sm text-headline-sm text-on-surface group-hover:text-primary-container transition-colors">
-                  Asian Bowls
+                  Kuy Teav & Noodles
                 </span>
                 <span className="font-body-sm text-body-sm text-secondary">
                   80+ places
@@ -397,7 +397,7 @@ const HomePage = () => {
                   </span>
                 </div>
                 <span className="font-headline-sm text-headline-sm text-on-surface group-hover:text-primary-container transition-colors">
-                  Healthy Salad
+                  Fresh Rolls & Salads
                 </span>
                 <span className="font-body-sm text-body-sm text-secondary">
                   65+ places
@@ -414,7 +414,7 @@ const HomePage = () => {
                   </span>
                 </div>
                 <span className="font-headline-sm text-headline-sm text-on-surface group-hover:text-primary-container transition-colors">
-                  Bakery
+                  Num Pang & Bakery
                 </span>
                 <span className="font-body-sm text-body-sm text-secondary">
                   45+ places
@@ -431,7 +431,7 @@ const HomePage = () => {
                   </span>
                 </div>
                 <span className="font-headline-sm text-headline-sm text-on-surface group-hover:text-primary-container transition-colors">
-                  Coffee
+                  Iced Coffee & Tea
                 </span>
                 <span className="font-body-sm text-body-sm text-secondary">
                   50+ places
@@ -448,7 +448,7 @@ const HomePage = () => {
                   </span>
                 </div>
                 <span className="font-headline-sm text-headline-sm text-on-surface group-hover:text-primary-container transition-colors">
-                  Curry &amp; Spices
+                  Khmer Curry & Soups
                 </span>
                 <span className="font-body-sm text-body-sm text-secondary">
                   70+ places
@@ -525,8 +525,7 @@ const HomePage = () => {
                     FoodOrder Mart
                   </h3>
                   <p className="font-body-md text-body-md text-secondary">
-                    Fresh fruits, dairy, bread, and pantry essentials delivered
-                    in as fast as 15 minutes without minimum order fees.
+                    Fresh tropical fruit, fresh milk, num pang bread, and pantry essentials delivered in as fast as 15 minutes without minimum order fees.
                   </p>
                 </div>
                 <div className="pt-space-lg flex items-center text-tertiary font-label-md text-label-md gap-1">
@@ -596,21 +595,23 @@ const HomePage = () => {
                   <div className="aspect-[4/5] rounded-3xl overflow-hidden shadow-lg">
                     <img
                       className="w-full h-full object-cover"
-                      data-alt="Passionate professional chef putting micro-herbs garnish onto an artisanal pasta dish in a brightly lit, modern industrial restaurant kitchen with warm ambient glow."
-                      src="https://lh3.googleusercontent.com/aida-public/AB6AXuDDFGoVOExY-z1eJk2yBmK7CB3UkM5aOSc9AJV7TBTlUhFmO-aQS4T5EX6Q-C3BWUgsB_HVbNNL0Xv-ax1_kpvsV2dHrmIyd_nvIxAFZd4BvIYnB8_gam5ngQefiE1ADEBmoRxnql1GMaiswvi4sFDVFQdY6gQ-Uj0jm37g5P_yRXPbnurladXVyuIOfFkKlqbSKE-g3JuHcfsqspr5KUTnjc0eiY6Q4r4YiDi35K71"
+                      data-alt="A Khmer chef garnishing a bowl of samlor and a plate of fish amok in a bright, modern Phnom Penh restaurant kitchen with warm ambient glow."
+                      src="/assets/cambodia/home-chef.jpg"
+                    onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = "https://lh3.googleusercontent.com/aida-public/AB6AXuDDFGoVOExY-z1eJk2yBmK7CB3UkM5aOSc9AJV7TBTlUhFmO-aQS4T5EX6Q-C3BWUgsB_HVbNNL0Xv-ax1_kpvsV2dHrmIyd_nvIxAFZd4BvIYnB8_gam5ngQefiE1ADEBmoRxnql1GMaiswvi4sFDVFQdY6gQ-Uj0jm37g5P_yRXPbnurladXVyuIOfFkKlqbSKE-g3JuHcfsqspr5KUTnjc0eiY6Q4r4YiDi35K71"; }}
                     />
                   </div>
                   <div className="flex flex-col gap-space-md -mt-space-md">
                     <div className="aspect-square rounded-3xl overflow-hidden shadow-lg">
                       <img
                         className="w-full h-full object-cover"
-                        data-alt="Smiling friendly food delivery courier on a modern orange bicycle holding a hot insulated delivery backpack outside a leafy city café."
-                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuCUpz9T68k7mxhkw83vbx3_DW3vmJUswcSLnLgMC2h1jxfIbFZusiZO1lb1lYUFz-MQOypOeNM4aicqsekbqo-qoW-5I4bEz-_jgewEIyNZzCKGsuQUNQrpEWWkQEGes1Cx2v0fnweqtTkH3K5_koR_HJ1YzO62joHeSRrKxzJyvZ_lUPHAliDO2QBbL3O8iyK_GNZaXnB2-M0IZfgItVlBsmnP6Z1HCKQjOG2Khowz"
+                        data-alt="A smiling courier on a motorbike with an orange insulated FoodOrder delivery bag on a leafy Phnom Penh street."
+                        src="/assets/cambodia/home-courier.jpg"
+                    onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = "https://lh3.googleusercontent.com/aida-public/AB6AXuCUpz9T68k7mxhkw83vbx3_DW3vmJUswcSLnLgMC2h1jxfIbFZusiZO1lb1lYUFz-MQOypOeNM4aicqsekbqo-qoW-5I4bEz-_jgewEIyNZzCKGsuQUNQrpEWWkQEGes1Cx2v0fnweqtTkH3K5_koR_HJ1YzO62joHeSRrKxzJyvZ_lUPHAliDO2QBbL3O8iyK_GNZaXnB2-M0IZfgItVlBsmnP6Z1HCKQjOG2Khowz"; }}
                       />
                     </div>
                     <div className="p-space-lg bg-inverse-surface text-inverse-on-surface rounded-3xl shadow-xl flex flex-col justify-center">
                       <span className="font-display-hero text-display-hero-mobile font-extrabold text-primary-fixed">
-                        5 Million+
+                        250,000+
                       </span>
                       <span className="font-body-md text-body-md text-secondary-fixed-dim">
                         Happy customers served with care across the nation.
@@ -635,10 +636,7 @@ const HomePage = () => {
                   neighborhood kitchens and people who appreciate good taste.
                 </p>
                 <p className="font-body-md text-body-md text-secondary">
-                  From mom-and-pop noodle joints to Michelin-starred bistros, we
-                  empower independent culinary entrepreneurs with sustainable
-                  delivery tech, fair economics, and real-time operational
-                  insights.
+                  From family-run noodle stalls and market kitchens to beloved riverside restaurants, we empower independent Khmer food entrepreneurs with sustainable delivery tech, fair economics, and real-time operational insights.
                 </p>
                 {/* Key Credibility Badges */}
                 <div className="grid grid-cols-2 gap-space-md pt-space-xs">
@@ -653,8 +651,7 @@ const HomePage = () => {
                         Zero-Carbon Mission
                       </span>
                       <span className="font-body-sm text-body-sm text-secondary">
-                        Over 40% of orders fulfilled on zero-emission e-bikes
-                        and foot couriers.
+                        Over 40% of orders fulfilled on e-bikes and electric tuk-tuks.
                       </span>
                     </div>
                   </div>
@@ -710,9 +707,7 @@ const HomePage = () => {
                     It’s all at your fingertips – Get the FoodOrder App
                   </h2>
                   <p className="font-body-lg text-body-lg text-secondary-fixed-dim max-w-xl">
-                    Unlock exclusive app-only promo codes ($15 off your first 3
-                    orders), watch your courier progress on live GPS maps, and
-                    re-order your favorites in one tap.
+                    Unlock exclusive app-only promo codes ($5 off your first 3 orders with HUNGRY5), watch your courier progress on live GPS maps, and re-order your favorites in one tap.
                   </p>
                   {/* Store Action Buttons & QR Code */}
                   <div className="flex flex-wrap items-center gap-space-md pt-space-md">
@@ -772,8 +767,9 @@ const HomePage = () => {
                     <div className="w-full h-full rounded-[32px] overflow-hidden relative bg-surface-container-lowest">
                       <img
                         className="w-full h-full object-cover"
-                        data-alt="Modern smartphone screen mockup displaying the sleek FoodOrder food delivery mobile application with restaurant listings, order status bar, and vibrant menu cards in clean orange and charcoal UI styling."
-                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuCoqOXwETSVF6qwIis7IAWPmE1famZkDU4wmp63HaW4EWq1QKqStxESKAc6qQn2S_-Pi5PPRQjlsiVwjR46HGcGV8hubVq7OIxjOrzM6DLeU5FDmVTJWwnc1lafaXAXqXyLTrtNJTbkPhsdXv00plrJhp9VkxqgJi3Gjc9afJ-V2EO9ZTFd1Rs9YXuJqxHBeSmU2Ktc2WrM0c8_dwVpvyN1z_Oqw5rdOGfakp7a979X"
+                        data-alt="Modern smartphone screen mockup displaying the FoodOrder mobile application with Cambodian restaurant listings, order status bar and menu cards in clean orange and charcoal UI styling."
+                        src="/assets/cambodia/home-app.jpg"
+                    onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = "https://lh3.googleusercontent.com/aida-public/AB6AXuCoqOXwETSVF6qwIis7IAWPmE1famZkDU4wmp63HaW4EWq1QKqStxESKAc6qQn2S_-Pi5PPRQjlsiVwjR46HGcGV8hubVq7OIxjOrzM6DLeU5FDmVTJWwnc1lafaXAXqXyLTrtNJTbkPhsdXv00plrJhp9VkxqgJi3Gjc9afJ-V2EO9ZTFd1Rs9YXuJqxHBeSmU2Ktc2WrM0c8_dwVpvyN1z_Oqw5rdOGfakp7a979X"; }}
                       />
                       {/* Overlay Card inside Phone */}
                       <div className="absolute top-4 left-4 right-4 bg-surface-container-lowest/95 backdrop-blur-md p-3 rounded-2xl shadow-md flex items-center justify-between">

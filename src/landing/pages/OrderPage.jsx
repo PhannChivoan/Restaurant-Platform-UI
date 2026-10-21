@@ -359,7 +359,11 @@ const OrderPage = () => {
                 <CartSwitcher carts={cart.carts} activeId={cart.activeId} onSelect={cart.setActiveId} />
                 <CartItemList items={cart.items} onModify={cart.modify} />
               </div>
-              {/* Voucher Input Form in Cart */}
+              {/* Voucher Input Form in Cart (one promo code for all carts: hidden once another cart uses it) */}
+              {cart.promoBlocked && (
+                <p className="font-body-sm text-body-sm text-on-surface-variant">A promo code is already used on your other order.</p>
+              )}
+              {!cart.promoBlocked && !cart.voucherVisible && (
               <div className="flex items-center bg-surface-container-low rounded-lg p-1">
                 <input
                   className="w-full bg-transparent px-space-sm font-body-sm text-body-sm text-on-surface placeholder:text-secondary focus:outline-none uppercase font-semibold"
@@ -377,6 +381,8 @@ const OrderPage = () => {
                   Apply
                 </button>
               </div>
+              )}
+              {cart.promoError && <p className="font-body-sm text-body-sm text-error">{cart.promoError}</p>}
               {/* Cost Breakdown Calculator */}
               <div className="flex flex-col gap-1.5 pt-space-xs text-on-surface-variant font-body-sm text-body-sm">
                 <div className="flex justify-between">
@@ -410,7 +416,12 @@ const OrderPage = () => {
                       : "flex justify-between text-tertiary font-semibold hidden"
                   }
                 >
-                  <span className="">Promo Voucher (HUNGRY5)</span>
+                  <span className="flex items-center gap-1">
+                    Promo {cart.promoCode}
+                    <button type="button" onClick={cart.removePromo} className="text-on-surface-variant hover:text-error" aria-label="Remove promo code">
+                      <span className="material-symbols-outlined text-[16px]">close</span>
+                    </button>
+                  </span>
                   <span id="cartDiscount" className="">
                     {"-" + fmt(cart.discount)}
                   </span>

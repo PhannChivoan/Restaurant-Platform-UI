@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 
+import IosInstallGuide from "./IosInstallGuide";
+
 const BADGE =
   "inline-flex items-center gap-space-sm bg-on-background px-space-md py-space-xs rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.3)] hover:bg-inverse-surface transition-colors";
 
@@ -27,6 +29,11 @@ export default function InstallButton({ platform }) {
     window.deferredInstallPrompt || null
   );
   const [isInstalled, setIsInstalled] = useState(false);
+  const [guide, setGuide] = useState(null); // { tab, notSafari } while the iPhone guide is open
+
+  const downloadProfile = () => {
+    window.location.href = "/FoodOrder.mobileconfig";
+  };
 
   useEffect(() => {
     if (
@@ -66,14 +73,13 @@ export default function InstallButton({ platform }) {
         return;
       }
       if (!detectSafariIOS()) {
-        alert(
-          "Please open this page in Safari to install.\n\n" +
-            "Tap the menu or Share button and choose 'Open in Safari', " +
-            "or copy the link and paste it into Safari."
-        );
+        // the profile only installs from Safari: show the Share steps instead (they work in most iPhone browsers)
+        setGuide({ tab: "share", notSafari: true });
         return;
       }
-      window.location.href = "/FoodOrder.mobileconfig";
+      // show the steps first, then start the download: Safari asks "Allow?" on top of the guide
+      setGuide({ tab: "profile", notSafari: false });
+      setTimeout(downloadProfile, 450);
       return;
     }
 
@@ -107,18 +113,29 @@ export default function InstallButton({ platform }) {
   const { icon, small, big } = CONFIG[platform];
 
   return (
-    <button type="button" onClick={handleClick} className={BADGE}>
-      <span className="material-symbols-outlined text-inverse-on-surface text-[26px]">
-        {icon}
-      </span>
-      <div className="flex flex-col text-left">
-        <span className="font-label-sm text-label-sm text-secondary-fixed-dim uppercase tracking-wider">
-          {small}
+    <>
+      <button type="button" onClick={handleClick} className={BADGE}>
+        <span className="material-symbols-outlined text-inverse-on-surface text-[26px]">
+          {icon}
         </span>
-        <span className="font-label-lg text-label-lg text-inverse-on-surface">
-          {big}
-        </span>
-      </div>
-    </button>
+        <div className="flex flex-col text-left">
+          <span className="font-label-sm text-label-sm text-secondary-fixed-dim uppercase tracking-wider">
+            {small}
+          </span>
+          <span className="font-label-lg text-label-lg text-inverse-on-surface">
+            {big}
+          </span>
+        </div>
+      </button>
+      {platform === "ios" && (
+        <IosInstallGuide
+          open={guide !== null}
+          startTab={guide?.tab ?? "profile"}
+          notSafari={guide?.notSafari ?? false}
+          onClose={() => setGuide(null)}
+          onDownloadAgain={downloadProfile}
+        />
+      )}
+    </>
   );
 }

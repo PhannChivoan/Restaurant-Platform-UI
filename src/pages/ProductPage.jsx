@@ -1,3 +1,4 @@
+import { formatMoney } from "../utils/platformSettings";
 import { useEffect, useMemo, useState } from "react";
 
 import {
@@ -39,6 +40,7 @@ import {
 import ModulePage from "../components/ui/ModulePage";
 import TopProgressBar from "../components/ui/TopProgressBar";
 import { request } from "../utils/request";
+import BulkBar from "../components/ui/BulkBar";
 import { getBranchId } from "../utils/branchStore";
 import { getPlatformConfig } from "../utils/platformSettings";
 import { Config } from "../utils/config";
@@ -133,16 +135,16 @@ const formatPrice = (price, discounted) => {
     return (
       <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
         <Text delete type="secondary" style={{ fontSize: 12 }}>
-          ${Number(price).toFixed(2)}
+          {formatMoney(Number(price))}
         </Text>
         <Text strong style={{ color: palette.danger }}>
-          ${Number(discounted).toFixed(2)}
+          {formatMoney(Number(discounted))}
         </Text>
       </div>
     );
   }
 
-  return <Text strong>${Number(price || 0).toFixed(2)}</Text>;
+  return <Text strong>{formatMoney(Number(price || 0))}</Text>;
 };
 
 const normFile = (e) => (Array.isArray(e) ? e : e?.fileList);
@@ -179,6 +181,9 @@ const ProductPage = () => {
   const [refreshing, setRefreshing] = useState(false);
   const [error, setError] = useState("");
   const [rows, setRows] = useState([]);
+  const [selectedIds, setSelectedIds] = useState([]);
+  const [bulkBusy, setBulkBusy] = useState(false);
+  const [bulkAsk, setBulkAsk] = useState(null); // { action, title, hint, value, min, max } while the dialog is open
   const [stats, setStats] = useState({});
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
@@ -280,6 +285,7 @@ const ProductPage = () => {
 
       if (Array.isArray(response?.data)) {
         setRows(response.data);
+        setSelectedIds((ids) => ids.filter((id) => response.data.some((row) => row.id === id)));
         setTotal(response.total || 0);
         setStats(response.stats || {});
 
@@ -404,6 +410,7 @@ const loadReferenceData = async () => {
         price: item.price,
         discounted_price: item.discounted_price,
         prep_time_minutes: item.prep_time_minutes,
+        stock_quantity: item.stock_quantity ?? null,
         is_available: item.is_available ?? true,
         is_featured: item.is_featured ?? false,
         image: item.image_url
@@ -470,6 +477,7 @@ const loadReferenceData = async () => {
     );
         formData.append("is_available", values.is_available ? "1" : "0");
     formData.append("is_featured", values.is_featured ? "1" : "0");
+    formData.append("stock_quantity", values.stock_quantity != null ? String(values.stock_quantity) : "");
 
     const imageFile = (values.image || []).find((file) => file.originFileObj);
     if (imageFile) {
@@ -558,6 +566,65 @@ const loadReferenceData = async () => {
      TABLE COLUMNS
   ========================================================= */
 
+  // ---- bulk actions on the ticked dishes (one request per restaurant) ----
+  const BULK_ACTIONS = [
+    { key: "available", label: "Mark available" },
+    { key: "unavailable", label: "Mark sold out" },
+    { key: "feature", label: "Feature" },
+    { key: "unfeature", label: "Remove from featured" },
+    { key: "price_percent", label: "Change price by %…" },
+    { key: "set_stock", label: "Set stock…" },
+    { key: "delete", label: "Delete", danger: true },
+  ];
+
+  const runBulk = async (action, value) => {
+    const byRestaurant = {};
+    rows.filter((row) => selectedIds.includes(row.id)).forEach((row) => {
+      (byRestaurant[row.restaurant_id] ||= []).push(row.id);
+    });
+
+    setBulkBusy(true);
+    try {
+      let done = 0;
+      for (const [restaurantId, ids] of Object.entries(byRestaurant)) {
+        const res =
+          action === "delete"
+            ? await request(`restaurants/${restaurantId}/items/bulk-delete`, "POST", { item_ids: ids })
+            : await request(`restaurants/${restaurantId}/items/bulk-update`, "POST", { item_ids: ids, action, value });
+        if (res?.count === undefined) {
+          message.error(res?.message || "Bulk update failed.");
+          return;
+        }
+        done += res.count;
+      }
+      message.success(`Updated ${done} item(s).`);
+      setSelectedIds([]);
+      setBulkAsk(null);
+      loadItems(true);
+    } finally {
+      setBulkBusy(false);
+    }
+  };
+
+  const onBulkAction = (action) => {
+    if (action === "price_percent") {
+      return setBulkAsk({ action, title: "Change price", hint: "Percent change, e.g. 10 raises prices 10%, -5 lowers them 5%.", value: 10, min: -99, max: 500 });
+    }
+    if (action === "set_stock") {
+      return setBulkAsk({ action, title: "Set stock", hint: "Dishes sell out automatically at 0. Leave the single-dish field empty to stop counting.", value: 20, min: 0, max: 100000 });
+    }
+    if (action === "delete") {
+      return Modal.confirm({
+        title: `Delete ${selectedIds.length} item(s)?`,
+        content: "They will be removed permanently.",
+        okText: "Delete",
+        okButtonProps: { danger: true },
+        onOk: () => runBulk("delete"),
+      });
+    }
+    runBulk(action);
+  };
+
 const columns = [
     {
       title: "Item",
@@ -621,6 +688,20 @@ const columns = [
       width: 120,
       align: "right",
       render: (_, row) => formatPrice(row.price, row.discounted_price),
+    },
+    {
+      title: "Stock",
+      key: "stock",
+      width: 90,
+      align: "right",
+      render: (_, row) =>
+        row.stock_quantity == null ? (
+          <Text type="secondary">-</Text>
+        ) : (
+          <Tag color={row.stock_quantity === 0 ? "red" : row.stock_quantity <= 5 ? "orange" : "default"} style={{ margin: 0 }}>
+            {row.stock_quantity}
+          </Tag>
+        ),
     },
     {
       title: "Availability",
@@ -739,6 +820,13 @@ return (
               alignItems: "center",
             }}
           >
+            <BulkBar
+              count={selectedIds.length}
+              actions={BULK_ACTIONS}
+              onAction={onBulkAction}
+              onClear={() => setSelectedIds([])}
+              busy={bulkBusy}
+            />
             <Input
               placeholder="Search item or restaurant…"
               prefix={<Search size={14} color={palette.muted} />}
@@ -831,6 +919,7 @@ return (
         }}
         columns={columns}
         rows={rows}
+        rowSelection={{ selectedRowKeys: selectedIds, onChange: setSelectedIds }}
       />
 
       {/* ─── Item Detail Drawer ──────────────────────── */}
@@ -898,8 +987,8 @@ return (
                   value:
                     selected.discounted_price != null &&
                     Number(selected.discounted_price) < Number(selected.price)
-                      ? `$${Number(selected.price).toFixed(2)} → $${Number(selected.discounted_price).toFixed(2)}`
-                      : `$${Number(selected.price || 0).toFixed(2)}`,
+                      ? `${formatMoney(Number(selected.price))} → ${formatMoney(Number(selected.discounted_price))}`
+                      : `${formatMoney(Number(selected.price || 0))}`,
                 },
                 {
                   label: "Prep time",
@@ -1059,6 +1148,9 @@ return (
             <Form.Item label="Prep time (min)" name="prep_time_minutes">
               <InputNumber className="!w-full" min={1} placeholder="15" />
             </Form.Item>
+            <Form.Item label="Stock (empty = unlimited)" name="stock_quantity" extra="Counts down with every order; the dish sells out at 0.">
+              <InputNumber className="!w-full" min={0} precision={0} placeholder="Unlimited" />
+            </Form.Item>
             <Form.Item
               label="Featured"
               name="is_featured"
@@ -1090,6 +1182,28 @@ return (
             </Upload>
           </Form.Item>
         </Form>
+      </Modal>
+
+      <Modal
+        title={bulkAsk ? `${bulkAsk.title} - ${selectedIds.length} item(s)` : ""}
+        open={Boolean(bulkAsk)}
+        onCancel={() => setBulkAsk(null)}
+        onOk={() => runBulk(bulkAsk.action, bulkAsk.value)}
+        okButtonProps={{ loading: bulkBusy, disabled: bulkAsk?.value == null }}
+        destroyOnHidden
+      >
+        {bulkAsk && (
+          <Space orientation="vertical" size={10} style={{ width: "100%" }}>
+            <Text type="secondary">{bulkAsk.hint}</Text>
+            <InputNumber
+              style={{ width: "100%" }}
+              min={bulkAsk.min}
+              max={bulkAsk.max}
+              value={bulkAsk.value}
+              onChange={(value) => setBulkAsk((ask) => ({ ...ask, value }))}
+            />
+          </Space>
+        )}
       </Modal>
     </ConfigProvider>
   );

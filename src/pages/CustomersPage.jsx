@@ -1,3 +1,4 @@
+import { formatMoney } from "../utils/platformSettings";
 import { useEffect, useState } from "react";
 
 import {
@@ -60,8 +61,7 @@ const { Text } = Typography;
    HELPERS
 ========================================================= */
 
-const formatCurrency = (v) =>
-  v != null ? `$${Number(v).toFixed(2)}` : "$0.00";
+const formatCurrency = (v) => (v != null ? formatMoney(v) : formatMoney(0));
 
 const formatDate = (iso) => {
   if (!iso) return "-";
@@ -778,7 +778,7 @@ const CustomersPage = () => {
       dataIndex: "total",
       width: 90,
       align: "right",
-      render: (v) => `$${Number(v).toFixed(2)}`,
+      render: (v) => `${formatMoney(Number(v))}`,
     },
     {
       title: "Status",

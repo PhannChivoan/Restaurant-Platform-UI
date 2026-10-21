@@ -150,11 +150,11 @@ const ContactPage = () => {
                       call
                     </span>
                     <span className="font-label-lg text-label-lg font-bold">
-                      1-800-FOODORDER
+                      +855 23 900 100
                     </span>
                   </div>
                   <p className="font-body-sm text-body-sm text-secondary">
-                    Toll-free, 24 hours a day, 7 days a week
+                    Hotline open every day, 7 AM to 10 PM
                   </p>
                   <button
                     className="mt-space-xs inline-flex items-center justify-center gap-space-xs w-full bg-primary-container hover:bg-primary text-on-primary font-label-md text-label-md py-space-xs rounded-lg transition-colors"
@@ -373,7 +373,7 @@ const ContactPage = () => {
                         <input
                           className="w-full bg-surface-container-low pl-10 pr-space-md py-space-xs rounded-lg font-body-md text-body-md text-on-surface placeholder:text-secondary-fixed-dim focus:outline-none focus:bg-surface-container-lowest focus:shadow-md transition-all"
                           id="fullName"
-                          placeholder="Elena Rostova"
+                          placeholder="Sokha Chan"
                           required
                           type="text"
                         />
@@ -581,7 +581,7 @@ const ContactPage = () => {
                           Customer Care &amp; Hotline
                         </span>
                         <span className="font-body-sm text-body-sm text-secondary">
-                          In-app chat &amp; 1-800 phone
+                          In-app chat & phone hotline
                         </span>
                       </div>
                       <span className="font-label-sm text-label-sm bg-tertiary-fixed text-on-tertiary-fixed px-space-xs py-0.5 rounded font-bold">
@@ -598,7 +598,7 @@ const ContactPage = () => {
                         </span>
                       </div>
                       <span className="font-label-md text-label-md text-on-surface">
-                        Mon–Sun 8AM–10PM EST
+                        Mon–Sun 7AM–10PM ICT
                       </span>
                     </li>
                     <li className="flex items-center justify-between py-space-xs bg-surface-container-low px-space-md rounded-lg">
@@ -611,7 +611,7 @@ const ContactPage = () => {
                         </span>
                       </div>
                       <span className="font-label-md text-label-md text-on-surface">
-                        Mon–Fri 9AM–6PM PST
+                        Mon–Sat 8AM–6PM ICT
                       </span>
                     </li>
                   </ul>
@@ -631,16 +631,19 @@ const ContactPage = () => {
                       2 Main Hubs
                     </span>
                   </div>
-                  {/* Map View Container */}
+                  {/* Map View Container: live OpenStreetMap of the Phnom Penh hub (Boeung Keng Kang 1) */}
                   <div
-                    className="w-full h-44 rounded-lg bg-cover bg-center relative overflow-hidden shadow-inner flex items-end p-space-md"
-                    data-location="San Francisco, CA"
-                    style={{
-                      backgroundImage:
-                        "url('https://lh3.googleusercontent.com/aida-public/AB6AXuB86IQZX8p3nM1Xx1ANIyjVDnRGPb6qpHj5Qxdh6QifL7HFEiGb4OFzysXdb3Tacm_AHh21W0i_I1ZnBhmtrsq5ka5WayWJ0DiSLEkJG2FD00EFu_jOwloI2U5SmyzxQRrd5jroKjGdfckP6fJVuN--ZuvoADP9GfuUOUXUoLw1KhjatzHdMXrTGUQ6iJF6XFLtSCjNBdZy8I8uSBgZu0TNXEk9Ju_x95qlggOfEeWB')",
-                    }}
+                    className="w-full h-44 rounded-lg bg-surface-container-low relative overflow-hidden shadow-inner flex items-end p-space-md"
+                    data-location="Phnom Penh, Cambodia"
                   >
-                    <div className="bg-surface-container-lowest/95 backdrop-blur-md px-space-md py-space-xs rounded-lg shadow-sm flex items-center justify-between w-full">
+                    <iframe
+                      title="Map of our Phnom Penh hub"
+                      className="absolute inset-0 w-full h-full border-0"
+                      loading="lazy"
+                      referrerPolicy="no-referrer"
+                      src="https://www.openstreetmap.org/export/embed.html?bbox=104.9127%2C11.5416%2C104.9327%2C11.5616&layer=mapnik&marker=11.5516%2C104.9227"
+                    />
+                    <div className="relative bg-surface-container-lowest/95 backdrop-blur-md px-space-md py-space-xs rounded-lg shadow-sm flex items-center justify-between w-full">
                       <div className="flex items-center gap-space-xs">
                         <span
                           className="material-symbols-outlined text-primary-container text-[20px]"
@@ -649,12 +652,14 @@ const ContactPage = () => {
                           pin_drop
                         </span>
                         <span className="font-label-sm text-label-sm text-on-surface font-bold">
-                          Pacific Coast Hub • SF
+                          Riverside Hub • Phnom Penh
                         </span>
                       </div>
                       <a
                         className="font-label-sm text-label-sm text-primary hover:underline"
-                        href="#"
+                        href="https://www.google.com/maps/dir/?api=1&destination=11.5516,104.9227"
+                        target="_blank"
+                        rel="noreferrer"
                       >
                         Get Directions
                       </a>
@@ -663,28 +668,28 @@ const ContactPage = () => {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-space-sm pt-space-xs">
                     <div className="bg-surface-container-low p-space-md rounded-lg">
                       <p className="font-label-md text-label-md text-on-surface font-bold">
-                        San Francisco, CA
+                        Phnom Penh, Cambodia
                       </p>
                       <p className="font-body-sm text-body-sm text-secondary mt-0.5">
-                        500 Howard Street, Suite 400
+                        No. 98, Street 310, Boeung Keng Kang 1
                         <br />
-                        San Francisco, CA 94105
+                        Phnom Penh 12302
                       </p>
                       <span className="font-label-sm text-label-sm text-primary mt-space-xs inline-block">
-                        Pacific Time Zone
+                        Indochina Time (UTC+7)
                       </span>
                     </div>
                     <div className="bg-surface-container-low p-space-md rounded-lg">
                       <p className="font-label-md text-label-md text-on-surface font-bold">
-                        New York, NY
+                        Siem Reap, Cambodia
                       </p>
                       <p className="font-body-sm text-body-sm text-secondary mt-0.5">
-                        250 Broadway, 18th Floor
+                        Street 6, Svay Dangkum
                         <br />
-                        New York, NY 10007
+                        Siem Reap 17252
                       </p>
                       <span className="font-label-sm text-label-sm text-primary mt-space-xs inline-block">
-                        Eastern Time Zone
+                        Indochina Time (UTC+7)
                       </span>
                     </div>
                   </div>
@@ -730,18 +735,20 @@ const ContactPage = () => {
                 <div className="relative h-56 rounded-xl overflow-hidden shadow-sm">
                   <img
                     className="w-full h-full object-cover"
-                    data-alt="Warm modern customer support headquarters office with friendly specialist smiling into a headset with multiple delivery status monitors showing real-time dispatch routes, orange branding details and soft natural studio lighting"
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuCDgUOBhGjjyHGlWg68fDQeQri0t6l4Y41BWCGY2FXIaXRnckEGhNWXjIHZrkBGCK_ebG4n-KPyJnOOrf_2bmlyM2W6PxXYRlvby-UF4hltiClks3gT2tZVKVnq7Cs_zy0ukIgJpBKRR4sOCOXhGRj4GhXQEnbQjNrIIy5m3l6SXClUtd1Wvytx7vUa7n8XEJqN9aBYcxYrvA1VBdbwqCFJV_3Z-faCUfN9izZScF6u"
+                    data-alt="Friendly customer support team in a bright Phnom Penh office, smiling into headsets with delivery dashboards showing live dispatch routes, orange branding details."
+                    src="/assets/cambodia/contact-office.jpg"
+                    onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = "https://lh3.googleusercontent.com/aida-public/AB6AXuCDgUOBhGjjyHGlWg68fDQeQri0t6l4Y41BWCGY2FXIaXRnckEGhNWXjIHZrkBGCK_ebG4n-KPyJnOOrf_2bmlyM2W6PxXYRlvby-UF4hltiClks3gT2tZVKVnq7Cs_zy0ukIgJpBKRR4sOCOXhGRj4GhXQEnbQjNrIIy5m3l6SXClUtd1Wvytx7vUa7n8XEJqN9aBYcxYrvA1VBdbwqCFJV_3Z-faCUfN9izZScF6u"; }}
                   />
                   <div className="absolute bottom-2 left-2 bg-inverse-surface/80 text-inverse-on-surface px-space-xs py-0.5 rounded text-label-sm font-label-sm backdrop-blur-sm">
-                    SF Operations Floor
+                    Phnom Penh Operations Floor
                   </div>
                 </div>
                 <div className="relative h-56 rounded-xl overflow-hidden shadow-sm">
                   <img
                     className="w-full h-full object-cover"
-                    data-alt="Close up shot of fresh artisan pizza being safely packed into a FoodOrder delivery thermal insulated bag with steam rising, clean commercial kitchen in background with warm ambient dining lighting"
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuBY_TujrPLKq6FSTAAzJrKrAJ6n8NoSpJWVR3miqu29IerCa496pMFfMcs42oNv_V3D7t6ooKlxWDUz2e_TiP0siHyaqdboLQOFw4BpQfzjnBLeNr0jD-7YaeTovF_uf4mMJdQGAeRcOuTD8Qmc8o-RebgX9Y9QVMPjPrJ3unrD6iADOaC5zXiP9ur7EAOJdHPFhcvFMM9kkHj8sT6wt1TvHCqVVOvBNlwL224rARKq"
+                    data-alt="Fresh Khmer takeaway being packed into an insulated FoodOrder delivery bag in a clean Phnom Penh kitchen, steam rising, warm ambient lighting."
+                    src="/assets/cambodia/contact-packing.jpg"
+                    onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = "https://lh3.googleusercontent.com/aida-public/AB6AXuBY_TujrPLKq6FSTAAzJrKrAJ6n8NoSpJWVR3miqu29IerCa496pMFfMcs42oNv_V3D7t6ooKlxWDUz2e_TiP0siHyaqdboLQOFw4BpQfzjnBLeNr0jD-7YaeTovF_uf4mMJdQGAeRcOuTD8Qmc8o-RebgX9Y9QVMPjPrJ3unrD6iADOaC5zXiP9ur7EAOJdHPFhcvFMM9kkHj8sT6wt1TvHCqVVOvBNlwL224rARKq"; }}
                   />
                   <div className="absolute bottom-2 left-2 bg-inverse-surface/80 text-inverse-on-surface px-space-xs py-0.5 rounded text-label-sm font-label-sm backdrop-blur-sm">
                     Quality Assurance Check
@@ -955,7 +962,7 @@ const ContactPage = () => {
                   <span className="material-symbols-outlined text-[20px]">
                     phone
                   </span>{" "}
-                  Call 1-800
+                  Call +855 23 900 100
                 </a>
                 <button
                   className="inline-flex items-center justify-center gap-space-xs bg-primary-container hover:bg-primary text-on-primary font-label-lg text-label-lg px-space-xl py-space-sm rounded-xl shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-0.5 w-full sm:w-auto"

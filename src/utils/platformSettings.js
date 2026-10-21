@@ -11,6 +11,7 @@ const DEFAULTS = {
   platform_name: "FoodOrder Platform",
   support_email: "",
   currency: "USD",
+  exchange_rate: 4100, // riel per US dollar (prices are stored in dollars)
   timezone: "Asia/Phnom_Penh",
   brand_logo: null,
   brand_favicon: null,
@@ -23,11 +24,10 @@ const DEFAULTS = {
   auto_accept_orders: true,
 };
 
+// the platform works in US dollars or Cambodian riel only (what ABA PayWay can charge)
 const CURRENCY_SYMBOLS = {
   USD: "$",
   KHR: "៛",
-  THB: "฿",
-  VND: "₫",
 };
 
 let config = { ...DEFAULTS };
@@ -101,13 +101,32 @@ export const platformName = () => config.platform_name || DEFAULTS.platform_name
 
 export const currencySymbol = () => CURRENCY_SYMBOLS[config.currency] || "$";
 
+/**
+ * A price (stored in US dollars) as shown to people: "$4.50", or in riel "៛18,500" (rate from Platform Settings,
+ * rounded to the nearest 100 riel as shops do).
+ */
 export const formatMoney = (amount) => {
   const value = Number(amount || 0);
-  const decimals = config.currency === "USD" ? 2 : 0;
-  return `${currencySymbol()}${value.toLocaleString("en-US", {
-    minimumFractionDigits: decimals,
-    maximumFractionDigits: decimals,
-  })}`;
+
+  if (config.currency === "KHR") {
+    const rate = Number(config.exchange_rate) || DEFAULTS.exchange_rate;
+    const riel = Math.round((value * rate) / 100) * 100;
+    return `${currencySymbol()}${riel.toLocaleString("en-US", { maximumFractionDigits: 0 })}`;
+  }
+
+  return `${currencySymbol()}${value.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+};
+
+/** Short label for chart axes: "$1.2k", or in riel "៛4.9M". */
+export const compactMoney = (amount) => {
+  const value = Number(amount || 0);
+
+  if (config.currency === "KHR") {
+    const riel = value * (Number(config.exchange_rate) || DEFAULTS.exchange_rate);
+    return `${currencySymbol()}${(riel / 1_000_000).toFixed(1)}M`;
+  }
+
+  return `${currencySymbol()}${(value / 1000).toFixed(1)}k`;
 };
 
 export const isMaintenanceMode = () => Boolean(config.maintenance_mode);

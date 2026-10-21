@@ -167,7 +167,10 @@ const PermissionsPage = () => {
       }
 
       setRoles(rolesRes);
-      setAllPermissions(Array.isArray(permsRes) ? permsRes : []);
+      // only the per-page view / create / update / delete permissions are enforced by the API
+      setAllPermissions(
+        Array.isArray(permsRes) ? permsRes.filter((p) => p.module) : [],
+      );
 
       const results = await Promise.all(
         rolesRes.map((role) => request(`roles/${role.id}/navigation`, "GET")),
@@ -527,7 +530,7 @@ const PermissionsPage = () => {
 
   const selectedIds = new Set(selected ? navMap[selected.id] || [] : []);
   const selectedLocked = isLocked(selected);
-  const selectedPerms = selected?.permissions || [];
+  const selectedPerms = (selected?.permissions || []).filter((p) => p.includes("."));
 
   /* ---------------- DRAWER SECTIONS ---------------- */
 
@@ -820,7 +823,9 @@ const PermissionsPage = () => {
                             fontWeight: isEnabled ? 500 : 400,
                           }}
                         >
-                          {perm.name}
+                          {perm.name.split(".")[1]
+                            ? perm.name.split(".")[1][0].toUpperCase() + perm.name.split(".")[1].slice(1)
+                            : perm.name}
                         </Text>
                         {desc && (
                           <div

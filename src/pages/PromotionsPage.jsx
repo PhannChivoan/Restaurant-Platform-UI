@@ -1,3 +1,4 @@
+import { formatMoney } from "../utils/platformSettings";
 import { useCallback, useEffect, useState } from "react";
 
 import {
@@ -37,6 +38,7 @@ import {
 } from "lucide-react";
 
 import ModulePage from "../components/ui/ModulePage";
+import BulkBar from "../components/ui/BulkBar";
 import TopProgressBar from "../components/ui/TopProgressBar";
 import { request } from "../utils/request";
 import { palette } from "../constants/theme";
@@ -62,8 +64,7 @@ const STATUS_OPTIONS = [
    HELPERS
 ========================================================= */
 
-const formatCurrency = (v) =>
-  v != null ? `$${Number(v).toFixed(2)}` : "$0.00";
+const formatCurrency = (v) => (v != null ? formatMoney(v) : formatMoney(0));
 
 const formatDate = (iso) => {
   if (!iso) return "-";
@@ -117,6 +118,8 @@ const PromotionsPage = () => {
   const [refreshing, setRefreshing] = useState(false);
   const [error, setError] = useState("");
   const [rows, setRows] = useState([]);
+  const [selectedIds, setSelectedIds] = useState([]);
+  const [bulkBusy, setBulkBusy] = useState(false);
   const [stats, setStats] = useState({});
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
@@ -166,6 +169,7 @@ const PromotionsPage = () => {
 
       if (Array.isArray(response?.data)) {
         setRows(response.data);
+        setSelectedIds((ids) => ids.filter((id) => response.data.some((row) => row.id === id)));
         setTotal(response.total || 0);
         setStats(response.stats || {});
 
@@ -362,6 +366,42 @@ const PromotionsPage = () => {
   /* =========================================================
      TABLE COLUMNS
   ========================================================= */
+
+  const BULK_ACTIONS = [
+    { key: "activate", label: "Activate" },
+    { key: "deactivate", label: "Deactivate" },
+    { key: "delete", label: "Delete", danger: true },
+  ];
+
+  const runBulk = async (action) => {
+    setBulkBusy(true);
+    try {
+      const res =
+        action === "delete"
+          ? await request("promotions/bulk-delete", "POST", { ids: selectedIds })
+          : await request("promotions/bulk-update", "POST", { ids: selectedIds, action });
+      if (res?.count === undefined) {
+        message.error(res?.message || "Bulk update failed.");
+        return;
+      }
+      message.success(res.message);
+      setSelectedIds([]);
+      loadPromotions(true);
+    } finally {
+      setBulkBusy(false);
+    }
+  };
+
+  const onBulkAction = (action) => {
+    if (action !== "delete") return runBulk(action);
+    Modal.confirm({
+      title: `Delete ${selectedIds.length} promotion(s)?`,
+      content: "They will be removed permanently.",
+      okText: "Delete",
+      okButtonProps: { danger: true },
+      onOk: () => runBulk("delete"),
+    });
+  };
 
   const columns = [
     {
@@ -623,6 +663,13 @@ const PromotionsPage = () => {
               alignItems: "center",
             }}
           >
+            <BulkBar
+              count={selectedIds.length}
+              actions={BULK_ACTIONS}
+              onAction={onBulkAction}
+              onClear={() => setSelectedIds([])}
+              busy={bulkBusy}
+            />
             <Input
               placeholder="Search name or code…"
               prefix={<Search size={14} color={palette.muted} />}
@@ -695,6 +742,7 @@ const PromotionsPage = () => {
         }}
         columns={columns}
         rows={rows}
+        rowSelection={{ selectedRowKeys: selectedIds, onChange: setSelectedIds }}
       />
 
       {/* ─── Detail Drawer ──────────────────────────── */}

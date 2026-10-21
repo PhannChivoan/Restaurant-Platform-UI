@@ -1,3 +1,4 @@
+import { compactMoney, formatMoney } from "../utils/platformSettings";
 import { useCallback, useEffect, useState } from "react";
 import {
   Button,
@@ -28,6 +29,8 @@ import {
   Cell,
 } from "recharts";
 import dayjs from "dayjs";
+import { Printer } from "lucide-react";
+import { downloadFile, printTable } from "../utils/downloadFile";
 import {
   Banknote,
   CircleDollarSign,
@@ -67,11 +70,7 @@ const DATE_PRESETS = [
   { label: "Last month", value: [dayjs().subtract(1, "month").startOf("month"), dayjs().subtract(1, "month").endOf("month")] },
 ];
 
-const formatCurrency = (value) =>
-  `$${Number(value || 0).toLocaleString("en-US", {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  })}`;
+const formatCurrency = (value) => formatMoney(value);
 
 const axisStyle = { fontSize: 11, fill: palette.muted };
 const noAxis = { axisLine: false, tickLine: false };
@@ -384,7 +383,7 @@ const RevenuePage = () => {
                       tick={axisStyle}
                       axisLine={{ stroke: palette.border }}
                       tickLine={false}
-                      tickFormatter={(v) => `$${(v / 1000).toFixed(1)}k`}
+                      tickFormatter={(v) => compactMoney(v)}
                     />
                     <YAxis
                       dataKey="restaurant"
@@ -492,6 +491,44 @@ const RevenuePage = () => {
                 style={{ borderRadius: 2 }}
               >
                 Export CSV
+              </Button>
+              <Button
+                size="small"
+                icon={<Download size={13} />}
+                onClick={() =>
+                  downloadFile(
+                    "exports/revenue",
+                    {
+                      date_from: dateRange?.[0]?.format?.("YYYY-MM-DD"),
+                      date_to: dateRange?.[1]?.format?.("YYYY-MM-DD"),
+                    },
+                    "revenue-by-day.csv",
+                  ).catch((e) => message.error(e.message))
+                }
+                style={{ borderRadius: 2 }}
+              >
+                Daily CSV
+              </Button>
+              <Button
+                size="small"
+                icon={<Printer size={13} />}
+                disabled={revenueData.length === 0 || loading}
+                onClick={() => {
+                  const ok = printTable(
+                    "Revenue by restaurant",
+                    ["Restaurant", "Gross revenue", "Commission", "Net payout"],
+                    revenueData.map((r) => [
+                      r.restaurant || "",
+                      Number(r.gross_revenue || 0).toFixed(2),
+                      Number(r.commission || 0).toFixed(2),
+                      Number(r.net_revenue || 0).toFixed(2),
+                    ]),
+                  );
+                  if (!ok) message.warning("Allow pop-ups to print the report.");
+                }}
+                style={{ borderRadius: 2 }}
+              >
+                Print / PDF
               </Button>
             </Space>
           }

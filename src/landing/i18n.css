@@ -1,0 +1,9 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+Khmer:wght@400;500;600;700&display=swap");
+
+/* Khmer needs a font that has the glyphs, otherwise the browser falls back to a mismatched one */
+html[lang="km"] body,
+html[lang="km"] button,
+html[lang="km"] input,
+html[lang="km"] textarea {
+  font-family: "Noto Sans Khmer", "Plus Jakarta Sans", "Be Vietnam Pro", system-ui, sans-serif;
+}

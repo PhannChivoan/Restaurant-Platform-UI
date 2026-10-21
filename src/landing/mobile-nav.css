@@ -1,0 +1,75 @@
+/* Phone / tablet bottom tab bar. Plain CSS (not utilities) so the prebuilt landing.css
+   `.flex` rule can never win over the desktop `display: none`. */
+.app-tabbar,
+.app-more-layer {
+  display: flex;
+}
+@media (min-width: 1024px) {
+  .app-tabbar,
+  .app-more-layer {
+    display: none !important;
+  }
+}
+
+.app-more-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+}
+.app-more-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  animation: app-fade-in 0.18s ease-out both;
+}
+.app-more-panel {
+  position: absolute;
+  right: 8px;
+  bottom: calc(64px + env(safe-area-inset-bottom));
+  width: min(320px, calc(100vw - 16px));
+  max-height: 70vh;
+  overflow-y: auto;
+  border-radius: 18px;
+  padding: 14px;
+  background: #fff;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.22);
+  /* grows out of the "More" tab (last tab, bottom right) */
+  transform-origin: calc(100% - 28px) 100%;
+  animation: app-pop-in 0.22s cubic-bezier(0.2, 0.9, 0.3, 1.2) both;
+}
+.app-more-layer.is-closing .app-more-backdrop {
+  animation: app-fade-out 0.16s ease-in both;
+}
+.app-more-layer.is-closing .app-more-panel {
+  animation: app-pop-out 0.16s ease-in both;
+}
+/* little pointer toward the More tab */
+.app-more-panel::after {
+  content: "";
+  position: absolute;
+  bottom: -6px;
+  right: 22px;
+  width: 14px;
+  height: 14px;
+  background: #fff;
+  transform: rotate(45deg);
+  border-radius: 2px;
+}
+
+@keyframes app-pop-in {
+  from { opacity: 0; transform: scale(0.4) translateY(12px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+@keyframes app-pop-out {
+  from { opacity: 1; transform: scale(1); }
+  to { opacity: 0; transform: scale(0.4) translateY(12px); }
+}
+@keyframes app-fade-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes app-fade-out { from { opacity: 1; } to { opacity: 0; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .app-more-panel,
+  .app-more-backdrop,
+  .app-more-layer.is-closing .app-more-panel,
+  .app-more-layer.is-closing .app-more-backdrop { animation-duration: 0.01ms; }
+}

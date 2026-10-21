@@ -25,6 +25,7 @@ const ModulePage = ({
   pagination = false,
   toolbar,
   expandable,
+  rowSelection,
 }) => {
   const loadingActive =
     typeof loading === "object"
@@ -139,7 +140,8 @@ const ModulePage = ({
               pagination={pagination}
               size="small"
               locale={{ emptyText: "No activity recorded yet" }}
-              rowKey="key"
+              rowKey={(record) => record.key ?? record.id}
+              rowSelection={rowSelection}
               expandable={expandable}
               scroll={{ x: "max-content" }}
               components={{

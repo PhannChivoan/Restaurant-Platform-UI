@@ -1,3 +1,4 @@
+import { formatMoney } from "../utils/platformSettings";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
@@ -50,11 +51,7 @@ import { DotsRing } from "@/components/ui/dots-ring";
 
 const { Text } = Typography;
 
-const formatCurrency = (value) =>
-  `$${Number(value || 0).toLocaleString("en-US", {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  })}`;
+const formatCurrency = (value) => formatMoney(value);
 
 const formatDate = (date) =>
   date ? dayjs(date).format("DD MMM YYYY, HH:mm") : "-";
@@ -68,6 +65,8 @@ const getDeliveryMinutes = (from, to) => {
 
 const paymentMethodColor = {
   cash: "green",
+  pickup: "orange",
+  aba_khqr: "geekblue",
   card: "blue",
   wallet: "purple",
   bank_transfer: "cyan",
@@ -560,7 +559,7 @@ const OrderDetailDrawer = ({ order, open, onClose, loading, navigate }) => {
                                 {mods
                                   .map(
                                     (m) =>
-                                      `${m.modifier || m.name || ""}${m.price ? ` (+$${Number(m.price).toFixed(2)})` : ""}`,
+                                      `${m.modifier || m.name || ""}${m.price ? ` (+${formatMoney(Number(m.price))})` : ""}`,
                                   )
                                   .join(", ")}
                               </div>
@@ -866,12 +865,12 @@ const OrderDetailDrawer = ({ order, open, onClose, loading, navigate }) => {
                               mods = m
                                 .map(
                                   (x) =>
-                                    `  + ${x.modifier || x.name || ""}${x.price ? ` $${Number(x.price).toFixed(2)}` : ""}`,
+                                    `  + ${x.modifier || x.name || ""}${x.price ? ` ${formatMoney(Number(x.price))}` : ""}`,
                                 )
                                 .join("\n");
                             }
                           } catch {}
-                          return `  ${item.quantity}x ${item.item_name || item.menuItem?.name || "Item"}  $${Number(item.subtotal || item.unit_price * item.quantity).toFixed(2)}${mods ? "\n" + mods : ""}`;
+                          return `  ${item.quantity}x ${item.item_name || item.menuItem?.name || "Item"}  ${formatMoney(Number(item.subtotal || item.unit_price * item.quantity))}${mods ? "\n" + mods : ""}`;
                         })
                         .join("\n\n");
 
@@ -894,13 +893,13 @@ ${items}
 --------------------------------
 PAYMENT
 --------------------------------
-Subtotal:    $${Number(order.subtotal || 0).toFixed(2)}
-Delivery:    $${Number(order.delivery_fee || 0).toFixed(2)}
-Surge:       $${Number(order.surge_fee || 0).toFixed(2)}
-Discount:   -$${Number(order.discount || 0).toFixed(2)}
-Tax:         $${Number(order.tax || 0).toFixed(2)}
+Subtotal:    ${formatMoney(Number(order.subtotal || 0))}
+Delivery:    ${formatMoney(Number(order.delivery_fee || 0))}
+Surge:       ${formatMoney(Number(order.surge_fee || 0))}
+Discount:   -${formatMoney(Number(order.discount || 0))}
+Tax:         ${formatMoney(Number(order.tax || 0))}
 --------------------------------
-TOTAL:       $${Number(order.total || 0).toFixed(2)}
+TOTAL:       ${formatMoney(Number(order.total || 0))}
 
 Method: ${order.payment_method || "-"}
 Status: ${order.is_paid ? "PAID" : "UNPAID"}
@@ -1480,6 +1479,8 @@ const CompletedOrdersPage = () => {
                 }}
                 options={[
                   { label: "Cash", value: "cash" },
+                  { label: "Pickup", value: "pickup" },
+                  { label: "ABA PAY (KHQR)", value: "aba_khqr" },
                   { label: "Card", value: "card" },
                   { label: "Wallet", value: "wallet" },
                   { label: "Bank Transfer", value: "bank_transfer" },

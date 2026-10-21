@@ -1,3 +1,4 @@
+import { compactMoney, formatMoney } from "../utils/platformSettings";
 import { useCallback, useEffect, useState } from "react";
 import {
   Button,
@@ -192,11 +193,7 @@ const RIDER_COLS = [
 const axisStyle = { fontSize: 11, fill: palette.muted };
 const noAxis = { axisLine: false, tickLine: false };
 
-const formatCurrency = (value) =>
-  `$${Number(value || 0).toLocaleString("en-US", {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  })}`;
+const formatCurrency = (value) => formatMoney(value);
 
 const OperationsAnalyticsPage = () => {
   const [loading, setLoading] = useState(true);
@@ -337,7 +334,7 @@ const OperationsAnalyticsPage = () => {
         stats={[
           { label: "Active riders", value: live.active_riders ?? riders.length, icon: Bike, iconBackground: palette.primaryLight },
           { label: "Avg. delivery", value: avgDelivery, suffix: "min", color: sla.within_sla ? palette.success : palette.danger, icon: Clock3, iconBackground: sla.within_sla ? "#ECFDF5" : "#FEF2F2" },
-          { label: "Revenue today", value: `$${Number(live.revenue_today || 0).toLocaleString()}`, color: palette.success, icon: Coins, iconBackground: "#DCFCE7" },
+          { label: "Revenue today", value: formatMoney(live.revenue_today), color: palette.success, icon: Coins, iconBackground: "#DCFCE7" },
           { label: "Satisfaction", value: satisfaction.average_rating ?? 0, suffix: "/ 5", color: palette.warning, icon: Star, iconBackground: "#FEF3C7" },
           {
             label: "Top restaurant",
@@ -601,9 +598,9 @@ const OperationsAnalyticsPage = () => {
                   <ResponsiveContainer width="100%" height={180}>
                     <BarChart data={revenueSplit} layout="vertical" margin={{ top: 0, right: 8, left: 0, bottom: 0 }}>
                       <CartesianGrid strokeDasharray="3 3" stroke={palette.border} horizontal={false} />
-                      <XAxis type="number" tick={axisStyle} axisLine={{ stroke: palette.border }} tickLine={false} tickFormatter={(v) => `$${(v / 1000).toFixed(0)}k`} />
+                      <XAxis type="number" tick={axisStyle} axisLine={{ stroke: palette.border }} tickLine={false} tickFormatter={(v) => compactMoney(v)} />
                       <YAxis dataKey="restaurant" type="category" tick={axisStyle} {...noAxis} width={100} />
-                      <Tooltip {...tooltipStyle} formatter={(v) => [`$${Number(v).toLocaleString()}`, ""]} />
+                      <Tooltip {...tooltipStyle} formatter={(v) => [formatMoney(v), ""]} />
                       <Bar dataKey="gross_revenue" fill={palette.primary} radius={[0, 2, 2, 0]} maxBarSize={22} />
                     </BarChart>
                   </ResponsiveContainer>

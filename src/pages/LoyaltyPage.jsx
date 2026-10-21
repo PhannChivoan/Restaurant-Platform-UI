@@ -1,3 +1,4 @@
+import { formatMoney } from "../utils/platformSettings";
 import { useCallback, useEffect, useState } from "react";
 
 import {
@@ -547,7 +548,7 @@ const LoyaltyPage = () => {
                 },
                 {
                   label: "Redeem ratio",
-                  value: `100 pts = $${(100 / rules.redeem_ratio).toFixed(2)}`,
+                  value: `100 pts = ${formatMoney((100 / rules.redeem_ratio))}`,
                   icon: Wallet,
                   color: palette.primary,
                 },

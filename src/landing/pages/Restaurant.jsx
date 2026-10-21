@@ -1,3 +1,4 @@
+import { formatMoney } from "../../utils/platformSettings";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { fetchPublicRestaurants, fetchPublicCategories, peekPublicRestaurants, peekPublicCategories } from "../api/publicApi";
@@ -540,7 +541,7 @@ function apiToVendor(r) {
     rating: "New",
     tagline: `${r.cuisine_type} \u2022 ${r.menu_items_count} dishes`,
     location: b ? `${b.name}${b.city ? ` \u2022 ${b.city}` : ""}` : "",
-    feeInfo: r.top_item ? `From $${r.top_item.price.toFixed(2)}` : "",
+    feeInfo: r.top_item ? `From ${formatMoney(r.top_item.price)}` : "",
     cta: "View Menu \u2192",
     alt: r.name,
     href: `/order/shop?shop=${r.id}`,

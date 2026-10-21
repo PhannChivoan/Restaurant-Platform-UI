@@ -131,3 +131,9 @@ h1, h2, h3, h4,
 }
 .admin-shell *::-webkit-scrollbar-thumb:hover { background: #b9c1ce; background-clip: padding-box; border: 3px solid transparent; }
 .admin-shell *::-webkit-scrollbar-track { background: transparent; }
+/* controls the signed-in role has no create / update / delete permission for */
+.perm-locked {
+  opacity: 0.4 !important;
+  cursor: not-allowed !important;
+  filter: grayscale(0.6);
+}

@@ -89,8 +89,9 @@ const ServicesPage = () => {
                 <div className="relative h-64 w-full overflow-hidden">
                   <img
                     className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    data-alt="A modern urban courier on a sleek electric bike delivering steaming hot gourmet takeaway packaging through sunset city streets, warm ambient lighting with orange highlights matching vibrant delivery gear"
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuDU_PeqgTfupn3juBdZ6ykrBxPVemRUHix-AT4bMnzBvlZcLKWMQnl5bPjOs02xdaUlnwG5kvWcxT_00OIjDVJRzLBJrPAN_gmfYIFclPY9VWy-afhNmXDEV52bIaxM4HFs5TUi8LmVrJ79bdjyZLXA_a-7sfzh0DXpiuSS0HWbj4rzJROZ-EaYxH601OcaTxuHBNNGenAxtZ0Mp0_5xT3gXi4aM_Y_eMzKaPzAVvFD"
+                    data-alt="A courier on a motorbike delivering steaming Khmer takeaway through the streets of Phnom Penh at sunset, warm light with orange highlights matching the delivery gear."
+                    src="/assets/cambodia/services-courier.jpg"
+                    onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = "https://lh3.googleusercontent.com/aida-public/AB6AXuDU_PeqgTfupn3juBdZ6ykrBxPVemRUHix-AT4bMnzBvlZcLKWMQnl5bPjOs02xdaUlnwG5kvWcxT_00OIjDVJRzLBJrPAN_gmfYIFclPY9VWy-afhNmXDEV52bIaxM4HFs5TUi8LmVrJ79bdjyZLXA_a-7sfzh0DXpiuSS0HWbj4rzJROZ-EaYxH601OcaTxuHBNNGenAxtZ0Mp0_5xT3gXi4aM_Y_eMzKaPzAVvFD"; }}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-inverse-surface/80 via-inverse-surface/20 to-transparent"></div>
                   <div className="absolute top-space-md left-space-md flex gap-space-xs">
@@ -179,8 +180,9 @@ const ServicesPage = () => {
                 <div className="relative h-64 w-full overflow-hidden">
                   <img
                     className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    data-alt="Corporate technology team enjoying a stylish catered buffet in a sunlit modern workplace cafeteria with individual eco-friendly bento meal packaging and healthy artisan bowls"
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuB8z-IhvS-UxG0GaFEVXXXbc8oV-nRLbK0KkhiV60anBtPSw7EPhADi47ZJBFk4kqctewYGoGgPM0ZqEb2qlr4onNxSTTRDoa0TfcbXgld82Ty5Dw6_yak3wHCdq0IaVYc9OJCecBNhraqtqXatFuplU0tvDFgFva75p-iZEWXeffLTD_4X6LLQcJ_3UKGpvTZEfoGsxvlrhaBAj51WJFNxFyAzu0szo74xap-HUimA"
+                    data-alt="An office team in Phnom Penh enjoying a catered Khmer lunch buffet in a bright workplace canteen with eco-friendly meal boxes."
+                    src="/assets/cambodia/services-corporate.jpg"
+                    onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = "https://lh3.googleusercontent.com/aida-public/AB6AXuB8z-IhvS-UxG0GaFEVXXXbc8oV-nRLbK0KkhiV60anBtPSw7EPhADi47ZJBFk4kqctewYGoGgPM0ZqEb2qlr4onNxSTTRDoa0TfcbXgld82Ty5Dw6_yak3wHCdq0IaVYc9OJCecBNhraqtqXatFuplU0tvDFgFva75p-iZEWXeffLTD_4X6LLQcJ_3UKGpvTZEfoGsxvlrhaBAj51WJFNxFyAzu0szo74xap-HUimA"; }}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-inverse-surface/80 via-inverse-surface/20 to-transparent"></div>
                   <div className="absolute top-space-md left-space-md flex gap-space-xs">
@@ -269,8 +271,9 @@ const ServicesPage = () => {
                 <div className="relative h-64 w-full overflow-hidden">
                   <img
                     className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    data-alt="A high-end restaurant chef in an open modern commercial kitchen inspecting multi-tablet order management terminals glowing with live ticket updates and kitchen routing systems"
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuCAPoPOqIJ68O5vu3NnHGBg3TcRATOQCO_QhaVqB6gMy8eNnkqeZXogYO4reTGnJ31Ar-FT-oJMGAgDYMf1_kWQu19k5tCgoLLGAZIB4X-0Ll6x5U3Uk_Rc9e6eS_9B4kZpwy9LX15Mwr_xw6Yqw-s5qbls6XJVnFvtLRSg8o85HH3ORv3mo4bTOoUu6u-M_7HPfxQtQ1bzFRenO4NGUjiBqsz1TePJ09cwEEDat8AY"
+                    data-alt="A Khmer restaurant chef in an open kitchen checking tablets that show live order tickets and kitchen routing."
+                    src="/assets/cambodia/services-kitchen.jpg"
+                    onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = "https://lh3.googleusercontent.com/aida-public/AB6AXuCAPoPOqIJ68O5vu3NnHGBg3TcRATOQCO_QhaVqB6gMy8eNnkqeZXogYO4reTGnJ31Ar-FT-oJMGAgDYMf1_kWQu19k5tCgoLLGAZIB4X-0Ll6x5U3Uk_Rc9e6eS_9B4kZpwy9LX15Mwr_xw6Yqw-s5qbls6XJVnFvtLRSg8o85HH3ORv3mo4bTOoUu6u-M_7HPfxQtQ1bzFRenO4NGUjiBqsz1TePJ09cwEEDat8AY"; }}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-inverse-surface/80 via-inverse-surface/20 to-transparent"></div>
                   <div className="absolute top-space-md left-space-md flex gap-space-xs">
@@ -359,8 +362,9 @@ const ServicesPage = () => {
                 <div className="relative h-64 w-full overflow-hidden">
                   <img
                     className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    data-alt="A clean, luminous modern micro-fulfillment center dark store with organized wooden shelves stocked with organic fruits, pantry jars, and fresh milk cartons under gentle morning daylight"
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuDl5Safq6fDdCpK2GxOzbTez0oGPm6iQtujE9XR9F7Mf2X3NU6eW94KoPdLAbMhQXOQh2jtXbm1sNu1iPpmzHS0IA7sABSJspmwHB4J214Kq27pBmMkYqfEZhR_Mwnfrb0bZatE3Z1FWpPisRWuBWA2WLEs3R8u7QiH6CI5HPxVimT5qdd-9m8zMl8zV84ARbkMdzwL91MPFp6QZOXGgvBed3PV13zJx0iUGsbz4Yj4"
+                    data-alt="A neat neighborhood mini-mart in Phnom Penh with shelves of tropical fruit, rice, pantry jars and fresh milk in gentle morning daylight."
+                    src="/assets/cambodia/services-mart.jpg"
+                    onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = "https://lh3.googleusercontent.com/aida-public/AB6AXuDl5Safq6fDdCpK2GxOzbTez0oGPm6iQtujE9XR9F7Mf2X3NU6eW94KoPdLAbMhQXOQh2jtXbm1sNu1iPpmzHS0IA7sABSJspmwHB4J214Kq27pBmMkYqfEZhR_Mwnfrb0bZatE3Z1FWpPisRWuBWA2WLEs3R8u7QiH6CI5HPxVimT5qdd-9m8zMl8zV84ARbkMdzwL91MPFp6QZOXGgvBed3PV13zJx0iUGsbz4Yj4"; }}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-inverse-surface/80 via-inverse-surface/20 to-transparent"></div>
                   <div className="absolute top-space-md left-space-md flex gap-space-xs">

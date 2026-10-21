@@ -1,3 +1,4 @@
+import { formatMoney } from "../utils/platformSettings";
 import { useEffect, useState } from "react";
 
 import {
@@ -48,8 +49,7 @@ const { Text } = Typography;
    HELPERS
 ========================================================= */
 
-const formatCurrency = (v) =>
-  v != null ? `$${Number(v).toFixed(2)}` : "-";
+const formatCurrency = (v) => (v != null ? formatMoney(v) : "-");
 
 const firstSaveError = (response) => {
   if (response?.errors) {

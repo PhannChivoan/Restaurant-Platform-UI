@@ -3,6 +3,8 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import AddressSelector from "./AddressSelector";
 import NotificationBell from "./NotificationBell";
 import { Config } from "../../utils/config";
+import "../mobile-nav.css";
+import { LANGS, useI18n } from "../i18n";
 import { platformLogo, platformName } from "../../utils/platformSettings";
 
 const API_URL = Config.BASE_URL.replace(/\/+$/, "");
@@ -34,6 +36,7 @@ const MENU_ITEM =
 
 const getActiveKey = (pathname) => {
   if (pathname === "/") return "home";
+  if (pathname.startsWith("/orders")) return "my-orders";
   if (pathname.startsWith("/order")) return "order";
   if (pathname.startsWith("/services")) return "services";
   if (pathname.startsWith("/about-us")) return "about-us";
@@ -42,6 +45,7 @@ const getActiveKey = (pathname) => {
 };
 
 const SiteHeader = () => {
+  const { t, lang, setLang } = useI18n();
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const isHome = pathname === "/";
@@ -145,27 +149,40 @@ const SiteHeader = () => {
     }
   };
 
+  // bottom tab bar (phones / tablets): four main tabs plus a "More" sheet
+  const tabs = [
+    ["home", "/", t("nav.home", "Home"), "home"],
+    ["order", "/order", t("nav.order", "Order"), "restaurant"],
+    ["services", "/services", t("nav.services", "Services"), "room_service"],
+    isLoggedIn
+      ? ["my-orders", "/orders", t("nav.orders", "Orders"), "receipt_long"]
+      : ["contact", "/contact", t("nav.contact", "Contact"), "mail"],
+  ];
+  const moreLinks = [
+    ["about-us", "/about-us", t("nav.about", "About Us"), "info"],
+    ...(isLoggedIn ? [["contact", "/contact", t("nav.contact", "Contact"), "mail"]] : []),
+    ["partner", "/partner", t("nav.partner", "Partner with us"), "handshake"],
+  ];
+  const [moreClosing, setMoreClosing] = useState(false);
+  const closeMore = () => {
+    setMoreClosing(true);
+    setTimeout(() => {
+      setMobileOpen(false);
+      setMoreClosing(false);
+    }, 160);
+  };
+  const moreActive = moreLinks.some(([key]) => key === active);
+
   const displayName = user?.name || user?.full_name || user?.email || "Account";
   // Only compute an initial once the real user has loaded (avoids a flash of "A" from "Account")
   const initial = user ? displayName.trim().charAt(0).toUpperCase() : null;
   const avatarSrc = user?.avatar_url || user?.avatar;
 
   return (
+    <>
     <header className="fixed top-0 left-0 right-0 z-50 bg-surface-container-lowest/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]">
       <div className="h-20 max-w-[1280px] mx-auto px-margin flex items-center justify-between gap-gutter">
         <div className="flex items-center gap-space-sm lg:gap-space-lg">
-          <button
-            type="button"
-            onClick={() => setMobileOpen((o) => !o)}
-            aria-label={mobileOpen ? "Close menu" : "Open menu"}
-            aria-expanded={mobileOpen}
-            aria-controls="mobile-nav"
-            className="lg:hidden flex h-10 w-10 items-center justify-center rounded-full text-on-surface hover:bg-surface-container-low transition-colors"
-          >
-            <span className="material-symbols-outlined text-[26px]">
-              {mobileOpen ? "close" : "menu"}
-            </span>
-          </button>
           <Link to="/" className="flex items-center gap-space-sm">
             {/* the logo comes from Platform Settings when one is uploaded */}
             {platformLogo() ? (
@@ -196,36 +213,49 @@ const SiteHeader = () => {
             className={active === "home" ? ACTIVE_NAV : INACTIVE_NAV}
             aria-current={active === "home" ? "page" : undefined}
           >
-            Home
+            {t("nav.home", "Home")}
           </Link>
           <Link
             to="/order"
             className={active === "order" ? ACTIVE_NAV : INACTIVE_NAV}
             aria-current={active === "order" ? "page" : undefined}
           >
-            Order
+            {t("nav.order", "Order")}
           </Link>
           <Link
             to="/services"
             className={active === "services" ? ACTIVE_NAV : INACTIVE_NAV}
             aria-current={active === "services" ? "page" : undefined}
           >
-            Services
+            {t("nav.services", "Services")}
           </Link>
           <Link
             to="/about-us"
             className={active === "about-us" ? ACTIVE_NAV : INACTIVE_NAV}
             aria-current={active === "about-us" ? "page" : undefined}
           >
-            About Us
+            {t("nav.about", "About Us")}
           </Link>
           <Link
             to="/contact"
             className={active === "contact" ? ACTIVE_NAV : INACTIVE_NAV}
             aria-current={active === "contact" ? "page" : undefined}
           >
-            Contact
+            {t("nav.contact", "Contact")}
           </Link>
+          <span className="flex items-center gap-1 rounded-full bg-surface-container-low p-0.5" role="group" aria-label={t("lang.label", "Language")}>
+            {LANGS.map(([code, label]) => (
+              <button
+                key={code}
+                type="button"
+                onClick={() => setLang(code)}
+                aria-pressed={lang === code}
+                className={`px-2.5 py-0.5 rounded-full text-[12px] font-bold ${lang === code ? "bg-primary-container text-on-primary" : "text-on-surface-variant"}`}
+              >
+                {label}
+              </button>
+            ))}
+          </span>
         </nav>
 
         {isLoggedIn ? (
@@ -350,59 +380,83 @@ const SiteHeader = () => {
         )}
       </div>
 
-      {/* Mobile / tablet menu */}
-      {mobileOpen && (
-        <nav
-          id="mobile-nav"
-          className="lg:hidden border-t border-black/5 bg-surface-container-lowest shadow-[0_12px_24px_rgba(0,0,0,0.08)] max-h-[calc(100vh-5rem)] overflow-y-auto"
-        >
-          <div className="max-w-[1280px] mx-auto px-margin py-space-sm flex flex-col">
-            {[
-              ["home", "/", "Home", "home"],
-              ["order", "/order", "Order", "restaurant"],
-              ["services", "/services", "Services", "room_service"],
-              ["about-us", "/about-us", "About Us", "info"],
-              ["contact", "/contact", "Contact", "mail"],
-            ].map(([key, to, label, icon]) => (
-              <Link
-                key={key}
-                to={to}
-                onClick={() => setMobileOpen(false)}
-                aria-current={active === key ? "page" : undefined}
-                className={`flex items-center gap-space-sm py-space-sm font-label-lg text-label-lg border-b border-black/5 ${
-                  active === key ? "text-primary-container font-bold" : "text-on-surface"
-                }`}
-              >
-                <span className="material-symbols-outlined text-[22px]">{icon}</span>
-                {label}
-              </Link>
-            ))}
-            <Link
-              to="/partner"
-              onClick={() => setMobileOpen(false)}
-              className="flex items-center gap-space-sm py-space-sm font-label-lg text-label-lg text-on-surface border-b border-black/5"
+    </header>
+
+      {/* Phones and tablets: app-style bottom tab bar */}
+      <nav
+        aria-label="Main navigation"
+        className="app-tabbar fixed bottom-0 left-0 right-0 z-50 border-t border-black/5 bg-surface-container-lowest/95 backdrop-blur-xl shadow-[0_-4px_16px_rgba(0,0,0,0.06)] pb-[env(safe-area-inset-bottom)]"
+      >
+        {tabs.map(([key, to, label, icon]) => (
+          <Link
+            key={key}
+            to={to}
+            aria-current={active === key ? "page" : undefined}
+            className={`flex-1 min-w-0 flex flex-col items-center gap-0.5 py-2 text-[11px] ${
+              active === key ? "text-primary-container font-bold" : "text-on-surface-variant"
+            }`}
+          >
+            <span
+              className="material-symbols-outlined text-[24px]"
+              style={active === key ? { fontVariationSettings: "'FILL' 1" } : undefined}
             >
-              <span className="material-symbols-outlined text-[22px]">handshake</span>
-              Partner with us
-            </Link>
-            {isLoggedIn && (
-              <Link
-                to="/orders"
-                onClick={() => setMobileOpen(false)}
-                className="flex items-center gap-space-sm py-space-sm font-label-lg text-label-lg text-on-surface border-b border-black/5"
-              >
-                <span className="material-symbols-outlined text-[22px]">receipt_long</span>
-                My orders
-              </Link>
-            )}
-            {/* the delivery address picker is hidden in the top bar on small screens */}
-            <div className="py-space-sm xl:hidden">
-              <AddressSelector compact />
+              {icon}
+            </span>
+            <span className="truncate max-w-full">{label}</span>
+          </Link>
+        ))}
+        <button
+          type="button"
+          onClick={() => (mobileOpen ? closeMore() : setMobileOpen(true))}
+          aria-haspopup="dialog"
+          className={`flex-1 min-w-0 flex flex-col items-center gap-0.5 py-2 text-[11px] ${
+            moreActive ? "text-primary-container font-bold" : "text-on-surface-variant"
+          }`}
+        >
+          <span className="material-symbols-outlined text-[24px]">grid_view</span>
+          <span>{t("nav.more", "More")}</span>
+        </button>
+      </nav>
+
+      {mobileOpen && (
+        <div className={`app-more-layer${moreClosing ? " is-closing" : ""}`} role="dialog" aria-modal="true" aria-label="More">
+          <button type="button" aria-label="Close" className="app-more-backdrop" onClick={closeMore} />
+          <div className="app-more-panel">
+            <div className="grid grid-cols-3 gap-space-sm">
+              {moreLinks.map(([key, to, label, icon]) => (
+                <Link
+                  key={key}
+                  to={to}
+                  onClick={closeMore}
+                  className={`flex flex-col items-center gap-1 rounded-xl border border-black/5 bg-surface-container-low px-2 py-space-sm text-center text-[12px] ${
+                    active === key ? "text-primary-container font-bold" : "text-on-surface"
+                  }`}
+                >
+                  <span className="material-symbols-outlined text-[26px]">{icon}</span>
+                  {label}
+                </Link>
+              ))}
+            </div>
+            <div className="flex items-center justify-between pt-space-sm">
+              <span className="font-label-md text-label-md text-on-surface-variant">{t("lang.label", "Language")}</span>
+              <span className="flex items-center gap-1 rounded-full bg-surface-container-low p-0.5">
+                {LANGS.map(([code, label]) => (
+                  <button
+                    key={code}
+                    type="button"
+                    onClick={() => setLang(code)}
+                    aria-pressed={lang === code}
+                    className={`px-3 py-1 rounded-full text-[12px] font-bold ${lang === code ? "bg-primary-container text-on-primary" : "text-on-surface-variant"}`}
+                  >
+                    {label}
+                  </button>
+                ))}
+              </span>
             </div>
           </div>
-        </nav>
+        </div>
       )}
-    </header>
+    </>
   );
 };
 

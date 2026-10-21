@@ -1,3 +1,4 @@
+import { formatMoney } from "../utils/platformSettings";
 import { useEffect, useMemo, useState } from "react";
 
 import {
@@ -84,11 +85,7 @@ const DATE_PRESETS = [
    HELPERS
 ========================================================= */
 
-const formatCurrency = (value) =>
-  `$${Number(value || 0).toLocaleString("en-US", {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  })}`;
+const formatCurrency = (value) => formatMoney(value);
 
 const formatStatus = (status = "") =>
   status
@@ -925,30 +922,17 @@ const RiderEarningsPage = () => {
                 },
                 {
                   label: "Total Earnings",
-                  value: `$${rows
-                    .reduce((sum, r) => sum + Number(r.earnings || 0), 0)
-                    .toLocaleString("en-US", {
-                      minimumFractionDigits: 2,
-                      maximumFractionDigits: 2,
-                    })}`,
+                  value: formatMoney(rows.reduce((sum, r) => sum + Number(r.earnings || 0), 0)),
                   color: palette.success,
                   bg: "#DCFCE7",
                 },
                 {
                   label: "Avg / Trip",
-                  value: `$${
+                  value: formatMoney(
                     rows.reduce((sum, r) => sum + (r.trips || 0), 0) > 0
-                      ? (
-                          rows.reduce(
-                            (sum, r) => sum + Number(r.earnings || 0),
-                            0,
-                          ) / rows.reduce((sum, r) => sum + (r.trips || 0), 0)
-                        ).toLocaleString("en-US", {
-                          minimumFractionDigits: 2,
-                          maximumFractionDigits: 2,
-                        })
-                      : "0.00"
-                  }`,
+                      ? rows.reduce((sum, r) => sum + Number(r.earnings || 0), 0) / rows.reduce((sum, r) => sum + (r.trips || 0), 0)
+                      : 0,
+                  ),
                   color: palette.info,
                   bg: "#DBEAFE",
                 },

@@ -4,6 +4,8 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import CartItemList from "../components/CartItemList";
 import AddressSelector from "../components/AddressSelector";
 import CartSwitcher from "../components/CartSwitcher";
+import FavoriteButton from "../components/FavoriteButton";
+import RestaurantReviews from "../components/RestaurantReviews";
 import { Config } from "../../utils/config";
 import useCart, { fmt } from "../hooks/useCart";
 import {
@@ -251,7 +253,8 @@ const ShopPage = () => {
                     </div>
                   )}
 
-                  <div className="absolute bottom-3 left-4 right-4 flex flex-col text-white">
+                  <FavoriteButton restaurantId={shop.id} className="absolute bottom-3 right-4" />
+                  <div className="absolute bottom-3 left-4 right-16 flex flex-col text-white">
                     <h1 className="font-headline-xl font-bold tracking-tight text-white">
                       {shop.name}
                     </h1>
@@ -293,6 +296,8 @@ const ShopPage = () => {
                 </div>
               </div>
             )}
+
+            {shop && <RestaurantReviews restaurantId={shop.id} />}
 
             {/* Menu sections */}
             {loadingMenu && (
@@ -511,6 +516,11 @@ const ShopPage = () => {
                 <CartItemList items={cart.items} onModify={cart.modify} />
               </div>
 
+              {/* one promo code for all carts: hidden once another cart uses it */}
+              {cart.promoBlocked && (
+                <p className="font-body-sm text-body-sm text-on-surface-variant">A promo code is already used on your other order.</p>
+              )}
+              {!cart.promoBlocked && !cart.voucherVisible && (
               <div className="flex items-center bg-surface-container-low rounded-lg p-1">
                 <input
                   className="w-full bg-transparent px-space-sm font-body-sm text-body-sm text-on-surface placeholder:text-secondary focus:outline-none uppercase font-semibold"
@@ -528,6 +538,8 @@ const ShopPage = () => {
                   Apply
                 </button>
               </div>
+              )}
+              {cart.promoError && <p className="font-body-sm text-body-sm text-error">{cart.promoError}</p>}
 
               <div className="flex flex-col gap-1.5 pt-space-xs text-on-surface-variant font-body-sm text-body-sm">
                 <div className="flex justify-between">
@@ -555,7 +567,12 @@ const ShopPage = () => {
                       : "flex justify-between text-tertiary font-semibold hidden"
                   }
                 >
-                  <span>Tenant Voucher (HUNGRY5)</span>
+                  <span className="flex items-center gap-1">
+                    Promo {cart.promoCode}
+                    <button type="button" onClick={cart.removePromo} className="text-on-surface-variant hover:text-error" aria-label="Remove promo code">
+                      <span className="material-symbols-outlined text-[16px]">close</span>
+                    </button>
+                  </span>
                   <span id="cartDiscount">{"-" + fmt(cart.discount)}</span>
                 </div>
                 <div className="flex justify-between">

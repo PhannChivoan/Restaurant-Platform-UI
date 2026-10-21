@@ -15,14 +15,15 @@ import {
 import {
   Bell,
   ChevronDown,
-  CreditCard,
   LogOut,
+  ShieldCheck,
   Search,
   Settings,
   User,
   Menu as MenuIcon,
 } from "lucide-react";
 import BranchSwitcher from "./BranchSwitcher";
+import SecurityModal from "./SecurityModal";
 import { palette, fontMono } from "../../constants/theme";
 import { findNavItem, NAV_ITEMS } from "../../constants/navigation";
 import { request } from "../../utils/request";
@@ -132,6 +133,8 @@ const Header = ({
   }, []);
 
 
+  const [securityOpen, setSecurityOpen] = useState(false);
+
   const userMenuItems = [
     {
       key: "profile",
@@ -139,9 +142,9 @@ const Header = ({
       label: "Profile",
     },
     {
-      key: "billing",
-      icon: <CreditCard size={16} strokeWidth={1.75} />,
-      label: "Billing",
+      key: "security",
+      icon: <ShieldCheck size={16} strokeWidth={1.75} />,
+      label: "Security",
     },
     {
       key: "settings",
@@ -159,7 +162,7 @@ const Header = ({
 
   const handleUserMenu = ({ key }) => {
     if (key === "profile") navigate("/profile");
-    if (key === "billing") navigate("/billing");
+    if (key === "security") setSecurityOpen(true);
     if (key === "settings") navigate("/settings");
     if (key === "logout") {
       removeAccessToken();
@@ -400,6 +403,8 @@ const Header = ({
           </Button>
         </Dropdown>
       </Space>
+
+      <SecurityModal open={securityOpen} onClose={() => setSecurityOpen(false)} />
 
       <style>
         {`

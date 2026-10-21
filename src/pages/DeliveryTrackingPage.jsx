@@ -1,3 +1,4 @@
+import { formatMoney } from "../utils/platformSettings";
 import { useEffect, useMemo, useState } from "react";
 
 import {
@@ -2871,7 +2872,7 @@ const DeliveryTrackingPage = () => {
                       <div style={{ fontSize: 12, fontWeight: 600, color: palette.ink, marginTop: 1 }}>{selectedDelivery.order || "-"}</div>
                     </div>
                     {selectedDelivery.order_total && (
-                      <div style={{ fontSize: 14, fontWeight: 700, color: palette.success }}>${Number(selectedDelivery.order_total).toFixed(2)}</div>
+                      <div style={{ fontSize: 14, fontWeight: 700, color: palette.success }}>{formatMoney(Number(selectedDelivery.order_total))}</div>
                     )}
                   </div>
 
@@ -2927,14 +2928,14 @@ const DeliveryTrackingPage = () => {
                             try {
                               const mods = typeof item.selected_modifiers === "string" ? JSON.parse(item.selected_modifiers) : item.selected_modifiers;
                               if (Array.isArray(mods) && mods.length > 0) {
-                                return <div style={{ fontSize: 9, color: palette.faint, marginTop: 1 }}>{mods.map((m) => `${m.modifier || m.name || ""}${m.price ? ` (+$${Number(m.price).toFixed(2)})` : ""}`).join(", ")}</div>;
+                                return <div style={{ fontSize: 9, color: palette.faint, marginTop: 1 }}>{mods.map((m) => `${m.modifier || m.name || ""}${m.price ? ` (+${formatMoney(m.price)})` : ""}`).join(", ")}</div>;
                               }
                             } catch { return null; }
                             return null;
                           })()}
                         </div>
                         <div style={{ fontSize: 11, fontWeight: 600, color: palette.ink, whiteSpace: "nowrap" }}>
-                          ${Number(item.subtotal || item.unit_price * item.quantity).toFixed(2)}
+                          {formatMoney(Number(item.subtotal || item.unit_price * item.quantity))}
                         </div>
                       </div>
                     ))}
@@ -2952,35 +2953,35 @@ const DeliveryTrackingPage = () => {
                     <div style={{ padding: "8px 13px" }}>
                       <div style={{ display: "flex", justifyContent: "space-between", fontSize: 11, marginBottom: 3 }}>
                         <span style={{ color: palette.muted }}>Subtotal</span>
-                        <span style={{ fontWeight: 600, color: palette.ink }}>${Number(orderDetail.subtotal || 0).toFixed(2)}</span>
+                        <span style={{ fontWeight: 600, color: palette.ink }}>{formatMoney(Number(orderDetail.subtotal || 0))}</span>
                       </div>
                       {Number(orderDetail.delivery_fee || 0) > 0 && (
                         <div style={{ display: "flex", justifyContent: "space-between", fontSize: 11, marginBottom: 3 }}>
                           <span style={{ color: palette.muted }}>Delivery fee</span>
-                          <span style={{ fontWeight: 600, color: palette.ink }}>${Number(orderDetail.delivery_fee).toFixed(2)}</span>
+                          <span style={{ fontWeight: 600, color: palette.ink }}>{formatMoney(Number(orderDetail.delivery_fee))}</span>
                         </div>
                       )}
                       {Number(orderDetail.surge_fee || 0) > 0 && (
                         <div style={{ display: "flex", justifyContent: "space-between", fontSize: 11, marginBottom: 3 }}>
                           <span style={{ color: palette.muted }}>Surge</span>
-                          <span style={{ fontWeight: 600, color: palette.warning }}>${Number(orderDetail.surge_fee).toFixed(2)}</span>
+                          <span style={{ fontWeight: 600, color: palette.warning }}>{formatMoney(Number(orderDetail.surge_fee))}</span>
                         </div>
                       )}
                       {Number(orderDetail.discount || 0) > 0 && (
                         <div style={{ display: "flex", justifyContent: "space-between", fontSize: 11, marginBottom: 3 }}>
                           <span style={{ color: palette.muted }}>Discount</span>
-                          <span style={{ fontWeight: 600, color: palette.success }}>-${Number(orderDetail.discount).toFixed(2)}</span>
+                          <span style={{ fontWeight: 600, color: palette.success }}>-{formatMoney(Number(orderDetail.discount))}</span>
                         </div>
                       )}
                       {Number(orderDetail.tax || 0) > 0 && (
                         <div style={{ display: "flex", justifyContent: "space-between", fontSize: 11, marginBottom: 3 }}>
                           <span style={{ color: palette.muted }}>Tax</span>
-                          <span style={{ fontWeight: 600, color: palette.ink }}>${Number(orderDetail.tax).toFixed(2)}</span>
+                          <span style={{ fontWeight: 600, color: palette.ink }}>{formatMoney(Number(orderDetail.tax))}</span>
                         </div>
                       )}
                       <div style={{ display: "flex", justifyContent: "space-between", fontSize: 12, fontWeight: 700, color: palette.ink, marginTop: 4, paddingTop: 4, borderTop: `1px solid ${palette.border}` }}>
                         <span>Total</span>
-                        <span>${Number(orderDetail.total || 0).toFixed(2)}</span>
+                        <span>{formatMoney(Number(orderDetail.total || 0))}</span>
                       </div>
                       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 5, fontSize: 10 }}>
                         <span style={{ color: palette.muted }}>Method: <span style={{ fontWeight: 600, color: palette.ink, textTransform: "capitalize" }}>{orderDetail.payment_method || "-"}</span></span>

@@ -40,7 +40,8 @@ const EFFECTS = {
   platform_name: "Shown in the dashboard, the storefront header and the partner sign-up page.",
   support_email: "Contact address used on the storefront footer and support replies.",
   timezone: "Every date and time in the API, including access window checks.",
-  currency: "Price symbol used across the storefront and dashboard.",
+  currency: "How prices are shown across the storefront and dashboard, and the currency ABA PayWay charges. Only US dollars and Cambodian riel are supported.",
+  exchange_rate: "Prices are stored in US dollars. With riel selected, every price is shown and charged at this rate (rounded to the nearest 100 riel).",
   prep_time_minutes: "Fallback preparation time when a dish has none of its own.",
   auto_accept_orders: "New customer orders arrive already accepted instead of pending.",
   order_alerts: "New-order notifications in the admin bell.",
@@ -82,8 +83,6 @@ const TIMEZONE_OPTIONS = [
 const CURRENCY_OPTIONS = [
   { value: "USD", label: "USD — US Dollar" },
   { value: "KHR", label: "KHR — Cambodian Riel" },
-  { value: "THB", label: "THB — Thai Baht" },
-  { value: "VND", label: "VND — Vietnamese Dong" },
 ];
 
 const PREP_TIME_OPTIONS = [15, 20, 30, 45, 60, 90].map((m) => ({
@@ -246,7 +245,8 @@ const fetchSettings = useCallback(async () => {
         platform_name: flat.platform_name || "",
         support_email: flat.support_email || "",
         timezone: flat.timezone || "Asia/Phnom_Penh",
-        currency: flat.currency || "USD",
+        currency: ["USD", "KHR"].includes(flat.currency) ? flat.currency : "USD",
+        exchange_rate: Number(flat.exchange_rate ?? 4100),
         prep_time_minutes: String(flat.prep_time_minutes ?? "30"),
         auto_accept_orders: asBool(flat.auto_accept_orders, true),
         order_alerts: asBool(flat.order_alerts, true),
@@ -300,8 +300,10 @@ const fetchSettings = useCallback(async () => {
       formData.append("_method", "PUT");
 
       const res = await request("settings", "POST", formData);
-      if (res?.message) {
-        notification.success({ message: res.message });
+      // error responses (422, 403...) also carry a "message", so success is judged
+      // by the saved settings coming back, not by the presence of a message
+      if (res?.settings && !res?.errors) {
+        notification.success({ message: res.message || "Settings updated successfully." });
         // the settings page is not enough: re-read what the API now serves so every
         // other screen (storefront, orders, branding) picks up the new values
         await loadPlatformConfig({ force: true });
@@ -388,6 +390,23 @@ const fetchSettings = useCallback(async () => {
             >
               <Form.Item label="Default currency" name="currency" extra={`Applies to: ${EFFECTS.currency}`}>
                 <Select options={CURRENCY_OPTIONS} />
+              </Form.Item>
+              <Form.Item
+                noStyle
+                shouldUpdate={(prev, next) => prev.currency !== next.currency}
+              >
+                {({ getFieldValue }) =>
+                  getFieldValue("currency") === "KHR" && (
+                    <Form.Item
+                      label="Exchange rate (riel per 1 US dollar)"
+                      name="exchange_rate"
+                      extra={EFFECTS.exchange_rate}
+                      rules={[{ required: true, type: "number", min: 1000, max: 10000, message: "Enter a rate between 1,000 and 10,000." }]}
+                    >
+                      <InputNumber min={1000} max={10000} step={50} precision={0} addonBefore="៛" style={{ width: "100%" }} />
+                    </Form.Item>
+                  )
+                }
               </Form.Item>
               <Form.Item label="Preparation time" name="prep_time_minutes" extra={`Applies to: ${EFFECTS.prep_time_minutes}`}>
                 <Select options={PREP_TIME_OPTIONS} />

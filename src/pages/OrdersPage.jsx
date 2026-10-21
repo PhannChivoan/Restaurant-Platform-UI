@@ -1,3 +1,4 @@
+import { formatMoney } from "../utils/platformSettings";
 import { useEffect, useMemo, useState } from "react";
 import dayjs from "dayjs";
 
@@ -27,9 +28,12 @@ import {
   Database,
   Ellipsis,
   Eye,
+  Download,
   Pencil,
   Plus,
+  Printer,
   RotateCcw,
+  Undo2,
   ShoppingBag,
   ChefHat,
   Trash2,
@@ -38,6 +42,9 @@ import {
 import ModulePage from "../components/ui/ModulePage";
 import { DotsRing } from "../components/ui/dots-ring";
 import { request } from "../utils/request";
+import { downloadFile } from "../utils/downloadFile";
+import { printTicket } from "../utils/printTicket";
+import { usePermissions } from "../utils/permissionsStore";
 import { palette } from "../constants/theme";
 
 const { TextArea } = Input;
@@ -47,11 +54,7 @@ const { Text } = Typography;
    FORMATTERS
 ========================================================= */
 
-const formatCurrency = (value) =>
-  `$${Number(value || 0).toLocaleString("en-US", {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  })}`;
+const formatCurrency = (value) => formatMoney(value);
 
 const formatStatus = (status = "") =>
   status
@@ -133,6 +136,14 @@ const PAYMENT_OPTIONS = [
     label: "Cash",
   },
   {
+    value: "pickup",
+    label: "Pickup (pay at restaurant)",
+  },
+  {
+    value: "aba_khqr",
+    label: "ABA PAY (KHQR)",
+  },
+  {
     value: "card",
     label: "Card",
   },
@@ -183,6 +194,64 @@ const OrdersPage = () => {
   const [selectedOrder, setSelectedOrder] = useState(null);
 
   const [saving, setSaving] = useState(false);
+
+  // refund: the order being refunded + the amount / reason typed in the dialog
+  const [refundOrder, setRefundOrder] = useState(null);
+  const [refundAmount, setRefundAmount] = useState(null);
+  const [refundReason, setRefundReason] = useState("");
+
+  const REFUNDABLE = ["cancelled", "rejected", "delivered"];
+  const { can } = usePermissions();
+  const canRefund = (o) => can("update") && o.is_paid && !o.refunded_at && REFUNDABLE.includes(o.status);
+
+  const handlePrint = async (order, kind) => {
+    // the list may not carry the dishes: read the full order first
+    let full = order;
+    if (!Array.isArray(order.items)) {
+      const res = await request(`orders/${order.id}`, "GET");
+      if (res?.id) full = res;
+    }
+    if (!printTicket(full, kind)) message.warning("Allow pop-ups to print the ticket.");
+  };
+
+  const openRefund = (order) => {
+    setRefundOrder(order);
+    setRefundAmount(Number(order.total));
+    setRefundReason("");
+  };
+
+  const submitRefund = async () => {
+    if (!refundReason.trim()) return message.warning("Write the reason for the refund.");
+    setSaving(true);
+    try {
+      const res = await request(`orders/${refundOrder.id}/refund`, "POST", {
+        amount: refundAmount || undefined,
+        reason: refundReason.trim(),
+      });
+      if (res?.refund_amount !== undefined) {
+        message.success(res.message || "Refund recorded.");
+        setRefundOrder(null);
+        setViewModalOpen(false);
+        loadOrders?.();
+      } else {
+        message.error(res?.message || "Refund failed.");
+      }
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const exportOrders = async () => {
+    try {
+      await downloadFile("exports/orders", {
+        status: status || undefined,
+        date_from: dateRange?.[0]?.format?.("YYYY-MM-DD"),
+        date_to: dateRange?.[1]?.format?.("YYYY-MM-DD"),
+      }, "orders.csv");
+    } catch (e) {
+      message.error(e.message);
+    }
+  };
 
   const clearFilters = () => {
     setSearchInput("");
@@ -885,6 +954,9 @@ const OrdersPage = () => {
                   borderRadius: 2,
                 }}
               />
+              <Button icon={<Download size={16} />} onClick={exportOrders}>
+                Export CSV
+              </Button>
               <Button
                 type="primary"
                 icon={<Plus size={17} />}
@@ -1033,6 +1105,25 @@ const OrdersPage = () => {
                           label: "View order",
                           icon: <Eye size={15} />,
                         },
+                        {
+                          key: "print-kitchen",
+                          label: "Print kitchen ticket",
+                          icon: <Printer size={15} />,
+                        },
+                        {
+                          key: "print-receipt",
+                          label: "Print receipt",
+                          icon: <Printer size={15} />,
+                        },
+                        ...(canRefund(order)
+                          ? [
+                              {
+                                key: "refund",
+                                label: "Refund",
+                                icon: <Undo2 size={15} />,
+                              },
+                            ]
+                          : []),
                         ...(canEdit
                           ? [
                               {
@@ -1055,6 +1146,9 @@ const OrdersPage = () => {
                       ],
                       onClick: ({ key }) => {
                         if (key === "view") handleView(order);
+                        if (key === "print-kitchen") handlePrint(order, "kitchen");
+                        if (key === "print-receipt") handlePrint(order, "receipt");
+                        if (key === "refund") openRefund(order);
                         if (key === "edit") handleEdit(order);
                         if (key === "delete") handleDelete(order.id);
                       },
@@ -1150,7 +1244,7 @@ const OrdersPage = () => {
                 </Descriptions.Item>
 
                 <Descriptions.Item label="Delivery Address ID">
-                  {raw.delivery_address_id || "-"}
+                  {raw.payment_method === "pickup" ? "Pickup (no delivery)" : raw.delivery_address_id || "-"}
                 </Descriptions.Item>
 
                 <Descriptions.Item label="Customer Notes">
@@ -1289,14 +1383,31 @@ const OrdersPage = () => {
             footer: { borderRadius: "0 0 2px 2px" },
           }}
           footer={
-            <Button
-              onClick={() => {
-                setViewModalOpen(false);
-                setSelectedOrder(null);
-              }}
-            >
-              Close
-            </Button>
+            <Space>
+              {selectedOrder && (
+                <>
+                  <Button icon={<Printer size={15} />} onClick={() => handlePrint(selectedOrder, "kitchen")}>
+                    Kitchen ticket
+                  </Button>
+                  <Button icon={<Printer size={15} />} onClick={() => handlePrint(selectedOrder, "receipt")}>
+                    Receipt
+                  </Button>
+                  {canRefund(selectedOrder) && (
+                    <Button danger icon={<Undo2 size={15} />} onClick={() => openRefund(selectedOrder)}>
+                      Refund
+                    </Button>
+                  )}
+                </>
+              )}
+              <Button
+                onClick={() => {
+                  setViewModalOpen(false);
+                  setSelectedOrder(null);
+                }}
+              >
+                Close
+              </Button>
+            </Space>
           }
         >
           {selectedOrder && (
@@ -1370,7 +1481,9 @@ const OrdersPage = () => {
                   </Text>
                   <div>
                     <Text type="secondary">
-                      Address ID {selectedOrder.delivery_address_id || "-"}
+                      {selectedOrder.payment_method === "pickup"
+                        ? "Collected at the restaurant - no delivery"
+                        : `Address ID ${selectedOrder.delivery_address_id || "-"}`}
                     </Text>
                   </div>
                 </Card>
@@ -1472,6 +1585,45 @@ const OrdersPage = () => {
                   </Text>
                 </Card>
               </div>
+            </Space>
+          )}
+        </Modal>
+
+        {/* ===================================================
+          REFUND MODAL
+      =================================================== */}
+
+        <Modal
+          title={refundOrder ? `Refund ${refundOrder.order_number || `#${refundOrder.id}`}` : "Refund"}
+          open={Boolean(refundOrder)}
+          onCancel={() => setRefundOrder(null)}
+          onOk={submitRefund}
+          okText="Record refund"
+          okButtonProps={{ danger: true, loading: saving }}
+          destroyOnHidden
+        >
+          {refundOrder && (
+            <Space orientation="vertical" size={12} style={{ width: "100%" }}>
+              <Text type="secondary">
+                The order total is {formatCurrency(refundOrder.total)}. Money paid online (ABA / card) is returned
+                from the PayWay portal; this records the refund on the order.
+              </Text>
+              <InputNumber
+                min={0.01}
+                max={Number(refundOrder.total)}
+                step={0.5}
+                value={refundAmount}
+                onChange={setRefundAmount}
+                addonBefore="$"
+                style={{ width: "100%" }}
+              />
+              <Input.TextArea
+                rows={3}
+                maxLength={255}
+                placeholder="Reason (required)"
+                value={refundReason}
+                onChange={(e) => setRefundReason(e.target.value)}
+              />
             </Space>
           )}
         </Modal>

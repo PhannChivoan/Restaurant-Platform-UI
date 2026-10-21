@@ -1,3 +1,4 @@
+import { formatMoney } from "../../utils/platformSettings";
 // Worked example for a $20.00 order, so the deduction is easy to understand.
 export const FeeExample = ({ rate }) => {
   const order = 20;
@@ -11,11 +12,11 @@ export const FeeExample = ({ rate }) => {
       </div>
       <div className="flex justify-between font-body-md text-body-md text-on-surface-variant">
         <span>Platform commission ({rate ?? "…"}%)</span>
-        <span>− {fee === null ? "…" : `$${fee.toFixed(2)}`}</span>
+        <span>− {fee === null ? "…" : `${formatMoney(fee)}`}</span>
       </div>
       <div className="flex justify-between border-t border-surface-container-low pt-space-sm font-headline-sm text-headline-sm font-bold text-primary">
         <span>You receive</span>
-        <span>{fee === null ? "…" : `$${(order - fee).toFixed(2)}`}</span>
+        <span>{fee === null ? "…" : `${formatMoney((order - fee))}`}</span>
       </div>
     </div>
   );

@@ -1,3 +1,4 @@
+import { formatMoney } from "../utils/platformSettings";
 import { useEffect, useState } from "react";
 import { Alert, Card, Col, Empty, Progress, Row, Skeleton, Space, Statistic, Table, Tag, Typography } from "antd";
 import { Activity, Bike, ChefHat, CircleDollarSign, ShoppingBag, Store, TimerReset } from "lucide-react";
@@ -7,7 +8,7 @@ import { request } from "../utils/request";
 
 const { Text, Title } = Typography;
 
-const money = (n) => `$${Number(n || 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+const money = (n) => formatMoney(n);
 const hourLabel = (h) => `${h % 12 === 0 ? 12 : h % 12}${h < 12 ? "a" : "p"}`;
 const dayLabel = (iso) => new Date(`${iso}T00:00:00`).toLocaleDateString([], { weekday: "short" });
 
@@ -171,7 +172,7 @@ const DashboardPage = () => {
       <Row gutter={[16, 16]}>
         <Col xs={24} lg={12}>
           <Card title="Last 7 days" extra={<Text type="secondary">Revenue</Text>} variant="outlined">
-            <Bars items={daily} valueOf={(d) => d.revenue} labelOf={(d) => dayLabel(d.date)} color={palette.success} format={(v) => `$${Math.round(v)}`} />
+            <Bars items={daily} valueOf={(d) => d.revenue} labelOf={(d) => dayLabel(d.date)} color={palette.success} format={(v) => formatMoney(Math.round(v))} />
           </Card>
         </Col>
         <Col xs={24} lg={12}>

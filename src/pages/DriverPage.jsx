@@ -1,3 +1,4 @@
+import { formatMoney } from "../utils/platformSettings";
 import { useCallback, useEffect, useState } from "react";
 import { Alert, Badge, Button, Card, Col, Empty, Image, Row, Space, Statistic, Switch, Tabs, Tag, Typography, message } from "antd";
 import { Bike, CheckCircle2, ClipboardList, MapPin, Navigation, Phone, Store, Wallet } from "lucide-react";
@@ -11,7 +12,7 @@ import "./material-symbols.css";
 
 const { Paragraph, Text, Title } = Typography;
 
-const money = (n) => `$${Number(n || 0).toFixed(2)}`;
+const money = (n) => formatMoney(n);
 const time = (iso) => (iso ? new Date(iso).toLocaleString([], { day: "2-digit", month: "short", hour: "2-digit", minute: "2-digit" }) : "");
 
 const STATUS = {

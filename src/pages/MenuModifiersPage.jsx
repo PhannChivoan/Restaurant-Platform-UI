@@ -1,3 +1,4 @@
+import { formatMoney } from "../utils/platformSettings";
 import { useEffect, useState } from "react";
 
 import {
@@ -818,9 +819,9 @@ const MenuModifiersPage = () => {
                           </div>
                           <Text type="secondary" style={{ fontSize: 11 }}>
                             {Number(mod.price_adjustment) > 0
-                              ? `+$${Number(mod.price_adjustment).toFixed(2)}`
+                              ? `+${formatMoney(Number(mod.price_adjustment))}`
                               : Number(mod.price_adjustment) < 0
-                                ? `-$${Math.abs(Number(mod.price_adjustment)).toFixed(2)}`
+                                ? `-${formatMoney(Math.abs(Number(mod.price_adjustment)))}`
                                 : "No extra cost"}
                           </Text>
                         </div>

@@ -4,6 +4,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { cartRequest } from "../api/cartApi";
 import { getCustomerToken } from "../api/publicApi";
 import { useCartStore } from "../context/CartContext";
+import { clearPromo, setPromo, usePromoFor } from "../promoStore";
 import { useAddresses } from "../context/AddressContext";
 import AddressMapModal from "../components/AddressMapModal";
 import PaymentPanel from "../components/PaymentPanel";
@@ -14,6 +15,7 @@ const ALL_PAYMENTS = [
   { id: "cash", icon: "payments", title: "Cash on delivery", hint: "Pay the rider when your food arrives" },
   { id: "aba_khqr", icon: "qr_code_scanner", title: "ABA PAY (KHQR)", hint: "Scan the QR with ABA Mobile or any KHQR app" },
   { id: "card", icon: "credit_card", title: "Credit / debit card", hint: "Visa or Mastercard — enter your card details" },
+  { id: "pickup", icon: "storefront", title: "Pickup at the restaurant", hint: "Collect your order at the restaurant and pay there" },
 ];
 
 // "Cash on delivery" and the default payment provider in Platform Settings decide
@@ -55,12 +57,21 @@ const CheckoutPage = () => {
   const signedIn = Boolean(getCustomerToken());
 
   const book = useAddresses();
-  const [promo, setPromo] = useState({ input: "", applied: null, busy: false, error: "" }); // applied: { code, name, discount }
+  const [promo, setPromoUi] = useState({ input: "", busy: false, error: "" });
+  // the applied code is shared with the other carts: see promoStore
+  const { applied: appliedPromo, blocked: promoBlocked } = usePromoFor(rid);
   const [unitEdits, setUnitEdits] = useState({}); // address id -> floor / house number typed on this page
   const [editing, setEditing] = useState(null); // null = closed, "new" = add, or the address being edited
   const [form, setForm] = useState({
     phone: "",
-    payment_method: "cash",
+    // the method used last time is preselected (kept only if it is still offered, see the effect below)
+    payment_method: (() => {
+      try {
+        return localStorage.getItem("last_payment_method") || "cash";
+      } catch {
+        return "cash";
+      }
+    })(),
     notes: "",
   });
   const [busy, setBusy] = useState(false);
@@ -72,6 +83,7 @@ const CheckoutPage = () => {
   const err = (k) => fieldErrors[k]?.[0];
 
   const PAYMENTS = useAvailablePayments();
+  const pickup = form.payment_method === "pickup"; // collected at the restaurant: no delivery address
   const maintenance = isMaintenanceMode();
 
   // keep the chosen method valid when the platform settings change
@@ -104,12 +116,13 @@ const CheckoutPage = () => {
   const applyPromo = async () => {
     const code = promo.input.trim();
     if (!code || promo.busy) return;
-    setPromo((p) => ({ ...p, busy: true, error: "" }));
+    setPromoUi((p) => ({ ...p, busy: true, error: "" }));
     try {
       const r = await cartRequest(`cart/${rid}/coupon`, "POST", { code });
-      setPromo({ input: "", applied: { code: r.code, name: r.name, discount: r.discount }, busy: false, error: "" });
+      setPromo({ restaurantId: rid, code: r.code, name: r.name, discount: r.discount });
+      setPromoUi({ input: "", busy: false, error: "" });
     } catch (err) {
-      setPromo((p) => ({ ...p, busy: false, applied: null, error: err.message }));
+      setPromoUi((p) => ({ ...p, busy: false, error: err.message }));
     }
   };
 
@@ -131,16 +144,27 @@ const CheckoutPage = () => {
     setFormError("");
     setFieldErrors({});
     try {
-      if (!book.selected) {
+      if (!pickup && !book.selected) {
         setFormError("Please add or choose a delivery address.");
         setBusy(false);
         return;
       }
-      const unit = (unitEdits[book.selected.id] ?? book.selected.details ?? "").trim();
-      const body = { ...form, address_id: book.selected.id, address_details: unit, coupon_code: promo.applied?.code || undefined, notes: form.notes || undefined };
+      const unit = pickup ? "" : (unitEdits[book.selected.id] ?? book.selected.details ?? "").trim();
+      const body = {
+        ...form,
+        address_id: pickup ? undefined : book.selected.id,
+        address_details: pickup ? undefined : unit,
+        coupon_code: appliedPromo?.code || undefined,
+        notes: form.notes || undefined,
+      };
       const res = await cartRequest(`cart/${rid}/checkout`, "POST", body);
       store.replaceServerCarts(res.data);
-      if (form.payment_method === "cash") setPlaced(res.order);
+      try {
+        localStorage.setItem("last_payment_method", form.payment_method);
+      } catch {
+        /* storage unavailable */
+      }
+      if (form.payment_method === "cash" || pickup) setPlaced(res.order);
       else setPaying({ order: res.order, method: form.payment_method });
     } catch (e2) {
       if (e2.status === 401) {
@@ -188,7 +212,9 @@ const CheckoutPage = () => {
           {PAYMENTS.find((p) => p.id === placed.payment_method)?.title}
         </p>
         <p className="font-body-sm text-body-sm text-on-surface-variant">
-          The restaurant has been notified and will confirm shortly.
+          {placed.payment_method === "pickup"
+            ? "The restaurant has been notified. Collect your order there when it is ready and pay at the counter."
+            : "The restaurant has been notified and will confirm shortly."}
         </p>
         <div className="flex flex-wrap justify-center gap-space-sm">
           {store.carts.length > 0 && (
@@ -255,6 +281,21 @@ const CheckoutPage = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-space-lg items-start">
         <div className="lg:col-span-3 flex flex-col gap-space-lg">
+          {pickup && (
+            <Card icon="storefront" title="Pickup at the restaurant">
+              <p className="font-body-md text-body-md text-on-surface-variant">
+                You collect this order at {cart?.restaurant?.name}{cart?.branch?.name ? ` (${cart.branch.name})` : ""} when it is ready, and pay there. No delivery fee, no rider.
+              </p>
+              <textarea
+                className={field}
+                rows={2}
+                placeholder="Note to the restaurant (optional)"
+                value={form.notes}
+                onChange={set("notes")}
+              />
+            </Card>
+          )}
+          {!pickup && (
           <Card
             icon="location_on"
             title="Delivery address"
@@ -341,6 +382,7 @@ const CheckoutPage = () => {
               onChange={set("notes")}
             />
           </Card>
+          )}
           <Card icon="call" title="Contact number">
             <div>
               <input className={field} type="tel" placeholder="e.g. 012 345 678" value={form.phone} onChange={set("phone")} />
@@ -417,30 +459,33 @@ const CheckoutPage = () => {
               <span>Delivery fee</span>
               <span className="font-semibold text-tertiary">FREE</span>
             </div>
-            {promo.applied && (
+            {appliedPromo && (
               <div className="flex justify-between text-tertiary font-semibold">
                 <span className="flex items-center gap-1">
-                  Promo {promo.applied.code}
-                  <button type="button" onClick={() => setPromo((p) => ({ ...p, applied: null }))} className="text-on-surface-variant hover:text-error" aria-label="Remove promo code">
+                  Promo {appliedPromo.code}
+                  <button type="button" onClick={clearPromo} className="text-on-surface-variant hover:text-error" aria-label="Remove promo code">
                     <span className="material-symbols-outlined text-[16px]">close</span>
                   </button>
                 </span>
-                <span>−{fmt(promo.applied.discount)}</span>
+                <span>−{fmt(appliedPromo.discount)}</span>
               </div>
             )}
             <div className="flex justify-between pt-space-xs border-t border-surface-container-low font-headline-sm text-headline-sm font-bold text-on-surface">
               <span>Total</span>
-              <span className="text-primary-container">{fmt(Math.max(0, cart.subtotal - (promo.applied?.discount ?? 0)))}</span>
+              <span className="text-primary-container">{fmt(Math.max(0, cart.subtotal - (appliedPromo?.discount ?? 0)))}</span>
             </div>
           </div>
-          {!promo.applied && (
+          {promoBlocked && (
+            <p className="font-body-sm text-body-sm text-on-surface-variant">A promo code is already used on your other order, so it can&apos;t be applied here.</p>
+          )}
+          {!appliedPromo && !promoBlocked && (
             <div className="flex flex-col gap-1">
               <div className="flex gap-space-xs">
                 <input
                   className={field}
                   placeholder="Promo code"
                   value={promo.input}
-                  onChange={(e) => setPromo((p) => ({ ...p, input: e.target.value.toUpperCase(), error: "" }))}
+                  onChange={(e) => setPromoUi((p) => ({ ...p, input: e.target.value.toUpperCase(), error: "" }))}
                   onKeyDown={(e) => e.key === "Enter" && (e.preventDefault(), applyPromo())}
                 />
                 <button
@@ -461,7 +506,7 @@ const CheckoutPage = () => {
             disabled={busy}
             className="w-full min-h-[56px] bg-primary-container hover:bg-primary disabled:opacity-60 text-on-primary rounded-xl font-label-lg text-label-lg font-bold shadow-md transition-all"
           >
-            {busy ? "Placing order…" : `Place order • ${fmt(Math.max(0, cart.subtotal - (promo.applied?.discount ?? 0)))}`}
+            {busy ? "Placing order…" : `Place order • ${fmt(Math.max(0, cart.subtotal - (appliedPromo?.discount ?? 0)))}`}
           </button>
         </aside>
       </div>

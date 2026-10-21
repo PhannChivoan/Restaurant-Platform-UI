@@ -1,3 +1,4 @@
+import { formatMoney } from "../utils/platformSettings";
 import { useEffect, useMemo, useState } from "react";
 
 import {
@@ -789,14 +790,14 @@ const MenuCategoriesPage = () => {
                             }}
                           >
                             <Text type="secondary" style={{ fontSize: 11 }}>
-                              ${item.price?.toFixed(2)}
+                              {formatMoney(item.price)}
                               {item.discounted_price != null && (
                                 <Text
                                   delete
                                   type="secondary"
                                   style={{ fontSize: 11, marginLeft: 4 }}
                                 >
-                                  ${item.discounted_price.toFixed(2)}
+                                  {formatMoney(item.discounted_price)}
                                 </Text>
                               )}
                             </Text>

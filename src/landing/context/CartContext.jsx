@@ -1,3 +1,4 @@
+import { clearPromo } from "../promoStore";
 import { createContext, useCallback, useContext, useEffect, useMemo, useReducer, useState } from "react";
 import { useLocation } from "react-router-dom";
 
@@ -25,6 +26,11 @@ export function CartProvider({ children }) {
   const [activeId, setActiveId] = useState(null);
   const [error, setError] = useState("");
   const [lastAdded, setLastAdded] = useState(0); // changes on every add, used to flash the floating button
+
+  // a promo code is only remembered while the customer still has carts to check out
+  useEffect(() => {
+    if (ready && carts.length === 0) clearPromo();
+  }, [ready, carts.length]);
 
   useEffect(() => {
     // carts used to be kept in localStorage; drop the old copies

@@ -1,3 +1,4 @@
+import { formatMoney } from "../utils/platformSettings";
 import { useMemo } from "react";
 import { Typography } from "antd";
 import { buildEarningsTrend } from "../utils/mapHelpers";
@@ -66,7 +67,7 @@ const EarningsChart = ({ rows }) => {
                 fill="#f97316"
                 opacity={0.85}
               >
-                <title>{`${point.label}: $${point.earnings.toLocaleString()}`}</title>
+                <title>{`${point.label}: ${formatMoney(point.earnings)}`}</title>
               </rect>
               <text
                 x={x + barWidth / 2}
