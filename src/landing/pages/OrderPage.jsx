@@ -210,7 +210,13 @@ const OrderPage = () => {
                     }
                     onClick={() => setCuisine(c.id)}
                   >
-                    <span className="material-symbols-outlined text-primary-container text-[18px]">{c.icon}</span>
+                    <span
+                      className={`material-symbols-outlined text-[18px] ${
+                        cuisine === c.id ? "text-on-primary" : "text-primary-container"
+                      }`}
+                    >
+                      {c.icon}
+                    </span>
                     <span>{c.name}</span>
                   </button>
                 ))}              </div>
