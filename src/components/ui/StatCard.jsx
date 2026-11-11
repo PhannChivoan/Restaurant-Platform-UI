@@ -4,9 +4,11 @@ import { palette, isDark } from "../../constants/theme";
 const { Text } = Typography;
 
 // KPI card: tinted icon tile, label, big value, helper line and a soft decorative wave.
-const StatCard = ({ icon: Icon, label, value, suffix, description, color = palette.primary, iconBackground }) => {
+const StatCard = ({ icon: Icon, label, value, suffix, description, descriptionColor, color = palette.primary, iconBackground }) => {
   const gid = `sw-${String(label).replace(/\W/g, "")}`;
-  const up = typeof description === "string" && /^[+↑]|^\d/.test(description.trim());
+  // a caller that knows what the note means passes its colour; otherwise a leading number or "+" reads as growth
+  const up = !descriptionColor && typeof description === "string" && /^[+↑]|^\d/.test(description.trim());
+  const noteColor = descriptionColor || (up ? palette.success : palette.muted);
   return (
     <Card
       variant="outlined"
@@ -37,7 +39,7 @@ const StatCard = ({ icon: Icon, label, value, suffix, description, color = palet
             {suffix ? <span style={{ fontSize: 13, fontWeight: 500, color: palette.muted }}> {suffix}</span> : null}
           </div>
           {description && (
-            <Text style={{ fontSize: 12, display: "block", marginTop: 2, color: up ? palette.success : palette.muted, fontWeight: 500 }}>
+            <Text style={{ fontSize: 12, display: "block", marginTop: 2, color: noteColor, fontWeight: 500 }}>
               {up ? "↑ " : ""}{description}
             </Text>
           )}

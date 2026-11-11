@@ -51,7 +51,8 @@ const HealthMetric = ({ icon: Icon, label, value, detail, color }) => (
 const AreaTrend = ({ items, valueOf, labelOf, color = palette.primary, format = (v) => v, id }) => {
   const rows = items.map((item) => ({ label: labelOf(item), value: Number(valueOf(item)) || 0 }));
   return (
-    <div style={{ height: 260 }}>
+    <div style={{ position: "relative", flex: 1, minHeight: 260 }}>
+      <div style={{ position: "absolute", inset: 0 }}>
       <ResponsiveContainer width="100%" height="100%">
         <AreaChart data={rows} margin={{ top: 16, right: 12, left: -8, bottom: 0 }}>
           <defs>
@@ -73,6 +74,7 @@ const AreaTrend = ({ items, valueOf, labelOf, color = palette.primary, format = 
           <Area type="monotone" dataKey="value" stroke={color} strokeWidth={3} fill={`url(#${id})`} dot={false} activeDot={{ r: 5, strokeWidth: 3, stroke: palette.bg }} />
         </AreaChart>
       </ResponsiveContainer>
+      </div>
     </div>
   );
 };
@@ -168,7 +170,7 @@ const DashboardPage = () => {
       <Row gutter={[16, 16]}>
         {metrics.map((m) => (
           <Col key={m.label} xs={24} sm={12} xl={6}>
-            <StatCard icon={m.icon} label={m.label} value={m.value} suffix={m.suffix} description={m.note.text} color={m.color} />
+            <StatCard icon={m.icon} label={m.label} value={m.value} suffix={m.suffix} description={m.note.text} descriptionColor={m.note.color} color={m.color} />
           </Col>
         ))}
       </Row>
@@ -176,14 +178,14 @@ const DashboardPage = () => {
       {/* sales + recent */}
       <Row gutter={[16, 16]}>
         <Col xs={24} xl={16}>
-          <Card variant="outlined" style={cardStyle} title={headTitle(<TrendingUp size={18} />, "Sales Overview")}
+          <Card variant="outlined" style={{ ...cardStyle, display: "flex", flexDirection: "column" }} styles={{ body: { flex: 1, display: "flex", flexDirection: "column", minHeight: 0 } }} title={headTitle(<TrendingUp size={18} />, "Sales Overview")}
             extra={<Segmented value={range} onChange={setRange} options={[{ label: "Today", value: "day" }, { label: "7 Days", value: "week" }]} />}>
             {range === "day" ? (
               <AreaTrend id="gHours" items={hours} valueOf={(h) => h.value} labelOf={(h) => hourLabel(h.hour)} />
             ) : (
               <AreaTrend id="gDays" items={daily} valueOf={(d) => d.revenue} labelOf={(d) => dayLabel(d.date)} format={(v) => formatMoney(Math.round(v))} />
             )}
-            <Text type="secondary" style={{ fontSize: 12 }}>{range === "day" ? "Orders per hour today" : "Revenue per day, last 7 days"}</Text>
+            <Text type="secondary" style={{ fontSize: 12, marginTop: 8 }}>{range === "day" ? "Orders per hour today" : "Revenue per day, last 7 days"}</Text>
           </Card>
         </Col>
         <Col xs={24} xl={8}>
