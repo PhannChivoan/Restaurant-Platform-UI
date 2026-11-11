@@ -1,0 +1,2418 @@
+{
+ "pages": [
+  {
+   "key": "home",
+   "label": "Home",
+   "sections": [
+    {
+     "key": "home-1",
+     "label": "Hero section",
+     "heading": "Craving something",
+     "texts": [
+      "Now delivering in Phnom Penh, Siem Reap & Battambang",
+      "Craving something",
+      "delicious?",
+      "Order food delivered fast.",
+      "From local culinary gems to world-renowned flavors, satisfy your cravings in minutes with seamless live order tracking.",
+      "Enter your street address or area...",
+      "Use current location",
+      "Locate Me",
+      "Find Food",
+      "Daily Special",
+      "Fish Amok Feast",
+      "Free chili-lime dipping sauce & zero delivery surcharge today.",
+      "Order #FD-8941",
+      "En Route",
+      "Driver arriving in 6 mins",
+      "4.9 Star Average"
+     ],
+     "images": [
+      "/assets/cambodia/home-hero.jpg"
+     ],
+     "lists": [
+      {
+       "id": "home.perks",
+       "label": "Hero highlights",
+       "names": [
+        "Value",
+        "Label",
+        "Icon"
+       ],
+       "items": [
+        [
+         {
+          "key": "20-30 min",
+          "kind": "text"
+         },
+         {
+          "key": "Lightning delivery",
+          "kind": "text"
+         },
+         {
+          "key": "bolt",
+          "kind": "icon"
+         },
+         {
+          "key": "__url",
+          "kind": "url"
+         }
+        ],
+        [
+         {
+          "key": "15,000+",
+          "kind": "text"
+         },
+         {
+          "key": "Top eateries",
+          "kind": "text"
+         },
+         {
+          "key": "restaurant",
+          "kind": "icon"
+         },
+         {
+          "key": "__url",
+          "kind": "url"
+         }
+        ],
+        [
+         {
+          "key": "4.9 / 5",
+          "kind": "text"
+         },
+         {
+          "key": "120K Reviews",
+          "kind": "text"
+         },
+         {
+          "key": "star",
+          "kind": "icon"
+         },
+         {
+          "key": "__url",
+          "kind": "url"
+         }
+        ]
+       ],
+       "page": "home",
+       "pageLabel": "Home",
+       "pageUrl": "/",
+       "section": "Hero section"
+      }
+     ]
+    },
+    {
+     "key": "home-2",
+     "label": "Stats bar",
+     "heading": "",
+     "texts": [],
+     "images": [],
+     "lists": [
+      {
+       "id": "home.stats",
+       "label": "Platform numbers",
+       "names": [
+        "Label",
+        "Number",
+        "Note",
+        "Icon",
+        "Note icon"
+       ],
+       "items": [
+        [
+         {
+          "key": "Total Cities Active",
+          "kind": "text"
+         },
+         {
+          "key": "9",
+          "kind": "text"
+         },
+         {
+          "key": "+6 new this month",
+          "kind": "text"
+         },
+         {
+          "key": "location_city",
+          "kind": "icon"
+         },
+         {
+          "key": "trending_up",
+          "kind": "icon"
+         },
+         {
+          "key": "__url",
+          "kind": "url"
+         }
+        ],
+        [
+         {
+          "key": "Active Restaurants",
+          "kind": "text"
+         },
+         {
+          "key": "1,280",
+          "kind": "text"
+         },
+         {
+          "key": "Verified culinary partners",
+          "kind": "text"
+         },
+         {
+          "key": "storefront",
+          "kind": "icon"
+         },
+         {
+          "key": "check_circle",
+          "kind": "icon"
+         },
+         {
+          "key": "__url",
+          "kind": "url"
+         }
+        ],
+        [
+         {
+          "key": "99.8%",
+          "kind": "text"
+         },
+         {
+          "key": "On-time delivery index",
+          "kind": "text"
+         },
+         {
+          "key": "verified",
+          "kind": "icon"
+         },
+         {
+          "key": "__url",
+          "kind": "url"
+         }
+        ],
+        [
+         {
+          "key": "Courier Fleet",
+          "kind": "text"
+         },
+         {
+          "key": "1,200",
+          "kind": "text"
+         },
+         {
+          "key": "70% motorbikes & tuk-tuks",
+          "kind": "text"
+         },
+         {
+          "key": "sports_motorsports",
+          "kind": "icon"
+         },
+         {
+          "key": "electric_bolt",
+          "kind": "icon"
+         },
+         {
+          "key": "__url",
+          "kind": "url"
+         }
+        ]
+       ],
+       "page": "home",
+       "pageLabel": "Home",
+       "pageUrl": "/",
+       "section": "Stats bar"
+      }
+     ]
+    },
+    {
+     "key": "home-3",
+     "label": "Explore by categories",
+     "heading": "Explore by Cuisines & Categories",
+     "texts": [
+      "Curated Selections",
+      "Explore by Cuisines & Categories",
+      "Whatever you crave, our network delivers it hot, fresh, and lightning-fast."
+     ],
+     "images": [],
+     "lists": [
+      {
+       "id": "home.categories",
+       "label": "Food categories",
+       "names": [
+        "Name",
+        "Places",
+        "Icon"
+       ],
+       "items": [
+        [
+         {
+          "key": "Khmer BBQ",
+          "kind": "text"
+         },
+         {
+          "key": "120+ places",
+          "kind": "text"
+         },
+         {
+          "key": "lunch_dining",
+          "kind": "icon"
+         },
+         {
+          "key": "__url",
+          "kind": "url"
+         }
+        ],
+        [
+         {
+          "key": "Fish Amok",
+          "kind": "text"
+         },
+         {
+          "key": "95+ places",
+          "kind": "text"
+         },
+         {
+          "key": "local_pizza",
+          "kind": "icon"
+         },
+         {
+          "key": "__url",
+          "kind": "url"
+         }
+        ],
+        [
+         {
+          "key": "Kuy Teav & Noodles",
+          "kind": "text"
+         },
+         {
+          "key": "80+ places",
+          "kind": "text"
+         },
+         {
+          "key": "ramen_dining",
+          "kind": "icon"
+         },
+         {
+          "key": "__url",
+          "kind": "url"
+         }
+        ],
+        [
+         {
+          "key": "Fresh Rolls & Salads",
+          "kind": "text"
+         },
+         {
+          "key": "65+ places",
+          "kind": "text"
+         },
+         {
+          "key": "eco",
+          "kind": "icon"
+         },
+         {
+          "key": "__url",
+          "kind": "url"
+         }
+        ],
+        [
+         {
+          "key": "Num Pang & Bakery",
+          "kind": "text"
+         },
+         {
+          "key": "45+ places",
+          "kind": "text"
+         },
+         {
+          "key": "cake",
+          "kind": "icon"
+         },
+         {
+          "key": "__url",
+          "kind": "url"
+         }
+        ],
+        [
+         {
+          "key": "Iced Coffee & Tea",
+          "kind": "text"
+         },
+         {
+          "key": "50+ places",
+          "kind": "text"
+         },
+         {
+          "key": "coffee",
+          "kind": "icon"
+         },
+         {
+          "key": "__url",
+          "kind": "url"
+         }
+        ],
+        [
+         {
+          "key": "Khmer Curry & Soups",
+          "kind": "text"
+         },
+         {
+          "key": "70+ places",
+          "kind": "text"
+         },
+         {
+          "key": "soup_kitchen",
+          "kind": "icon"
+         },
+         {
+          "key": "__url",
+          "kind": "url"
+         }
+        ],
+        [
+         {
+          "key": "Mart & Grocery",
+          "kind": "text"
+         },
+         {
+          "key": "15 min drop",
+          "kind": "text"
+         },
+         {
+          "key": "shopping_basket",
+          "kind": "icon"
+         },
+         {
+          "key": "__url",
+          "kind": "url"
+         }
+        ]
+       ],
+       "page": "home",
+       "pageLabel": "Home",
+       "pageUrl": "/",
+       "section": "Explore by categories"
+      }
+     ]
+    },
+    {
+     "key": "home-4",
+     "label": "Services & value propositions",
+     "heading": "What We Bring to Your Table",
+     "texts": [
+      "Comprehensive Convenience",
+      "What We Bring to Your Table",
+      "More than food delivery. We power seamless convenience, grocery essentials, and corporate solutions designed for busy schedules."
+     ],
+     "images": [],
+     "lists": [
+      {
+       "id": "home.services",
+       "label": "What we bring cards",
+       "names": [
+        "Title",
+        "Description",
+        "Link text",
+        "Icon",
+        "Link icon"
+       ],
+       "items": [
+        [
+         {
+          "key": "Superfast Express Delivery",
+          "kind": "text"
+         },
+         {
+          "key": "Enjoy piping-hot meals at your doorstep in under 30 minutes with live GPS tracking from kitchen to hand.",
+          "kind": "text"
+         },
+         {
+          "key": "Learn about express fleet",
+          "kind": "text"
+         },
+         {
+          "key": "local_shipping",
+          "kind": "icon"
+         },
+         {
+          "key": "arrow_forward",
+          "kind": "icon"
+         },
+         {
+          "key": "__url",
+          "kind": "url"
+         }
+        ],
+        [
+         {
+          "key": "FoodOrder Mart",
+          "kind": "text"
+         },
+         {
+          "key": "Fresh tropical fruit, fresh milk, num pang bread, and pantry essentials delivered in as fast as 15 minutes without minimum order fees.",
+          "kind": "text"
+         },
+         {
+          "key": "Shop daily essentials",
+          "kind": "text"
+         },
+         {
+          "key": "store",
+          "kind": "icon"
+         },
+         {
+          "key": "arrow_forward",
+          "kind": "icon"
+         },
+         {
+          "key": "__url",
+          "kind": "url"
+         }
+        ],
+        [
+         {
+          "key": "Preorder & Pickup",
+          "kind": "text"
+         },
+         {
+          "key": "Order ahead to skip lines at lunch hours, claim self-pickup discounts, and pick up your bag fresh from the counter.",
+          "kind": "text"
+         },
+         {
+          "key": "Discover pickup deals",
+          "kind": "text"
+         },
+         {
+          "key": "takeout_dining",
+          "kind": "icon"
+         },
+         {
+          "key": "arrow_forward",
+          "kind": "icon"
+         },
+         {
+          "key": "__url",
+          "kind": "url"
+         }
+        ],
+        [
+         {
+          "key": "Corporate & Catering",
+          "kind": "text"
+         },
+         {
+          "key": "Keep teams energized with customized monthly meal allowances, large group office trays, and unified corporate billing.",
+          "kind": "text"
+         },
+         {
+          "key": "FoodOrder for Teams",
+          "kind": "text"
+         },
+         {
+          "key": "corporate_fare",
+          "kind": "icon"
+         },
+         {
+          "key": "arrow_forward",
+          "kind": "icon"
+         },
+         {
+          "key": "__url",
+          "kind": "url"
+         }
+        ]
+       ],
+       "page": "home",
+       "pageLabel": "Home",
+       "pageUrl": "/",
+       "section": "Services & value propositions"
+      }
+     ]
+    },
+    {
+     "key": "home-5",
+     "label": "About us / brand story section",
+     "heading": "Connecting Local Passion with Every Hungry Appetite",
+     "texts": [
+      "250,000+",
+      "Happy customers served with care across the nation.",
+      "Our Heritage & Promise",
+      "Connecting Local Passion with Every Hungry Appetite",
+      "Born out of a simple belief that great food should never be out of reach, FoodOrder bridges the gap between beloved neighborhood kitchens and people who appreciate good taste.",
+      "From family-run noodle stalls and market kitchens to beloved riverside restaurants, we empower independent Khmer food entrepreneurs with sustainable delivery tech, fair economics, and real-time operational insights.",
+      "Read Our Full Story"
+     ],
+     "images": [
+      "/assets/cambodia/home-chef.jpg",
+      "/assets/cambodia/home-courier.jpg"
+     ],
+     "lists": [
+      {
+       "id": "home.story",
+       "label": "Story highlights",
+       "names": [
+        "Title",
+        "Description",
+        "Icon"
+       ],
+       "items": [
+        [
+         {
+          "key": "Zero-Carbon Mission",
+          "kind": "text"
+         },
+         {
+          "key": "Over 40% of orders fulfilled on e-bikes and electric tuk-tuks.",
+          "kind": "text"
+         },
+         {
+          "key": "eco",
+          "kind": "icon"
+         },
+         {
+          "key": "__url",
+          "kind": "url"
+         }
+        ],
+        [
+         {
+          "key": "Fresh Food Guarantee",
+          "kind": "text"
+         },
+         {
+          "key": "100% meal temperature satisfaction or instant credit refund.",
+          "kind": "text"
+         },
+         {
+          "key": "thumb_up",
+          "kind": "icon"
+         },
+         {
+          "key": "__url",
+          "kind": "url"
+         }
+        ]
+       ],
+       "page": "home",
+       "pageLabel": "Home",
+       "pageUrl": "/",
+       "section": "About us / brand story section"
+      }
+     ]
+    },
+    {
+     "key": "home-6",
+     "label": "Get the app promo banner",
+     "heading": "It’s all at your fingertips – Get the FoodOrder App",
+     "texts": [
+      "Fastest Mobile Experience",
+      "It’s all at your fingertips – Get the FoodOrder App",
+      "Unlock exclusive app-only promo codes ($5 off your first 3 orders with HUNGRY5), watch your courier progress on live GPS maps, and re-order your favorites in one tap.",
+      "Download on the",
+      "App Store",
+      "GET IT ON",
+      "Google Play",
+      "Scan with Camera",
+      "Instant download",
+      "12 mins remaining",
+      "On time"
+     ],
+     "images": [
+      "/assets/cambodia/home-app.jpg"
+     ],
+     "lists": []
+    },
+    {
+     "key": "home-7",
+     "label": "Contact & support / partner onboarding",
+     "heading": "Need Help or Want to Partner?",
+     "texts": [
+      "Always Here For You",
+      "Need Help or Want to Partner?",
+      "Whether you manage a kitchen, ride the streets, or simply have an order question.",
+      "Quick Inquiry",
+      "Have a custom question?",
+      "Leave your details and our team will get in touch in less than 30 minutes.",
+      "Your name",
+      "Email address",
+      "Sent successfully!",
+      "Send Request"
+     ],
+     "images": [],
+     "lists": [
+      {
+       "id": "home.help",
+       "label": "Help & partner cards",
+       "names": [
+        "Title",
+        "Description",
+        "Button text",
+        "Icon"
+       ],
+       "items": [
+        [
+         {
+          "key": "Partner Your Restaurant",
+          "kind": "text"
+         },
+         {
+          "key": "Expand your customer reach and grow revenue up to 40% with zero setup fee for the first 90 days. We provide point-of-sale tablets and driver network.",
+          "kind": "text"
+         },
+         {
+          "key": "List Your Restaurant",
+          "kind": "text"
+         },
+         {
+          "key": "restaurant_menu",
+          "kind": "icon"
+         },
+         {
+          "key": "__url",
+          "kind": "url"
+         }
+        ],
+        [
+         {
+          "key": "Ride With FoodOrder",
+          "kind": "text"
+         },
+         {
+          "key": "Flexible hours, competitive weekly payouts, 100% rider tips retained, and complimentary safety gear. Work whenever you desire on your own schedule.",
+          "kind": "text"
+         },
+         {
+          "key": "Sign Up to Deliver",
+          "kind": "text"
+         },
+         {
+          "key": "two_wheeler",
+          "kind": "icon"
+         },
+         {
+          "key": "__url",
+          "kind": "url"
+         }
+        ],
+        [
+         {
+          "key": "Customer Care & FAQ",
+          "kind": "text"
+         },
+         {
+          "key": "Have an issue with a recent delivery or payment? Our real-human support specialists are available round-the-clock via instant live in-app chat.",
+          "kind": "text"
+         },
+         {
+          "key": "Launch Live Chat",
+          "kind": "text"
+         },
+         {
+          "key": "support_agent",
+          "kind": "icon"
+         },
+         {
+          "key": "__url",
+          "kind": "url"
+         }
+        ]
+       ],
+       "page": "home",
+       "pageLabel": "Home",
+       "pageUrl": "/",
+       "section": "Contact & support / partner onboarding"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "key": "services",
+   "label": "Services",
+   "sections": [
+    {
+     "key": "services-1",
+     "label": "Services hero section",
+     "heading": "Our Food Ordering & Delivery Services",
+     "texts": [
+      "Built for Customers, Restaurants & Riders",
+      "Our Food Ordering & Delivery Services",
+      "Order from local restaurants, run your restaurant's branches and kitchen, deliver as a rider, and manage everything from one admin dashboard.",
+      "Customer Ordering",
+      "Rider Network",
+      "Restaurant Partners",
+      "Admin Control"
+     ],
+     "images": [],
+     "lists": []
+    },
+    {
+     "key": "services-2",
+     "label": "Core service offerings grid",
+     "heading": "Core Service Offerings",
+     "texts": [
+      "From Order to Doorstep",
+      "Core Service Offerings",
+      "One platform that connects customers, restaurants, riders, and administrators from the first tap to the final delivery.",
+      "LIVE TRACKING",
+      "FOR CUSTOMERS",
+      "Food Ordering & Home Delivery",
+      "Browse local restaurants without an account, pick a branch, add dishes with options to a cart, and check out to your saved address. Pay with cash or card QR, then follow your order on a live map.",
+      "Saved Addresses",
+      "Pin it on the map",
+      "Order Tracking",
+      "Status & ETA on a map",
+      "Payment Options",
+      "Cash & QR",
+      "Explore Restaurants",
+      "RIDER APP",
+      "EARN PER DELIVERY",
+      "Delivery Partners",
+      "Rider Delivery Network",
+      "Riders register and sign in to their own app, see the orders assigned to them, follow the route on a map, confirm the hand-over with a photo from the camera, and track their income for every delivery.",
+      "Map & Route",
+      "Opens in Google Maps",
+      "Photo Proof",
+      "Taken at hand-over",
+      "Rider Income",
+      "Per delivery",
+      "Become a Rider",
+      "FOR RESTAURANT OWNERS",
+      "MULTI-BRANCH",
+      "Restaurant & Kitchen Management",
+      "Register your business online and get an owner account. Manage branches on a map, give each branch its own menu (or copy the main branch's), accept or reject orders in the kitchen queue, and run coupon promotions.",
+      "Branch Menus",
+      "Load from main branch",
+      "Coupon Codes",
+      "Promotions & loyalty",
+      "Pricing Model",
+      "Commission only",
+      "Partner With Us",
+      "WEB ADMIN",
+      "ROLE-BASED",
+      "Platform Operations",
+      "Admin Dashboard & Control Center",
+      "A single dashboard for owners, kitchen staff, riders, and administrators. Dispatch riders, follow live deliveries, review analytics and revenue, and control which modules each role can open.",
+      "Roles & Permissions",
+      "Modules per role",
+      "Activity Log",
+      "Who changed what",
+      "Staff Roles",
+      "Open Admin Dashboard"
+     ],
+     "images": [
+      "/assets/cambodia/services-courier.jpg",
+      "/assets/cambodia/services-corporate.jpg",
+      "/assets/cambodia/services-kitchen.jpg",
+      "/assets/cambodia/services-mart.jpg"
+     ],
+     "lists": []
+    },
+    {
+     "key": "services-3",
+     "label": "Restaurant & partner tools",
+     "heading": "Restaurant & Partner Tools",
+     "texts": [
+      "Platform Tools",
+      "Restaurant & Partner Tools",
+      "Menus, the kitchen queue, rider dispatch, and payments, all in one place, from the moment an order is placed until it is delivered.",
+      "Unified Admin Dashboard",
+      "One Dashboard for Every Role.",
+      "Owners, kitchen staff, riders, and administrators all sign in to the same dashboard and only see the modules their role allows. Owners with several branches can switch the whole dashboard to one branch with a single dropdown.",
+      "Order Lifecycle",
+      "LIVE",
+      "1. Customer places order",
+      "Cash or QR",
+      "2. Kitchen prepares",
+      "Accept → Ready",
+      "3. Rider delivers",
+      "Pick up → Photo"
+     ],
+     "images": [],
+     "lists": [
+      {
+       "id": "services.tools",
+       "label": "Dashboard tool cards",
+       "names": [
+        "Title",
+        "Subtitle",
+        "Description",
+        "Tag label",
+        "Tag value",
+        "Icon"
+       ],
+       "items": [
+        [
+         {
+          "key": "Menu Control",
+          "kind": "text"
+         },
+         {
+          "key": "Menus & Branches",
+          "kind": "text"
+         },
+         {
+          "key": "Categories, dishes, and option groups for every restaurant. Each branch has its own menu and orders, and can copy the main branch's menu in one click.",
+          "kind": "text"
+         },
+         {
+          "key": "Menu per Branch",
+          "kind": "text"
+         },
+         {
+          "key": "Included",
+          "kind": "text"
+         },
+         {
+          "key": "restaurant_menu",
+          "kind": "icon"
+         },
+         {
+          "key": "__url",
+          "kind": "url"
+         }
+        ],
+        [
+         {
+          "key": "Kitchen Operations",
+          "kind": "text"
+         },
+         {
+          "key": "Kitchen Queue",
+          "kind": "text"
+         },
+         {
+          "key": "New orders land in the queue. Accept or reject them, move them from preparing to ready, and hand them to a rider.",
+          "kind": "text"
+         },
+         {
+          "key": "Order Flow",
+          "kind": "text"
+         },
+         {
+          "key": "Accept → Ready",
+          "kind": "text"
+         },
+         {
+          "key": "tv",
+          "kind": "icon"
+         },
+         {
+          "key": "__url",
+          "kind": "url"
+         }
+        ],
+        [
+         {
+          "key": "Delivery Logistics",
+          "kind": "text"
+         },
+         {
+          "key": "Rider Dispatch & Tracking",
+          "kind": "text"
+         },
+         {
+          "key": "Assign riders to ready orders, watch live deliveries on the map, and receive a photo as proof when the order is handed over.",
+          "kind": "text"
+         },
+         {
+          "key": "Delivery Proof",
+          "kind": "text"
+         },
+         {
+          "key": "Photo",
+          "kind": "text"
+         },
+         {
+          "key": "route",
+          "kind": "icon"
+         },
+         {
+          "key": "__url",
+          "kind": "url"
+         }
+        ],
+        [
+         {
+          "key": "Payments & Growth",
+          "kind": "text"
+         },
+         {
+          "key": "Payments & Promotions",
+          "kind": "text"
+         },
+         {
+          "key": "Customers pay with cash or an ABA PayWay QR. Restaurants run coupon codes and loyalty rules, and see revenue reports.",
+          "kind": "text"
+         },
+         {
+          "key": "Payment Methods",
+          "kind": "text"
+         },
+         {
+          "key": "Cash & QR",
+          "kind": "text"
+         },
+         {
+          "key": "account_balance_wallet",
+          "kind": "icon"
+         },
+         {
+          "key": "__url",
+          "kind": "url"
+         }
+        ]
+       ],
+       "page": "services",
+       "pageLabel": "Services",
+       "pageUrl": "/services",
+       "section": "Restaurant & partner tools"
+      },
+      {
+       "id": "services.points",
+       "label": "Highlight chips",
+       "names": [
+        "Text",
+        "Icon"
+       ],
+       "items": [
+        [
+         {
+          "key": "Role-Based Access (RBAC)",
+          "kind": "text"
+         },
+         {
+          "key": "check_circle",
+          "kind": "icon"
+         },
+         {
+          "key": "__url",
+          "kind": "url"
+         }
+        ],
+        [
+         {
+          "key": "Branch Switcher",
+          "kind": "text"
+         },
+         {
+          "key": "check_circle",
+          "kind": "icon"
+         },
+         {
+          "key": "__url",
+          "kind": "url"
+         }
+        ],
+        [
+         {
+          "key": "Coupons & Loyalty",
+          "kind": "text"
+         },
+         {
+          "key": "check_circle",
+          "kind": "icon"
+         },
+         {
+          "key": "__url",
+          "kind": "url"
+         }
+        ]
+       ],
+       "page": "services",
+       "pageLabel": "Services",
+       "pageUrl": "/services",
+       "section": "Restaurant & partner tools"
+      }
+     ]
+    },
+    {
+     "key": "services-4",
+     "label": "What customers get",
+     "heading": "Built Into Every Order",
+     "texts": [
+      "What Customers Get",
+      "Built Into Every Order"
+     ],
+     "images": [],
+     "lists": [
+      {
+       "id": "services.features",
+       "label": "Feature cards",
+       "names": [
+        "Highlight",
+        "Title",
+        "Description",
+        "Icon"
+       ],
+       "items": [
+        [
+         {
+          "key": "Live",
+          "kind": "text"
+         },
+         {
+          "key": "Order Tracking",
+          "kind": "text"
+         },
+         {
+          "key": "Follow your order's status and estimated arrival on a map, from the kitchen to your door.",
+          "kind": "text"
+         },
+         {
+          "key": "schedule",
+          "kind": "icon"
+         },
+         {
+          "key": "__url",
+          "kind": "url"
+         }
+        ],
+        [
+         {
+          "key": "Multi",
+          "kind": "text"
+         },
+         {
+          "key": "Branch Menus",
+          "kind": "text"
+         },
+         {
+          "key": "Each branch shows its own menu, so you only see dishes that branch can actually prepare.",
+          "kind": "text"
+         },
+         {
+          "key": "storefront",
+          "kind": "icon"
+         },
+         {
+          "key": "__url",
+          "kind": "url"
+         }
+        ],
+        [
+         {
+          "key": "Instant",
+          "kind": "text"
+         },
+         {
+          "key": "Notifications",
+          "kind": "text"
+         },
+         {
+          "key": "Get a notification every time your order changes status, right in the app.",
+          "kind": "text"
+         },
+         {
+          "key": "notifications_active",
+          "kind": "icon"
+         },
+         {
+          "key": "__url",
+          "kind": "url"
+         }
+        ],
+        [
+         {
+          "key": "Easy",
+          "kind": "text"
+         },
+         {
+          "key": "Checkout",
+          "kind": "text"
+         },
+         {
+          "key": "Browse freely without an account. Sign in only at checkout, then pay with cash or an ABA PayWay QR.",
+          "kind": "text"
+         },
+         {
+          "key": "verified_user",
+          "kind": "icon"
+         },
+         {
+          "key": "__url",
+          "kind": "url"
+         }
+        ]
+       ],
+       "page": "services",
+       "pageLabel": "Services",
+       "pageUrl": "/services",
+       "section": "What customers get"
+      }
+     ]
+    },
+    {
+     "key": "services-5",
+     "label": "Dual interactive cta conversion section",
+     "heading": "Do you own a restaurant? Partner with FoodOrder",
+     "texts": [
+      "For Restaurant Owners",
+      "Do you own a restaurant? Partner with FoodOrder",
+      "Reach new customers, manage every branch and its menu from one dashboard, and pay only a commission per order, with no subscription.",
+      "Register Your Restaurant",
+      "Your owner account is created when you register",
+      "Fast Doorstep Delivery",
+      "Hungry? Start exploring local menus",
+      "Browse nearby restaurants by category, pick the branch you want, add your favorite dishes to the cart, and have them delivered to your saved address.",
+      "Order Now",
+      "No account needed to browse"
+     ],
+     "images": [],
+     "lists": []
+    }
+   ]
+  },
+  {
+   "key": "about",
+   "label": "About us",
+   "sections": [
+    {
+     "key": "about-1",
+     "label": "Immersive hero section bleeding soft background",
+     "heading": "Revolutionizing Local Commerce & Food Delivery",
+     "texts": [
+      "Our Heritage & Vision",
+      "Revolutionizing Local Commerce & Food Delivery",
+      "Connecting neighborhood culinary artisans, multi-branch restaurants, and local shoppers with cutting-edge logistics and community-first empowerment.",
+      "Explore Our Mission",
+      "Our Story",
+      "100% Eco Fleet",
+      "Net-zero delivery path",
+      "Fair Tenant Model",
+      "Protecting culinary margins",
+      "Smart Dispatch v4.2",
+      "Real-time live routing active",
+      "99.8%",
+      "Hyper-Local Pride",
+      "Empowering family-run kitchens"
+     ],
+     "images": [
+      "/assets/cambodia/about-team.jpg"
+     ],
+     "lists": []
+    },
+    {
+     "key": "about-2",
+     "label": "Impact & growth counters",
+     "heading": "Cities & Provinces Served",
+     "texts": [],
+     "images": [],
+     "lists": [
+      {
+       "id": "about.numbers",
+       "label": "Numbers",
+       "names": [
+        "Number",
+        "Title",
+        "Description",
+        "Icon"
+       ],
+       "items": [
+        [
+         {
+          "key": "54",
+          "kind": "text"
+         },
+         {
+          "key": "Cities & Provinces Served",
+          "kind": "text"
+         },
+         {
+          "key": "Dense micro-hubs operating with unified algorithmic logistics.",
+          "kind": "text"
+         },
+         {
+          "key": "location_city",
+          "kind": "icon"
+         },
+         {
+          "key": "__url",
+          "kind": "url"
+         }
+        ],
+        [
+         {
+          "key": "15,820",
+          "kind": "text"
+         },
+         {
+          "key": "Partner Merchants",
+          "kind": "text"
+         },
+         {
+          "key": "From riverside restaurants to family-run noodle stalls and local bakeries.",
+          "kind": "text"
+         },
+         {
+          "key": "storefront",
+          "kind": "icon"
+         },
+         {
+          "key": "__url",
+          "kind": "url"
+         }
+        ],
+        [
+         {
+          "key": "250K+",
+          "kind": "text"
+         },
+         {
+          "key": "Meals Delivered",
+          "kind": "text"
+         },
+         {
+          "key": "Consistently maintaining a 98.4% on-time threshold across Cambodia.",
+          "kind": "text"
+         },
+         {
+          "key": "restaurant",
+          "kind": "icon"
+         },
+         {
+          "key": "__url",
+          "kind": "url"
+         }
+        ],
+        [
+         {
+          "key": "1,200",
+          "kind": "text"
+         },
+         {
+          "key": "EV & Eco Couriers",
+          "kind": "text"
+         },
+         {
+          "key": "A rapidly expanding fleet committed to clean urban movement.",
+          "kind": "text"
+         },
+         {
+          "key": "electric_bike",
+          "kind": "icon"
+         },
+         {
+          "key": "__url",
+          "kind": "url"
+         }
+        ]
+       ],
+       "page": "about",
+       "pageLabel": "About us",
+       "pageUrl": "/about-us",
+       "section": "Impact & growth counters"
+      }
+     ]
+    },
+    {
+     "key": "about-3",
+     "label": "Company mission & core values",
+     "heading": "Our Mission & Core Values",
+     "texts": [
+      "Foundation & Principles",
+      "Our Mission & Core Values",
+      "We built FoodOrder to solve the systemic extractive models of traditional delivery aggregators. Everything we do serves merchant sovereignty and customer satisfaction."
+     ],
+     "images": [],
+     "lists": [
+      {
+       "id": "about.pillars",
+       "label": "Pillars",
+       "names": [
+        "Label",
+        "Title",
+        "Description",
+        "Link text",
+        "Icon",
+        "Link icon"
+       ],
+       "items": [
+        [
+         {
+          "key": "Pillar 01",
+          "kind": "text"
+         },
+         {
+          "key": "Empowering Independent Tenants",
+          "kind": "text"
+         },
+         {
+          "key": "Building multi-tenant infrastructure so local kitchens retain customer relationships, customer databases, and direct brand equity rather than being masked as nameless dark kitchens.",
+          "kind": "text"
+         },
+         {
+          "key": "Learn how we protect data",
+          "kind": "text"
+         },
+         {
+          "key": "diversity_3",
+          "kind": "icon"
+         },
+         {
+          "key": "arrow_forward",
+          "kind": "icon"
+         },
+         {
+          "key": "__url",
+          "kind": "url"
+         }
+        ],
+        [
+         {
+          "key": "Pillar 02",
+          "kind": "text"
+         },
+         {
+          "key": "Ultra-Fast & Sustainable Logistics",
+          "kind": "text"
+         },
+         {
+          "key": "100% carbon-neutral delivery target supported with zero-emission electric fleet subsidies, intelligent micro-fulfillment zones, and battery-swapping infrastructure across our active cities.",
+          "kind": "text"
+         },
+         {
+          "key": "Read our Green Paper",
+          "kind": "text"
+         },
+         {
+          "key": "eco",
+          "kind": "icon"
+         },
+         {
+          "key": "arrow_forward",
+          "kind": "icon"
+         },
+         {
+          "key": "__url",
+          "kind": "url"
+         }
+        ],
+        [
+         {
+          "key": "Pillar 03",
+          "kind": "text"
+         },
+         {
+          "key": "Obsessive Quality & Freshness",
+          "kind": "text"
+         },
+         {
+          "key": "Ensuring every meal arrives fresh, piping hot, and secure with standardized tamper-evident thermal packaging and algorithmic transit-window monitoring that preserves gourmet texture.",
+          "kind": "text"
+         },
+         {
+          "key": "Explore our FreshStandards",
+          "kind": "text"
+         },
+         {
+          "key": "verified_user",
+          "kind": "icon"
+         },
+         {
+          "key": "arrow_forward",
+          "kind": "icon"
+         },
+         {
+          "key": "__url",
+          "kind": "url"
+         }
+        ]
+       ],
+       "page": "about",
+       "pageLabel": "About us",
+       "pageUrl": "/about-us",
+       "section": "Company mission & core values"
+      }
+     ]
+    },
+    {
+     "key": "about-4",
+     "label": "Visual milestone journey timeline",
+     "heading": "Our Journey Timeline",
+     "texts": [
+      "From Local Roots to National Reach",
+      "Our Journey Timeline",
+      "A disciplined evolution focused on sustainable unit economics, partner profitability, and delighting diners."
+     ],
+     "images": [],
+     "lists": [
+      {
+       "id": "about.timeline",
+       "label": "Timeline",
+       "names": [
+        "Year",
+        "Title",
+        "Description",
+        "Badge",
+        "Icon"
+       ],
+       "items": [
+        [
+         {
+          "key": "2021",
+          "kind": "text"
+         },
+         {
+          "key": "The Phnom Penh Pilot",
+          "kind": "text"
+         },
+         {
+          "key": "Founded alongside 20 neighborhood restaurants in Boeung Keng Kang seeking fair delivery commissions.",
+          "kind": "text"
+         },
+         {
+          "key": "20 Initial Merchants",
+          "kind": "text"
+         },
+         {
+          "key": "pin_drop",
+          "kind": "icon"
+         },
+         {
+          "key": "__url",
+          "kind": "url"
+         }
+        ],
+        [
+         {
+          "key": "2022",
+          "kind": "text"
+         },
+         {
+          "key": "Live GPS & Architecture",
+          "kind": "text"
+         },
+         {
+          "key": "Engineered a custom multi-tenant marketplace platform with millisecond courier telemetry tracking.",
+          "kind": "text"
+         },
+         {
+          "key": "Real-time GPS Active",
+          "kind": "text"
+         },
+         {
+          "key": "sensors",
+          "kind": "icon"
+         },
+         {
+          "key": "__url",
+          "kind": "url"
+         }
+        ],
+        [
+         {
+          "key": "2023",
+          "kind": "text"
+         },
+         {
+          "key": "FoodOrder Mart Quick-Commerce",
+          "kind": "text"
+         },
+         {
+          "key": "Launched 15-minute quick fulfillment for neighborhood pantries, farm-direct produce, and craft groceries.",
+          "kind": "text"
+         },
+         {
+          "key": "15-Minute Fulfillment",
+          "kind": "text"
+         },
+         {
+          "key": "bolt",
+          "kind": "icon"
+         },
+         {
+          "key": "__url",
+          "kind": "url"
+         }
+        ],
+        [
+         {
+          "key": "2024",
+          "kind": "text"
+         },
+         {
+          "key": "Enterprise Multi-Branch",
+          "kind": "text"
+         },
+         {
+          "key": "Scaled to 9 cities and provinces, launching multi-branch chain controls and unified restaurant POS integrations.",
+          "kind": "text"
+         },
+         {
+          "key": "9 Cities & Provinces",
+          "kind": "text"
+         },
+         {
+          "key": "domain",
+          "kind": "icon"
+         },
+         {
+          "key": "__url",
+          "kind": "url"
+         }
+        ],
+        [
+         {
+          "key": "2025",
+          "kind": "text"
+         },
+         {
+          "key": "250K Orders & E-Bike Fleet",
+          "kind": "text"
+         },
+         {
+          "key": "Surpassed 250,000 orders, powered by our 1,200+ courier fleet of motorbikes, e-bikes and tuk-tuks across Cambodia.",
+          "kind": "text"
+         },
+         {
+          "key": "250K+ Meals milestone",
+          "kind": "text"
+         },
+         {
+          "key": "celebration",
+          "kind": "icon"
+         },
+         {
+          "key": "__url",
+          "kind": "url"
+         }
+        ]
+       ],
+       "page": "about",
+       "pageLabel": "About us",
+       "pageUrl": "/about-us",
+       "section": "Visual milestone journey timeline"
+      }
+     ]
+    },
+    {
+     "key": "about-5",
+     "label": "Team six members, scrolls sideways",
+     "heading": "Meet the People Behind FoodOrder",
+     "texts": [
+      "The Team",
+      "Meet the People Behind FoodOrder",
+      "Six team members who designed, built, and tested the platform together. Swipe or scroll to meet everyone."
+     ],
+     "images": [],
+     "lists": []
+    },
+    {
+     "key": "about-6",
+     "label": "Community & sustainability pledge",
+     "heading": "Giving Back: Zero Food Waste & 25,000+ Meals Donated",
+     "texts": [
+      "Community & Eco Commitment",
+      "Giving Back: Zero Food Waste & 25,000+ Meals Donated",
+      "Delivery should enrich communities, not overwhelm them with waste. Through our neighborhood surplus routing protocol, unsold daily inventory is routed directly to partner charities and pagoda kitchens before end-of-shift."
+     ],
+     "images": [
+      "/assets/cambodia/about-community.jpg"
+     ],
+     "lists": [
+      {
+       "id": "about.impact",
+       "label": "Impact numbers",
+       "names": [
+        "Number",
+        "Description"
+       ],
+       "items": [
+        [
+         {
+          "key": "250,000+",
+          "kind": "text"
+         },
+         {
+          "key": "Nutritious meals diverted to pagoda kitchens and local shelters.",
+          "kind": "text"
+         },
+         {
+          "key": "__url",
+          "kind": "url"
+         }
+        ],
+        [
+         {
+          "key": "100% Recyclable",
+          "kind": "text"
+         },
+         {
+          "key": "Bespoke biodegradable packaging supplied to partner kitchens.",
+          "kind": "text"
+         },
+         {
+          "key": "__url",
+          "kind": "url"
+         }
+        ]
+       ],
+       "page": "about",
+       "pageLabel": "About us",
+       "pageUrl": "/about-us",
+       "section": "Community & sustainability pledge"
+      }
+     ]
+    },
+    {
+     "key": "about-7",
+     "label": "Interactive dual call to action",
+     "heading": "Want to join our mission? We're hiring across Cambodia.",
+     "texts": [
+      "We're Growing Fast",
+      "Want to join our mission? We're hiring across Cambodia.",
+      "Explore open roles across logistics engineering, partner success, field operations, and machine learning.",
+      "View Open Careers",
+      "Merchant Network",
+      "Become a Culinary Partner today.",
+      "Take control of your digital delivery business. 0% listing setup fees, low fair take-rates, and direct diner ownership.",
+      "Partner With FoodOrder"
+     ],
+     "images": [],
+     "lists": []
+    }
+   ]
+  },
+  {
+   "key": "contact",
+   "label": "Contact",
+   "sections": [
+    {
+     "key": "contact-1",
+     "label": "Top hero section",
+     "heading": "We’re Here to Help You Feast & Grow",
+     "texts": [
+      "24/7 Support & Partnerships",
+      "We’re Here to Help You Feast & Grow",
+      "Whether you have questions about an active order, want to partner your restaurant, or explore corporate catering solutions, our team is ready.",
+      "90s Live Response",
+      "Dedicated Merchant Reps",
+      "365 Days Uninterrupted"
+     ],
+     "images": [],
+     "lists": []
+    },
+    {
+     "key": "contact-2",
+     "label": "3 direct contact cards",
+     "heading": "Customer Care",
+     "texts": [
+      "Live Assistance",
+      "< 90s ETA",
+      "Customer Care",
+      "Real-time delivery issues, missing sauces, order cancellations, and immediate dispatch adjustments.",
+      "+855 23 900 100",
+      "Hotline open every day, 7 AM to 10 PM",
+      "Launch App Chat",
+      "Restaurant Growth",
+      "Partner Hub",
+      "Merchant Onboarding",
+      "Expand your kitchen's delivery territory with zero-setup-fee tablet integration and dynamic menu analytics.",
+      "merchants@foodorder.com",
+      "Kitchen ops direct line & hardware kits",
+      "Book Onboarding Demo",
+      "B2B & Media",
+      "HQ Operations",
+      "Corporate & Press",
+      "Weekly curated team lunches, flexible cafeteria meal stipend accounts, brand partnerships, and media outreach.",
+      "corporate@foodorder.com",
+      "Invoiced monthly with tailored team portals",
+      "Download Press & B2B Kit"
+     ],
+     "images": [],
+     "lists": []
+    },
+    {
+     "key": "contact-3",
+     "label": "Main split section form",
+     "heading": "Send a Secure Inquiry",
+     "texts": [
+      "Write Directly to Dispatch",
+      "Send a Secure Inquiry",
+      "Select your inquiry type so we can route your ticket to the specialized department instantly.",
+      "General Inquiry",
+      "Customer Support",
+      "Partner With Us",
+      "Courier / Rider Help",
+      "Full Name",
+      "Sokha Chan",
+      "Email Address",
+      "elena@example.com",
+      "Phone Number",
+      "+1 (555) 019-2834",
+      "Order ID",
+      "(Optional)",
+      "#FD-948210",
+      "Subject",
+      "Question about merchant commission structures...",
+      "Detailed Message",
+      "Please provide background details, restaurant name or active delivery instructions...",
+      "Typical response time:",
+      "< 15 minutes",
+      "Sending…",
+      "Send Message",
+      "progress_activity",
+      "send",
+      "Thank you! Your message has been sent and we will reply to your email soon.",
+      "Live Dispatch Active",
+      "All Systems Normal",
+      "Driver Courier Pool",
+      "99.8% Online",
+      "Average Delivery",
+      "26.4 Mins",
+      "Operating Hours",
+      "Customer Care & Hotline",
+      "In-app chat & phone hotline",
+      "24/7 / 365 Days",
+      "Partner & Merchant Support",
+      "Kitchen tablet onboarding team",
+      "Mon–Sun 7AM–10PM ICT",
+      "Corporate Accounts & Press",
+      "Executive inquiries",
+      "Mon–Sat 8AM–6PM ICT",
+      "Regional Headquarters",
+      "2 Main Hubs",
+      "Map of our Phnom Penh hub",
+      "Riverside Hub • Phnom Penh",
+      "Get Directions",
+      "Phnom Penh, Cambodia",
+      "No. 98, Street 310, Boeung Keng Kang 1",
+      "Phnom Penh 12302",
+      "Indochina Time (UTC+7)",
+      "Siem Reap, Cambodia",
+      "Street 6, Svay Dangkum",
+      "Siem Reap 17252"
+     ],
+     "images": [],
+     "lists": []
+    },
+    {
+     "key": "contact-4",
+     "label": "Support team & kitchen ops visual break",
+     "heading": "Real People, Real-Time Culinary Logistics",
+     "texts": [
+      "Inside Dispatch Central",
+      "Real People, Real-Time Culinary Logistics",
+      "Our multi-lingual dispatch team monitors kitchen backlogs, weather contingencies, and courier pathways in real time so your hot meals arrive pristine.",
+      "CSAT Resolution Score",
+      "3,400+",
+      "Active Partner Kitchens",
+      "Phnom Penh Operations Floor",
+      "Quality Assurance Check"
+     ],
+     "images": [
+      "/assets/cambodia/contact-office.jpg",
+      "/assets/cambodia/contact-packing.jpg"
+     ],
+     "lists": []
+    },
+    {
+     "key": "contact-5",
+     "label": "Frequently asked questions",
+     "heading": "Frequently Asked Questions",
+     "texts": [
+      "Quick Resolution Guide",
+      "Frequently Asked Questions",
+      "Answers to immediate questions before submitting an inquiry.",
+      "How do I track my live order?",
+      "Once a restaurant confirms your meal prep, you can follow your courier's GPS location live within the FoodOrder mobile application or via the web tracker link sent to your SMS. The tracker displays live estimated arrival time, vehicle type, and direct encrypted chat with your courier.",
+      "What are the fees for multi-tenant merchant onboarding?",
+      "We offer transparent, commission-tiered pricing starting with a 0% setup fee and no hidden terminal charges. We provide customized packages for standalone family kitchens as well as national multi-tenant franchises. Contact",
+      "to receive an individualized tier breakdown.",
+      "How do I report a missing item or allergy concern?",
+      "Navigate to \"My Orders\", tap your active or recent receipt, and tap \"Help with Order\". Our automated resolution engine triggers an instant refund, kitchen remake, or driver redelivery within 90 seconds without requiring you to wait on hold.",
+      "Can I schedule recurring orders for my office team?",
+      "Yes! Our Corporate Catering portal lets office managers set recurrent lunch calendars, group budgets, and dietary filter preferences with aggregated consolidated monthly billing. Contact our B2B team to launch a pilot week for your company."
+     ],
+     "images": [],
+     "lists": []
+    },
+    {
+     "key": "contact-6",
+     "label": "Bottom reassurance banner",
+     "heading": "Need immediate help with an ongoing order?",
+     "texts": [
+      "Urgent Active Order?",
+      "Need immediate help with an ongoing order?",
+      "Skip the queue: jump directly into prioritized dispatch routing.",
+      "Call +855 23 900 100",
+      "Open Live Support Chat"
+     ],
+     "images": [],
+     "lists": []
+    }
+   ]
+  },
+  {
+   "key": "partner",
+   "label": "Partner",
+   "sections": [
+    {
+     "key": "partner-1",
+     "label": "Hero",
+     "heading": "Grow your business with FoodOrder",
+     "texts": [
+      "For restaurants & food businesses",
+      "Grow your business with FoodOrder",
+      "Reach hungry customers nearby without paying a subscription. Register for free, manage everything from one dashboard, and pay a small commission only when you receive an order.",
+      "Register your restaurant",
+      "Partner sign in",
+      "Our only fee",
+      "per order · $0 subscription · $0 setup"
+     ],
+     "images": [],
+     "lists": []
+    },
+    {
+     "key": "partner-2",
+     "label": "How it works",
+     "heading": "How it works",
+     "texts": [
+      "How it works"
+     ],
+     "images": [],
+     "lists": []
+    },
+    {
+     "key": "partner-3",
+     "label": "Dashboard features",
+     "heading": "Everything in one partner dashboard",
+     "texts": [
+      "Everything in one partner dashboard"
+     ],
+     "images": [],
+     "lists": []
+    },
+    {
+     "key": "partner-4",
+     "label": "Faq",
+     "heading": "Questions",
+     "texts": [
+      "Questions",
+      "Read the full",
+      "fees and privacy policy"
+     ],
+     "images": [],
+     "lists": []
+    },
+    {
+     "key": "partner-5",
+     "label": "Final cta",
+     "heading": "Ready to start selling?",
+     "texts": [
+      "Ready to start selling?",
+      "Free to join. We only earn when you do.",
+      "Become a driver"
+     ],
+     "images": [],
+     "lists": []
+    },
+    {
+     "key": "partner-6",
+     "label": "Page content",
+     "heading": "",
+     "texts": [
+      "You're all set!",
+      "Taking you to your partner dashboard. Set up your menu now. Customers can order as soon as our team verifies your restaurant.",
+      "Progress",
+      "A quick read before you start. Joining is free.",
+      "This is how you'll sign in to your dashboard.",
+      "What customers will see, and where you are.",
+      "No subscription. Just a commission.",
+      "Joining and using the dashboard is free. For every customer order we deduct",
+      "of the food subtotal. The rest is your payout.",
+      "Read the full fees and privacy policy →",
+      "I have read and agree to the fees (",
+      "per order, no subscription) and the privacy policy.",
+      "Your full name",
+      "Email address",
+      "Phone number",
+      "Password (8+ characters)",
+      "Confirm password",
+      "Restaurant name",
+      "Choose a category…",
+      "Short description (optional)",
+      "Change",
+      "Pick location on map",
+      "Cancel",
+      "Back",
+      "Next",
+      "Register",
+      "Already registered?",
+      "Sign in to the dashboard",
+      "Where is your restaurant?"
+     ],
+     "images": [],
+     "lists": []
+    }
+   ]
+  },
+  {
+   "key": "order",
+   "label": "Order & restaurants",
+   "sections": [
+    {
+     "key": "order-1",
+     "label": "Top operational sub-bar & active voucher notification",
+     "heading": "",
+     "texts": [
+      "$5 OFF your first 3 orders!",
+      "Use code:",
+      "HUNGRY5",
+      "Apply"
+     ],
+     "images": [],
+     "lists": []
+    },
+    {
+     "key": "order-2",
+     "label": "Other content on the page",
+     "heading": "",
+     "texts": [
+      "Search dishes, burgers, sushi, tacos, desserts...",
+      "Sort:",
+      "Most Popular",
+      "Top Rated",
+      "Fastest Delivery",
+      "Nearest",
+      "Free Delivery",
+      "4.5+ Rating",
+      "< 30 mins",
+      "Vegetarian",
+      "$ (Affordable)",
+      "Showing",
+      "restaurants nearby",
+      "Loading restaurants…",
+      "Couldn't load restaurants",
+      "Check your connection and refresh the page.",
+      "No restaurants yet",
+      "Partner restaurants will appear here once they join.",
+      "Your Order",
+      "item",
+      "s",
+      "A promo code is already used on your other order.",
+      "Promo code (e.g. HUNGRY5)",
+      "Subtotal",
+      "Delivery Fee",
+      "FREE",
+      "Promo",
+      "Remove promo code",
+      "Service & Taxes",
+      "Total",
+      "Placing Order...",
+      "Order Confirmed!",
+      "Proceed to Checkout",
+      "Contactless Delivery & Real-time GPS guarantee"
+     ],
+     "images": [],
+     "lists": []
+    },
+    {
+     "key": "order-3",
+     "label": "Other content on the page",
+     "heading": "",
+     "texts": [
+      "Loading store…",
+      "Verified Marketplace Tenant",
+      "(closed)",
+      "No branch available",
+      "All Items",
+      "Loading menu…",
+      "This shop has no menu items yet.",
+      "Featured",
+      "min",
+      "progress_activity",
+      "add",
+      "Browse Other Stores Nearby",
+      "Order from neighboring tenant kitchens in separate orders",
+      "Branches",
+      "View Store Menu",
+      "Ordering from:",
+      "No branch selected",
+      "Multi-tenant marketplace:",
+      "Orders are placed per individual shop for separate fulfillment and fresh courier dispatch.",
+      "Store Delivery Fee",
+      "Service & Merchant Taxes"
+     ],
+     "images": [],
+     "lists": []
+    },
+    {
+     "key": "order-4",
+     "label": "Explore All Food & Mart Shops",
+     "heading": "Explore All Food & Mart Shops",
+     "texts": [
+      "Home",
+      "All Partner Shops & Restaurants",
+      "Active Vendors",
+      "Explore All Food & Mart Shops",
+      "Browse partner restaurants and shops, and order with live courier dispatch."
+     ],
+     "images": [],
+     "lists": []
+    },
+    {
+     "key": "order-5",
+     "label": "Popular Categories & Cuisines",
+     "heading": "Popular Categories & Cuisines",
+     "texts": [
+      "Popular Categories & Cuisines",
+      "Swipe to explore",
+      "spot",
+      "spots"
+     ],
+     "images": [],
+     "lists": []
+    },
+    {
+     "key": "order-6",
+     "label": "Featured Multi-Branch Chains",
+     "heading": "Featured Multi-Branch Chains",
+     "texts": [
+      "Featured Multi-Branch Chains",
+      "Order seamlessly from your closest district branch with consistent citywide menus",
+      "View All Multi-Location Partners"
+     ],
+     "images": [],
+     "lists": []
+    },
+    {
+     "key": "order-7",
+     "label": "Are you a restaurant or store owner?",
+     "heading": "Are you a restaurant or store owner?",
+     "texts": [
+      "FoodOrder Merchant Network",
+      "Are you a restaurant or store owner?",
+      "Partner with FoodOrder to reach 350,000+ local hungry consumers, optimize delivery dispatch with our runner network, and manage multi-branch inventory effortlessly.",
+      "Zero setup onboarding fees",
+      "Integrated live dispatch app",
+      "Register Your Shop",
+      "Merchant Portal Log In"
+     ],
+     "images": [],
+     "lists": []
+    },
+    {
+     "key": "order-8",
+     "label": "Other content on the page",
+     "heading": "",
+     "texts": [
+      "Delivery",
+      "Self Pickup",
+      "Search restaurants, marts, artisanal bakeries, dish names, or ingredients...",
+      "Sort: Highest Rated (4.8+)",
+      "Sort: Fastest Delivery (< 25m)",
+      "Sort: Most Popular",
+      "Sort: Nearest Distance",
+      "Sort: Lowest Minimum Order",
+      "Filter Vendors",
+      "Filter Stores",
+      "Reset All",
+      "Category",
+      "Dietary & Prep",
+      "Store Availability",
+      "Max Delivery Fee",
+      "Free ($0)",
+      "$10.00+",
+      "FoodOrder VIP Pass",
+      "Get $0 delivery fee on every order over $15 from local merchants.",
+      "Try 30 Days Free",
+      "of",
+      "verified partner stores",
+      "View:",
+      "Grid View",
+      "List View",
+      "No restaurants in this category yet"
+     ],
+     "images": [],
+     "lists": []
+    },
+    {
+     "key": "order-9",
+     "label": "More from",
+     "heading": "More from",
+     "texts": [
+      "More from",
+      "Browse store →"
+     ],
+     "images": [],
+     "lists": []
+    },
+    {
+     "key": "order-10",
+     "label": "Other content on the page",
+     "heading": "",
+     "texts": [
+      "Back to restaurants",
+      "Loading…",
+      "Restaurants",
+      "Ready in about",
+      "Required •",
+      "Optional •",
+      "Choose 1",
+      "Free",
+      "Adding…",
+      "Add to cart •",
+      "Added to your cart (",
+      "View cart & checkout →"
+     ],
+     "images": [],
+     "lists": []
+    }
+   ]
+  },
+  {
+   "key": "checkout",
+   "label": "Checkout & orders",
+   "sections": [
+    {
+     "key": "checkout-1",
+     "label": "Other content on the page",
+     "heading": "",
+     "texts": [
+      "Order placed!",
+      "Order",
+      "The restaurant has been notified. Collect your order there when it is ready and pay at the counter.",
+      "The restaurant has been notified and will confirm shortly.",
+      "Checkout next cart (",
+      "Track order",
+      "Keep browsing",
+      "Loading…",
+      "This cart is empty",
+      "Browse restaurants",
+      "← Back to",
+      "Checkout",
+      "You have",
+      "other cart",
+      "s",
+      "). Each is checked out separately.",
+      "Pickup at the restaurant",
+      "You collect this order at",
+      "when it is ready, and pay there. No delivery fee, no rider.",
+      "Note to the restaurant (optional)",
+      "Delivery address",
+      "Add address",
+      "You have no saved addresses yet. Add one on the map and it will be saved for next time.",
+      "Floor / house number",
+      "(optional)",
+      "e.g. Floor 3, Room 12 · House 45B · gate code 1234",
+      "Note to the restaurant or rider (optional)",
+      "Contact number",
+      "e.g. 012 345 678",
+      "Payment method",
+      "No payment method is available right now. Please contact support.",
+      "Ordering is paused for maintenance. Your cart is saved — please try again shortly.",
+      "Your order from",
+      "No longer available",
+      "Subtotal",
+      "Delivery fee",
+      "FREE",
+      "Promo",
+      "Remove promo code",
+      "Total",
+      "A promo code is already used on your other order, so it can't be applied here.",
+      "Promo code",
+      "Apply",
+      "Placing order…"
+     ],
+     "images": [],
+     "lists": []
+    },
+    {
+     "key": "checkout-2",
+     "label": "Page content",
+     "heading": "",
+     "texts": [
+      "Confirming your payment with ABA PayWay…",
+      "Payment received!",
+      "· pay cash on delivery",
+      "Payment cancelled",
+      "We haven't received your payment",
+      "Your order",
+      "is saved but not paid yet. The restaurant won't start it until payment is confirmed.",
+      "Pay by card",
+      "Scan ABA PAY QR"
+     ],
+     "images": [],
+     "lists": []
+    },
+    {
+     "key": "checkout-3",
+     "label": "Page content",
+     "heading": "",
+     "texts": [
+      "My orders",
+      "No favourite restaurants yet",
+      "No active orders",
+      "No past orders yet",
+      "Order food",
+      "Order again",
+      "View details"
+     ],
+     "images": [],
+     "lists": []
+    },
+    {
+     "key": "checkout-4",
+     "label": "Pickup at the restaurant",
+     "heading": "Pickup at the restaurant",
+     "texts": [
+      "Pay at the counter when you collect your order.",
+      "Get directions"
+     ],
+     "images": [],
+     "lists": []
+    },
+    {
+     "key": "checkout-5",
+     "label": "Section 3",
+     "heading": "",
+     "texts": [
+      "Refunded"
+     ],
+     "images": [],
+     "lists": []
+    },
+    {
+     "key": "checkout-6",
+     "label": "Section 4",
+     "heading": "",
+     "texts": [
+      "Call driver"
+     ],
+     "images": [],
+     "lists": []
+    },
+    {
+     "key": "checkout-7",
+     "label": "Order details",
+     "heading": "Order details",
+     "texts": [
+      "Order details",
+      "Cash on delivery",
+      "ABA PAY (KHQR)",
+      "Card",
+      "· paid"
+     ],
+     "images": [],
+     "lists": []
+    },
+    {
+     "key": "checkout-8",
+     "label": "Other content on the page",
+     "heading": "",
+     "texts": [
+      "Back to my orders",
+      "← My orders",
+      "Estimated arrival",
+      "in about",
+      "min",
+      "Map positions aren't available for this order."
+     ],
+     "images": [],
+     "lists": []
+    }
+   ]
+  },
+  {
+   "key": "account",
+   "label": "Sign in & sign up",
+   "sections": [
+    {
+     "key": "account-1",
+     "label": "Your next crave-worthy meal is minutes away.",
+     "heading": "Your next crave-worthy meal is minutes away.",
+     "texts": [
+      "Trusted Delivery Hub",
+      "v4.8 • PHNOM PENH",
+      "4.9/5 from 25k+ foodies",
+      "Your next crave-worthy meal is minutes away.",
+      "Save favorite kitchens, customize delivery instructions, and unlock instant secret member flash drops.",
+      "24 Min",
+      "Average ETA",
+      "$0 Fee",
+      "First 3 orders",
+      "End-to-End Encrypted Session",
+      "Welcome back to FoodOrder",
+      "Create your FoodOrder account",
+      "Sign in to track orders, redeem coupons, and access quick checkout.",
+      "Unlock localized culinary gems, express checkout, and exclusive member vouchers.",
+      "or enter details",
+      "Full Name",
+      "Sokha Chan",
+      "Mobile Phone",
+      "For delivery driver SMS updates",
+      "+1 (555) 000-8392",
+      "Email Address",
+      "sokha.chan@example.com",
+      "Password",
+      "Forgot password?",
+      "Toggle password visibility",
+      "Confirm Password",
+      "Keep me signed in on this device",
+      "Receive exclusive secret coupons, local pop-up drops, and free delivery perks.",
+      "By creating an account, you agree to FoodOrder Terms of Service and Privacy Policy.",
+      "Authenticating...",
+      "Registering...",
+      "Log In to FoodOrder",
+      "Create Free Account",
+      "sync",
+      "arrow_forward",
+      "256-bit Bank Grade Encryption",
+      "Fast 1-Tap Re-ordering",
+      "Don't have a FoodOrder account yet?",
+      "Create one now",
+      "Already registered with us?",
+      "Log In here"
+     ],
+     "images": [],
+     "lists": []
+    }
+   ]
+  },
+  {
+   "key": "privacy",
+   "label": "Privacy policy",
+   "sections": [
+    {
+     "key": "privacy-1",
+     "label": "Other content on the page",
+     "heading": "",
+     "texts": [
+      "Privacy Policy & Fees",
+      "Last updated: October 2026 · Applies to customers, partner restaurants and drivers.",
+      "1. How the platform earns: no subscription, a commission on each order",
+      "FoodOrder does",
+      "not",
+      "charge restaurants a subscription, a setup fee or a monthly fee. Registering and using the partner dashboard is free.",
+      "Instead, for every customer order the platform",
+      "deducts a commission of",
+      "from the food subtotal. The remainder is the restaurant's payout. The commission rate that applies to a restaurant is recorded when it registers, and each order stores the commission and payout that were calculated for it, so past orders never change if the rate is updated later.",
+      "Customer delivery fees and any taxes charged by law are shown to the customer at checkout. Drivers are paid a delivery fee per completed delivery, shown in their dashboard.",
+      "2. Information we collect",
+      "Customers:",
+      "name, email, phone number, saved delivery addresses and map locations, order history, and payment method type (we store only the card brand and last four digits, never the full card number or CVV).",
+      "Partner restaurants:",
+      "owner name, contact details, restaurant name, branch address and location, menu and sales data.",
+      "Drivers:",
+      "name, contact details, vehicle type and plate, delivery history and earnings, delivery photos, and live location while on duty.",
+      "3. How we use it",
+      "To take, prepare and deliver orders; to show customers where their order is; to calculate commissions and payouts; to prevent fraud and keep the platform safe; and to send order updates.",
+      "4. Who we share it with",
+      "A restaurant sees the order details it needs to cook and hand over the food. The assigned driver sees the customer's name, delivery address, unit details and phone number only until the order is delivered. Payment providers such as ABA PayWay process online payments. We do not sell personal data.",
+      "5. Location data",
+      "Customers choose the delivery pin themselves. Drivers share live location only while signed in to the driver dashboard. Map and route services (OpenStreetMap) receive coordinates but no names or order details.",
+      "6. Retention and your rights",
+      "We keep order records for as long as needed for accounting and dispute handling. You can ask us to correct or delete your account data, or to remove saved addresses at any time from your account. Contact us using the details below.",
+      "7. Contact",
+      "Questions about this policy or our fees? Reach us through the",
+      "contact page"
+     ],
+     "images": [],
+     "lists": []
+    }
+   ]
+  }
+ ]
+}

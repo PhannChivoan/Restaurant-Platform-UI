@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import Repeat from "../components/Repeat";
 import useScrollReveal from "../hooks/useScrollReveal";
 
 // Scrolls to one of the four service cards (the quick tabs under the hero)
@@ -466,7 +467,8 @@ const ServicesPage = () => {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-space-lg">
               {/* Tool Card 1 */}
-              <div className="group flex flex-col p-space-lg rounded-xl bg-surface-container-lowest shadow-sm hover:shadow-lg transition-all duration-300">
+              <Repeat id="services.tools" label="Dashboard tool cards">
+<div className="group flex flex-col p-space-lg rounded-xl bg-surface-container-lowest shadow-sm hover:shadow-lg transition-all duration-300">
                 <div className="h-12 w-12 rounded-lg bg-primary-fixed text-primary flex items-center justify-center mb-space-md">
                   <span className="material-symbols-outlined text-[28px]">
                     restaurant_menu
@@ -589,6 +591,7 @@ const ServicesPage = () => {
                   </div>
                 </div>
               </div>
+</Repeat>
             </div>
             {/* Dashboard overview */}
             <div className="mt-space-2xl p-space-xl rounded-xl bg-surface-container-lowest shadow-md">
@@ -610,7 +613,8 @@ const ServicesPage = () => {
                     dashboard to one branch with a single dropdown.
                   </p>
                   <div className="flex flex-wrap gap-space-md">
-                    <div className="flex items-center gap-space-xs font-label-md text-label-md text-on-surface">
+                    <Repeat id="services.points" label="Highlight chips">
+<div className="flex items-center gap-space-xs font-label-md text-label-md text-on-surface">
                       <span className="material-symbols-outlined text-tertiary text-[20px]">
                         check_circle
                       </span>{" "}
@@ -628,6 +632,7 @@ const ServicesPage = () => {
                       </span>{" "}
                       Coupons &amp; Loyalty
                     </div>
+</Repeat>
                   </div>
                 </div>
                 {/* Order lifecycle widget */}
@@ -703,7 +708,8 @@ const ServicesPage = () => {
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-space-lg">
               {/* Feature 1 */}
-              <div className="flex flex-col items-center text-center p-space-xl rounded-xl bg-surface-container-low hover:bg-surface-container transition-colors shadow-sm">
+              <Repeat id="services.features" label="Feature cards">
+<div className="flex flex-col items-center text-center p-space-xl rounded-xl bg-surface-container-low hover:bg-surface-container transition-colors shadow-sm">
                 <div className="h-16 w-16 rounded-full bg-primary-fixed flex items-center justify-center text-primary mb-space-md shadow-sm">
                   <span className="material-symbols-outlined text-[32px]">
                     schedule
@@ -774,6 +780,7 @@ const ServicesPage = () => {
                   then pay with cash or an ABA PayWay QR.
                 </p>
               </div>
+</Repeat>
             </div>
           </div>
         </section>

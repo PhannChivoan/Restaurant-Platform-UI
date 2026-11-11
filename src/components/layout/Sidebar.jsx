@@ -71,12 +71,12 @@ useEffect(() => {
 }, []);
   const pathByKey = useMemo(() => {
     const map = {};
-    navItems.forEach((item) => {
-      if (item.path) map[item.key] = item.path;
-      item.children?.forEach((child) => {
-        if (child.path) map[child.key] = child.path;
+    const visit = (items) =>
+      (items || []).forEach((item) => {
+        if (item.path) map[item.key] = item.path;
+        visit(item.children);
       });
-    });
+    visit(navItems);
     return map;
   }, [navItems]);
 
@@ -90,31 +90,26 @@ useEffect(() => {
         label
       );
 
+    // a menu entry and, when it is a group, the entries inside it (groups can sit inside groups)
+    const build = (item, depth) => {
+      const entry = {
+        key: item.key,
+        icon: renderIcon(item.icon, depth === 0 ? 16 : 15),
+        label: wrapLabel(item.label),
+      };
+      const children = (item.children || [])
+        .filter((child) => child.is_active)
+        .sort(sortByOrder)
+        .map((child) => build(child, depth + 1));
+
+      if (item.is_dropdown && children.length > 0) entry.children = children;
+      return entry;
+    };
+
     return navItems
       .filter((item) => item.is_active)
       .sort(sortByOrder)
-      .map((item) => {
-        const children = (item.children || [])
-          .filter((child) => child.is_active)
-          .sort(sortByOrder)
-          .map((child) => ({
-            key: child.key,
-            icon: renderIcon(child.icon, 15),
-            label: wrapLabel(child.label),
-          }));
-
-        const entry = {
-          key: item.key,
-          icon: renderIcon(item.icon, 16),
-          label: wrapLabel(item.label),
-        };
-
-        if (item.is_dropdown && children.length > 0) {
-          entry.children = children;
-        }
-
-        return entry;
-      });
+      .map((item) => build(item, 0));
   }, [navItems, sidebarCollapsed]);
 
   const sidebarContent = (
@@ -329,11 +324,21 @@ useEffect(() => {
             padding-left: 6px;
             border-left: 1px solid ${palette.border};
           }
-          .mono-menu .ant-menu-sub .ant-menu-item {
+          /* items and group titles inside a group share one size and one left padding; each level of nesting
+             steps in through the rail (margin + padding above), so a child always sits further in than its parent */
+          .mono-menu .ant-menu-sub .ant-menu-item,
+          .mono-menu .ant-menu-sub .ant-menu-submenu-title {
             height: 36px !important;
             line-height: 36px !important;
             padding-left: 14px !important;
+            padding-right: 12px !important;
             font-size: 13px;
+          }
+          .mono-menu .ant-menu-sub .ant-menu-sub.ant-menu-inline {
+            margin-left: 14px;
+          }
+          .mono-menu .ant-menu-sub .ant-menu-sub .ant-menu-item {
+            font-size: 12.5px;
           }
           /* current page: blue pill, white text (stays the same on hover) */
           .mono-menu .ant-menu-item.ant-menu-item-selected,

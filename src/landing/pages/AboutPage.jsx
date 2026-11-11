@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import Repeat from "../components/Repeat";
 import CountUp from "../components/CountUp";
 import useScrollReveal from "../hooks/useScrollReveal";
 
@@ -226,7 +227,8 @@ const AboutPage = () => {
           <div className="max-w-[1280px] mx-auto px-margin" data-reveal>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-space-lg">
               {/* Stat 1 */}
-              <div className="bg-surface-container-lowest p-space-xl rounded-xl shadow-sm hover:shadow-md transition-shadow flex flex-col gap-space-sm">
+              <Repeat id="about.numbers" label="Numbers">
+<div className="bg-surface-container-lowest p-space-xl rounded-xl shadow-sm hover:shadow-md transition-shadow flex flex-col gap-space-sm">
                 <div className="w-12 h-12 rounded-lg bg-secondary-container text-on-secondary-fixed flex items-center justify-center">
                   <span className="material-symbols-outlined text-[28px]">
                     location_city
@@ -319,6 +321,7 @@ const AboutPage = () => {
                   A rapidly expanding fleet committed to clean urban movement.
                 </p>
               </div>
+</Repeat>
             </div>
           </div>
         </section>
@@ -340,7 +343,8 @@ const AboutPage = () => {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-space-xl">
               {/* Pillar 1 */}
-              <div className="bg-surface-container-lowest rounded-2xl p-space-xl shadow-md hover:shadow-xl transition-all duration-300 flex flex-col justify-between group">
+              <Repeat id="about.pillars" label="Pillars">
+<div className="bg-surface-container-lowest rounded-2xl p-space-xl shadow-md hover:shadow-xl transition-all duration-300 flex flex-col justify-between group">
                 <div className="flex flex-col gap-space-md">
                   <div className="w-16 h-16 rounded-xl bg-primary-fixed/70 text-on-primary-fixed flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
                     <span className="material-symbols-outlined text-[32px] text-primary">
@@ -423,6 +427,7 @@ const AboutPage = () => {
                   </span>
                 </div>
               </div>
+</Repeat>
             </div>
           </div>
         </section>
@@ -449,7 +454,8 @@ const AboutPage = () => {
             {/* Timeline Rail */}
             <div className="grid grid-cols-1 md:grid-cols-5 gap-space-md relative">
               {/* 2021 */}
-              <div className="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col justify-between transition-all hover:-translate-y-1">
+              <Repeat id="about.timeline" label="Timeline">
+<div className="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col justify-between transition-all hover:-translate-y-1">
                 <div className="flex flex-col gap-space-sm">
                   <span className="font-headline-lg text-headline-lg font-extrabold text-primary-container">
                     2021
@@ -555,6 +561,7 @@ const AboutPage = () => {
                   <span>250K+ Meals milestone</span>
                 </div>
               </div>
+</Repeat>
             </div>
           </div>
         </section>
@@ -627,7 +634,8 @@ const AboutPage = () => {
                     Delivery should enrich communities, not overwhelm them with waste. Through our neighborhood surplus routing protocol, unsold daily inventory is routed directly to partner charities and pagoda kitchens before end-of-shift.
                   </p>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-space-md pt-space-xs">
-                    <div className="bg-surface-container-lowest/80 backdrop-blur-sm p-space-md rounded-xl">
+                    <Repeat id="about.impact" label="Impact numbers">
+<div className="bg-surface-container-lowest/80 backdrop-blur-sm p-space-md rounded-xl">
                       <span className="font-headline-lg text-headline-lg text-tertiary font-bold">
                         250,000+
                       </span>
@@ -644,6 +652,7 @@ const AboutPage = () => {
                         kitchens.
                       </p>
                     </div>
+</Repeat>
                   </div>
                 </div>
                 <div className="lg:col-span-5">

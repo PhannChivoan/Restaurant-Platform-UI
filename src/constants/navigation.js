@@ -1,6 +1,15 @@
 export const NAV_ITEMS = [
   { key: "dashboard", label: "Dashboard", path: "/", icon: "LayoutDashboard" },
-  { key: "my-deliveries", label: "My Deliveries", path: "/driver", icon: "Bike" },
+  {
+    key: "my-deliveries-group",
+    label: "My Deliveries",
+    icon: "Bike",
+    children: [
+      { key: "my-deliveries", label: "To deliver", path: "/driver", icon: "Route" },
+      { key: "my-deliveries-available", label: "Available orders", path: "/driver/available", icon: "Radar" },
+      { key: "my-deliveries-completed", label: "Completed", path: "/driver/completed", icon: "CheckCircle2" },
+    ],
+  },
   {
     key: "operations",
     label: "Operations",
@@ -211,6 +220,48 @@ export const NAV_ITEMS = [
         },
       ],
     },
+  {
+    key: "landing-page",
+    label: "Landing Page",
+    icon: "PanelsTopLeft",
+    children: [
+      {
+        key: "landing-home",
+        label: "Home",
+        icon: "House",
+        children: [
+          { key: "landing-home-perks", label: "Hero highlights", path: "/landing/home-perks", icon: "Zap" },
+          { key: "landing-home-stats", label: "Platform numbers", path: "/landing/home-stats", icon: "BarChart3" },
+          { key: "landing-home-categories", label: "Food categories", path: "/landing/home-categories", icon: "Utensils" },
+          { key: "landing-home-services", label: "What we bring", path: "/landing/home-services", icon: "Gift" },
+          { key: "landing-home-story", label: "Story highlights", path: "/landing/home-story", icon: "BookOpen" },
+          { key: "landing-home-help", label: "Help & partner cards", path: "/landing/home-help", icon: "LifeBuoy" },
+        ],
+      },
+      {
+        key: "landing-services",
+        label: "Services",
+        icon: "Briefcase",
+        children: [
+          { key: "landing-services-tools", label: "Tool cards", path: "/landing/services-tools", icon: "Wrench" },
+          { key: "landing-services-points", label: "Highlight chips", path: "/landing/services-points", icon: "ListChecks" },
+          { key: "landing-services-features", label: "Feature cards", path: "/landing/services-features", icon: "Sparkles" },
+        ],
+      },
+      {
+        key: "landing-about",
+        label: "About us",
+        icon: "Info",
+        children: [
+          { key: "landing-about-numbers", label: "Numbers", path: "/landing/about-numbers", icon: "Hash" },
+          { key: "landing-about-pillars", label: "Pillars", path: "/landing/about-pillars", icon: "Landmark" },
+          { key: "landing-about-timeline", label: "Timeline", path: "/landing/about-timeline", icon: "Milestone" },
+          { key: "landing-about-impact", label: "Impact numbers", path: "/landing/about-impact", icon: "Leaf" },
+        ],
+      },
+      { key: "landing-content", label: "Texts & Images", path: "/landing/texts", icon: "Type" },
+    ],
+  },
 ];
 
 export const findNavItem = (items, key) => {
@@ -252,12 +303,22 @@ export const getActiveKeyFromPath = (pathname) => {
   visit(NAV_ITEMS);
   return matchedKey;
 };
+// the groups to keep open for a page, from the outermost one in (Landing Page, then Home)
 export const getOpenKeysForActive = (activeKey) => {
-  for (const item of NAV_ITEMS) {
-    if (item.children?.some((child) => child.key === activeKey)) {
-      return [item.key];
+  const walk = (items, trail) => {
+    for (const item of items) {
+      if (item.key === activeKey) return trail;
+      if (item.children) {
+        const found = walk(item.children, [...trail, item.key]);
+        if (found) return found;
+      }
     }
-  }
+    return null;
+  };
 
-  return [];
+  return walk(NAV_ITEMS, []) || [];
 };
+
+// the labels of the groups a page sits in, outermost first (for the breadcrumb)
+export const getParentLabels = (activeKey) =>
+  getOpenKeysForActive(activeKey).map((key) => findNavItem(NAV_ITEMS, key)?.label).filter(Boolean);

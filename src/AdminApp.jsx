@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import "./App.css";
 import "./admin.css";
 import { lazy, Suspense, useEffect } from "react";
@@ -49,6 +49,8 @@ const DeliveryPerformancePage = lazy(
 
 // Settings
 const SettingsPage = lazy(() => import("./pages/SettingsPage"));
+const LandingContentPage = lazy(() => import("./pages/LandingContentPage"));
+const LandingListPage = lazy(() => import("./pages/LandingListPage"));
 const UsersRolesPage = lazy(() => import("./pages/UsersRolesPage"));
 const PermissionsPage = lazy(() => import("./pages/PermissionsPage"));
 const AccessWindowsPage = lazy(() => import("./pages/AccessWindowsPage"));
@@ -94,7 +96,9 @@ function AdminApp() {
                 element={<OperationsAnalyticsPage />}
               />
               <Route path="/products" element={<ProductPage />} />
-              <Route path="/driver" element={<DriverPage />} />
+              <Route path="/driver" element={<DriverPage key="active" section="active" />} />
+              <Route path="/driver/available" element={<DriverPage key="available" section="available" />} />
+              <Route path="/driver/completed" element={<DriverPage key="completed" section="completed" />} />
 
               {/* Customers */}
               <Route path="/customers" element={<CustomersPage />} />
@@ -150,6 +154,10 @@ function AdminApp() {
               {/* Settings */}
               <Route path="/settings" element={<SettingsPage />} />
               <Route path="/settings/categories" element={<CategoriesPage />} />
+              {/* Landing Page: one table per card group, plus the texts & images editor */}
+              <Route path="/landing/texts" element={<LandingContentPage />} />
+              <Route path="/landing/:slug" element={<LandingListPage />} />
+              <Route path="/settings/landing" element={<Navigate to="/landing/texts" replace />} />
               <Route path="/settings/users" element={<UsersRolesPage />} />
               <Route path="/settings/permissions" element={<PermissionsPage />} />
               <Route

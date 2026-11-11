@@ -11,6 +11,7 @@ import {
   Modal,
   Select,
   Space,
+  Switch,
   Tag,
   Tooltip,
 } from "antd";
@@ -425,6 +426,30 @@ const KitchenPage = () => {
                   {formatStatus(status)}
                 </Tag>
               ),
+            },
+            {
+              // the kitchen decides which orders drivers may see and accept on their own
+              title: "Open to riders",
+              key: "riders",
+              width: 150,
+              render: (_, row) =>
+                row.payment_method === "pickup" ? (
+                  <span style={{ color: palette.muted }}>Pickup order</span>
+                ) : ["accepted", "preparing", "ready"].includes(row.status) ? (
+                  <Tooltip title="Let drivers see this order and accept it themselves. Drivers can take it once it is ready.">
+                    <Space size={8}>
+                      <Switch
+                        size="small"
+                        checked={Boolean(row.open_to_riders)}
+                        loading={actionOrderId === row.id}
+                        onChange={(checked) => updateOrder(row.id, "rider-visibility", { open: checked })}
+                      />
+                      <span style={{ color: row.open_to_riders ? palette.success : palette.muted }}>{row.open_to_riders ? "Open" : "Closed"}</span>
+                    </Space>
+                  </Tooltip>
+                ) : (
+                  <span style={{ color: palette.muted }}>–</span>
+                ),
             },
             {
               title: "Actions",

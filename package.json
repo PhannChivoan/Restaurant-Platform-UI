@@ -8,6 +8,7 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
+    "landing:catalog": "node scripts/landing-catalog.mjs",
     "start:fast": "vite build && vite preview --port 5173"
   },
   "dependencies": {

@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import Repeat from "../components/Repeat";
 import useScrollReveal from "../hooks/useScrollReveal";
 
 const HomePage = () => {
@@ -100,7 +101,8 @@ const HomePage = () => {
                 </div>
                 {/* Quick Delivery Perks */}
                 <div className="grid grid-cols-3 gap-space-md pt-space-xs">
-                  <div className="flex items-center gap-space-sm bg-surface-container-lowest/80 backdrop-blur-sm p-space-sm rounded-xl shadow-sm">
+                  <Repeat id="home.perks" label="Hero highlights">
+<div className="flex items-center gap-space-sm bg-surface-container-lowest/80 backdrop-blur-sm p-space-sm rounded-xl shadow-sm">
                     <div className="w-10 h-10 rounded-lg bg-primary-fixed flex items-center justify-center text-primary-container">
                       <span className="material-symbols-outlined text-[22px]">
                         bolt
@@ -145,6 +147,7 @@ const HomePage = () => {
                       </span>
                     </div>
                   </div>
+</Repeat>
                 </div>
               </div>
               {/* Right Visual Showcase with Floating Badges */}
@@ -214,7 +217,8 @@ const HomePage = () => {
           <div className="max-w-[1280px] mx-auto px-margin" data-reveal>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-space-md">
               {/* Stat 1 */}
-              <div className="bg-surface-container-lowest p-space-lg rounded-2xl shadow-sm flex flex-col justify-between">
+              <Repeat id="home.stats" label="Platform numbers">
+<div className="bg-surface-container-lowest p-space-lg rounded-2xl shadow-sm flex flex-col justify-between">
                 <div className="flex items-center justify-between text-secondary">
                   <span className="font-label-md text-label-md">
                     Total Cities Active
@@ -295,6 +299,7 @@ const HomePage = () => {
                   </div>
                 </div>
               </div>
+</Repeat>
             </div>
           </div>
         </section>
@@ -336,7 +341,8 @@ const HomePage = () => {
             {/* Categories Grid */}
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-8 gap-space-md">
               {/* Item 1 */}
-              <a
+              <Repeat id="home.categories" label="Food categories">
+<a
                 className="group bg-surface-container-lowest p-space-md rounded-2xl shadow-sm hover:shadow-xl transition-all flex flex-col items-center text-center cursor-pointer hover:-translate-y-1"
                 href="#"
               >
@@ -471,6 +477,7 @@ const HomePage = () => {
                   15 min drop
                 </span>
               </a>
+</Repeat>
             </div>
           </div>
         </section>
@@ -491,7 +498,8 @@ const HomePage = () => {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-space-lg">
               {/* Service 1 */}
-              <div className="bg-surface-container-lowest p-space-xl rounded-2xl shadow-sm flex flex-col justify-between hover:shadow-xl transition-all group">
+              <Repeat id="home.services" label="What we bring cards">
+<div className="bg-surface-container-lowest p-space-xl rounded-2xl shadow-sm flex flex-col justify-between hover:shadow-xl transition-all group">
                 <div className="flex flex-col gap-space-md">
                   <div className="w-14 h-14 rounded-2xl bg-primary-fixed flex items-center justify-center text-primary-container group-hover:bg-primary-container group-hover:text-on-primary transition-colors">
                     <span className="material-symbols-outlined text-[30px]">
@@ -582,6 +590,7 @@ const HomePage = () => {
                   </span>
                 </div>
               </div>
+</Repeat>
             </div>
           </div>
         </section>
@@ -640,7 +649,8 @@ const HomePage = () => {
                 </p>
                 {/* Key Credibility Badges */}
                 <div className="grid grid-cols-2 gap-space-md pt-space-xs">
-                  <div className="flex items-start gap-space-sm">
+                  <Repeat id="home.story" label="Story highlights">
+<div className="flex items-start gap-space-sm">
                     <div className="p-space-xs rounded-lg bg-primary-fixed text-primary-container">
                       <span className="material-symbols-outlined text-[20px]">
                         eco
@@ -671,6 +681,7 @@ const HomePage = () => {
                       </span>
                     </div>
                   </div>
+</Repeat>
                 </div>
                 <div className="pt-space-sm">
                   <a
@@ -809,7 +820,8 @@ const HomePage = () => {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-space-lg">
               {/* Card 1: Restaurant Partner */}
-              <div className="bg-surface-container-lowest p-space-xl rounded-2xl shadow-sm flex flex-col justify-between hover:shadow-xl transition-all">
+              <Repeat id="home.help" label="Help & partner cards">
+<div className="bg-surface-container-lowest p-space-xl rounded-2xl shadow-sm flex flex-col justify-between hover:shadow-xl transition-all">
                 <div className="flex flex-col gap-space-md">
                   <div className="w-12 h-12 rounded-xl bg-primary-fixed flex items-center justify-center text-primary-container">
                     <span className="material-symbols-outlined text-[26px]">
@@ -886,6 +898,7 @@ const HomePage = () => {
                   </button>
                 </div>
               </div>
+</Repeat>
             </div>
             {/* Quick Contact Message Form */}
             <div className="bg-surface-container-lowest p-space-xl lg:p-space-2xl rounded-3xl shadow-sm">

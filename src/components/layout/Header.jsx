@@ -29,7 +29,7 @@ import {
 import BranchSwitcher from "./BranchSwitcher";
 import SecurityModal from "./SecurityModal";
 import { palette, fontMono, themeMode, setThemeMode } from "../../constants/theme";
-import { findNavItem, NAV_ITEMS } from "../../constants/navigation";
+import { findNavItem, getParentLabels, NAV_ITEMS } from "../../constants/navigation";
 import { request } from "../../utils/request";
 import { loadAdminBootstrap } from "../../utils/adminBootstrap";
 import { Config } from "../../utils/config";
@@ -193,10 +193,7 @@ const Header = ({
     return item?.label || "Overview";
   };
 
-  const getParentLabel = () => {
-    const parent = NAV_ITEMS.find((i) => i.children?.some((c) => c.key === activeKey));
-    return parent?.label || "";
-  };
+  const parentLabels = getParentLabels(activeKey);
 
   const userName = user?.name || "User";
   const userRole = roleDisplay(user?.role);
@@ -232,9 +229,11 @@ const Header = ({
           style={{ fontSize: 17, fontWeight: 650, letterSpacing: "-0.02em", color: palette.ink }}
         >
           {getPageTitle()}
-          {getParentLabel() && (
+          {parentLabels.length > 0 && (
             <div style={{ fontSize: 12, fontWeight: 500, letterSpacing: 0, color: palette.muted, marginTop: -1 }}>
-              Home <span style={{ margin: "0 4px" }}>/</span> {getParentLabel()} <span style={{ margin: "0 4px" }}>/</span> <span style={{ color: palette.primary }}>{getPageTitle()}</span>
+              Home{parentLabels.map((label) => (
+                <span key={label}> <span style={{ margin: "0 4px" }}>/</span> {label}</span>
+              ))} <span style={{ margin: "0 4px" }}>/</span> <span style={{ color: palette.primary }}>{getPageTitle()}</span>
             </div>
           )}
         </div>

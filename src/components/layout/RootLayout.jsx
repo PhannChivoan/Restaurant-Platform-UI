@@ -26,18 +26,15 @@ const { Content } = Layout;
 const collectAllowed = (items) => {
   const keys = new Set();
   const paths = [];
-  (items || []).forEach((item) => {
-    if (item.path) {
-      keys.add(item.key);
-      paths.push(item.path);
-    }
-    (item.children || []).forEach((child) => {
-      if (child.path) {
-        keys.add(child.key);
-        paths.push(child.path);
+  const visit = (list) =>
+    (list || []).forEach((item) => {
+      if (item.path) {
+        keys.add(item.key);
+        paths.push(item.path);
       }
+      visit(item.children);
     });
-  });
+  visit(items);
   return { keys, paths };
 };
 
