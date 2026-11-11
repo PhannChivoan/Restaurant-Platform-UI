@@ -45,6 +45,7 @@ import { getBranchId } from "../utils/branchStore";
 import { getPlatformConfig } from "../utils/platformSettings";
 import { Config } from "../utils/config";
 import { palette } from "../constants/theme";
+import { sameImageNotice } from "../utils/uploadNotice";
 
 const { Text } = Typography;
 
@@ -1206,7 +1207,7 @@ return (
               listType="picture-card"
               maxCount={1}
               accept="image/jpeg,image/png,image/webp"
-              beforeUpload={() => false}
+              beforeUpload={sameImageNotice}
             >
               {uploadTrigger}
             </Upload>

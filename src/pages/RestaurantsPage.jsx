@@ -51,6 +51,7 @@ import { request } from "../utils/request";
 import { Config } from "../utils/config";
 import { palette } from "../constants/theme";
 import dayjs from "dayjs";
+import { sameImageNotice } from "../utils/uploadNotice";
 
 const { Text } = Typography;
 
@@ -1407,7 +1408,7 @@ const RestaurantsPage = () => {
               listType="picture-card"
               maxCount={1}
               accept="image/jpeg,image/png,image/webp"
-              beforeUpload={() => false}
+              beforeUpload={sameImageNotice}
             >
               {uploadTrigger}
             </Upload>
