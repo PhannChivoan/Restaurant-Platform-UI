@@ -73,8 +73,8 @@ const STATUS_META = {
   picked_up: {
     label: "Picked up",
     color: "orange",
-    markerColor: "#f97316",
-    background: "#fff7ed",
+    markerColor: palette.primary,
+    background: palette.fillActive,
     icon: PackageCheck,
   },
 
@@ -324,7 +324,7 @@ const createDivIcon = (html, size = 28) =>
   });
 
 const RestaurantIcon = createDivIcon(
-  `<div style="width:28px;height:28px;border-radius:50%;background:#f97316;border:3px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.3);display:flex;align-items:center;justify-content:center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg></div>`,
+  `<div style="width:28px;height:28px;border-radius:50%;background:#2563eb;border:3px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.3);display:flex;align-items:center;justify-content:center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg></div>`,
   28,
 );
 
@@ -334,7 +334,7 @@ const CustomerIcon = createDivIcon(
 );
 
 const RiderIcon = createDivIcon(
-  `<div style="width:32px;height:32px;border-radius:50%;background:#2563eb;border:3px solid #fff;box-shadow:0 2px 10px rgba(37,99,235,.5);display:flex;align-items:center;justify-content:center;animation:pulse-ring 2s infinite"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="18.5" cy="17.5" r="3.5"/><circle cx="5.5" cy="17.5" r="3.5"/><circle cx="15" cy="5" r="1"/><path d="M12 17.5V14l-3.5-3.5 2-3 2 3 3.5-3.5"/><path d="M12 17.5V14l-3.5-3.5 2-3 2 3 3.5-3.5"/></svg></div>`,
+  `<div style="width:32px;height:32px;border-radius:50%;background:#2563eb;border:3px solid #fff;box-shadow:0 2px 10px rgba(37, 99, 235,.5);display:flex;align-items:center;justify-content:center;animation:pulse-ring 2s infinite"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="18.5" cy="17.5" r="3.5"/><circle cx="5.5" cy="17.5" r="3.5"/><circle cx="15" cy="5" r="1"/><path d="M12 17.5V14l-3.5-3.5 2-3 2 3 3.5-3.5"/><path d="M12 17.5V14l-3.5-3.5 2-3 2 3 3.5-3.5"/></svg></div>`,
   32,
 );
 
@@ -1092,7 +1092,7 @@ const DeliveryTrackingPage = () => {
               label: "Picked up",
               value: pickedUpCount,
               icon: PackageCheck,
-              iconBackground: "#fff7ed",
+              iconBackground: palette.fillActive,
               description: "Orders being delivered",
             },
 
@@ -1705,7 +1705,7 @@ const DeliveryTrackingPage = () => {
                                   ? "#16a34a"
                                   : selectedDelivery.assignment_status ===
                                       "picked_up"
-                                    ? "#f97316"
+                                    ? palette.primary
                                     : selectedDelivery.assignment_status ===
                                         "failed"
                                       ? "#dc2626"
@@ -1725,7 +1725,7 @@ const DeliveryTrackingPage = () => {
                             <Polyline
                               positions={[restaurantPos, riderPos]}
                               pathOptions={{
-                                color: "#2563eb",
+                                color: palette.primary,
                                 weight: 3,
                                 opacity: 0.7,
                                 dashArray: "6 4",
@@ -1738,7 +1738,7 @@ const DeliveryTrackingPage = () => {
                           <Polyline
                             positions={[riderPos, destPos]}
                             pathOptions={{
-                              color: "#f97316",
+                              color: palette.primary,
                               weight: 4,
                               opacity: 0.85,
                               dashArray: "10 6",

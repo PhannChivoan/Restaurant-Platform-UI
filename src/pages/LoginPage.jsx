@@ -82,7 +82,7 @@ export default function LoginPage() {
       <div className="flex-1 flex items-center justify-center px-6 py-12">
         <div className="w-full" style={{ maxWidth: 420 }}>
           <div className="flex items-center gap-3 mb-10">
-            <span style={{ width: 44, height: 44, borderRadius: 14, background: c.primary, display: "grid", placeItems: "center", boxShadow: "0 8px 20px rgba(249,115,22,.35)" }}>
+            <span style={{ width: 44, height: 44, borderRadius: 14, background: c.primary, display: "grid", placeItems: "center", boxShadow: "0 8px 20px rgba(249, 115, 22,.35)" }}>
               <UtensilsCrossed size={22} color="#fff" />
             </span>
             <div>
@@ -141,7 +141,7 @@ export default function LoginPage() {
                 block
                 size="large"
                 disabled={loading}
-                style={{ height: 52, borderRadius: 14, background: loading ? c.primaryHover : c.primary, borderColor: "transparent", color: "#fff", fontWeight: 700, fontSize: 16, boxShadow: "0 8px 20px rgba(249,115,22,.35)" }}
+                style={{ height: 52, borderRadius: 14, background: loading ? c.primaryHover : c.primary, borderColor: "transparent", color: "#fff", fontWeight: 700, fontSize: 16, boxShadow: "0 8px 20px rgba(249, 115, 22,.35)" }}
               >
                 {loading ? (
                   <span className="inline-flex items-center gap-2">
@@ -168,7 +168,7 @@ export default function LoginPage() {
       {/* Right: food imagery */}
       <div className="hidden md:flex flex-1 relative overflow-hidden" style={{ minHeight: 560 }}>
         <div className="absolute inset-0" style={{ backgroundImage: `url('${HERO}')`, backgroundSize: "cover", backgroundPosition: "center" }} />
-        <div className="absolute inset-0" style={{ background: "linear-gradient(160deg, rgba(249,115,22,.55) 0%, rgba(11,28,48,.88) 100%)" }} />
+        <div className="absolute inset-0" style={{ background: "linear-gradient(160deg, rgba(249, 115, 22,.55) 0%, rgba(11,28,48,.88) 100%)" }} />
         <div className="relative flex flex-col justify-end p-12" style={{ color: "#fff" }}>
           <h2 style={{ fontSize: 34, lineHeight: 1.15, fontWeight: 800, margin: 0, maxWidth: 440 }}>Run your restaurant business in one place.</h2>
           <p style={{ opacity: 0.85, margin: "12px 0 28px", maxWidth: 440, fontSize: 15 }}>

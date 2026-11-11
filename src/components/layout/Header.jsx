@@ -21,10 +21,14 @@ import {
   Settings,
   User,
   Menu as MenuIcon,
+  Sun,
+  Moon,
+  Flame,
+  Check,
 } from "lucide-react";
 import BranchSwitcher from "./BranchSwitcher";
 import SecurityModal from "./SecurityModal";
-import { palette, fontMono } from "../../constants/theme";
+import { palette, fontMono, themeMode, setThemeMode } from "../../constants/theme";
 import { findNavItem, NAV_ITEMS } from "../../constants/navigation";
 import { request } from "../../utils/request";
 import { loadAdminBootstrap } from "../../utils/adminBootstrap";
@@ -40,6 +44,12 @@ const toMediaUrl = (url) => {
   if (/^(https?:\/\/|blob:|data:)/.test(url)) return url;
   return `${API_ORIGIN}${url.startsWith("/") ? "" : "/"}${url}`;
 };
+
+const THEME_OPTIONS = [
+  { key: "light", label: "Light", icon: Sun },
+  { key: "dark", label: "Dark", icon: Moon },
+  { key: "orange", label: "Orange", icon: Flame },
+];
 
 const XButton = ({ onClick }) => (
   <button
@@ -183,6 +193,11 @@ const Header = ({
     return item?.label || "Overview";
   };
 
+  const getParentLabel = () => {
+    const parent = NAV_ITEMS.find((i) => i.children?.some((c) => c.key === activeKey));
+    return parent?.label || "";
+  };
+
   const userName = user?.name || "User";
   const userRole = roleDisplay(user?.role);
   const userAvatar = user?.avatar_url || user?.avatar;
@@ -192,14 +207,14 @@ const Header = ({
       style={{
         height: 64,
         padding: "0 24px",
-        background: "rgba(255, 255, 255, 0.86)",
+        background: palette.bgHeaderGlass,
         backdropFilter: "saturate(180%) blur(12px)",
         WebkitBackdropFilter: "saturate(180%) blur(12px)",
         borderBottom: `1px solid ${palette.border}`,
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
-        position: "sticky",
+        position: "relative",
         top: 0,
         zIndex: 50,
       }}
@@ -217,6 +232,11 @@ const Header = ({
           style={{ fontSize: 17, fontWeight: 650, letterSpacing: "-0.02em", color: palette.ink }}
         >
           {getPageTitle()}
+          {getParentLabel() && (
+            <div style={{ fontSize: 12, fontWeight: 500, letterSpacing: 0, color: palette.muted, marginTop: -1 }}>
+              Home <span style={{ margin: "0 4px" }}>/</span> {getParentLabel()} <span style={{ margin: "0 4px" }}>/</span> <span style={{ color: palette.primary }}>{getPageTitle()}</span>
+            </div>
+          )}
         </div>
       </Space>
 
@@ -232,14 +252,41 @@ const Header = ({
           onChange={(e) => setQuery(e.target.value)}
           disabled={!searchEnabled}
           style={{
-            width: 240,
-            background: palette.bgSubtle,
+            width: 280,
+            background: palette.bg,
             border: "1px solid transparent",
             fontSize: 13,
-            borderRadius: 10,
+            borderRadius: 14,
           }}
           className="header-search"
         />
+
+        <Dropdown
+          trigger={["click"]}
+          placement="bottomRight"
+          menu={{
+            selectedKeys: [themeMode],
+            onClick: ({ key }) => setThemeMode(key),
+            items: THEME_OPTIONS.map(({ key, label, icon: Icon }) => ({
+              key,
+              icon: <Icon size={16} strokeWidth={1.75} />,
+              label: (
+                <span style={{ display: "inline-flex", alignItems: "center", justifyContent: "space-between", gap: 24, minWidth: 110 }}>
+                  {label}
+                  {themeMode === key && <Check size={14} color={palette.primary} />}
+                </span>
+              ),
+            })),
+          }}
+        >
+            <Button
+              type="text"
+              title="Theme"
+              aria-label="Change theme"
+              icon={themeMode === "dark" ? <Moon size={18} strokeWidth={1.75} /> : themeMode === "orange" ? <Flame size={18} strokeWidth={1.75} /> : <Sun size={18} strokeWidth={1.75} />}
+              style={{ width: 36, height: 36 }}
+            />
+        </Dropdown>
 
         <Dropdown
           open={notifOpen}
@@ -284,7 +331,7 @@ const Header = ({
                       padding: "12px 16px",
                       borderBottom: `1px solid ${palette.border}`,
                       cursor: "pointer",
-                      background: item.unread ? "#FFF7ED" : undefined,
+                      background: item.unread ? palette.fillActive : undefined,
                     }}
                   >
                     <List.Item.Meta

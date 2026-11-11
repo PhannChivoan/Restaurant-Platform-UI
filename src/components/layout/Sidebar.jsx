@@ -6,6 +6,7 @@ import { palette } from "../../constants/theme";
 import { useNavigate } from "react-router-dom";
 import { loadAdminBootstrap } from "../../utils/adminBootstrap";
 import { getAccessToken } from "../../store/access_token";
+import { getProfile } from "../../store/access_token";
 import { platformLogo } from "../../utils/platformSettings";
 // the uploaded platform logo from /admin/settings wins over the bundled file
 const logo = platformLogo() || "/assets/logo/logo.png";
@@ -159,7 +160,7 @@ useEffect(() => {
               paddingLeft: 12,
               display: "block",
               marginBottom: 10,
-              color: "#64748b",
+              color: palette.sidebarMuted,
               textTransform: "uppercase",
               letterSpacing: 1,
             }}
@@ -188,10 +189,20 @@ useEffect(() => {
         )}
       </div>
 
+      <div style={{ display: "flex", alignItems: "center", gap: 10, padding: sidebarCollapsed ? "12px 0" : "12px 18px", justifyContent: sidebarCollapsed ? "center" : "flex-start", borderTop: `1px solid ${palette.border}`, flexShrink: 0 }}>
+        <div style={{ width: 36, height: 36, borderRadius: "50%", background: palette.primary, color: "#fff", display: "grid", placeItems: "center", fontWeight: 700, flexShrink: 0 }}>{(getProfile()?.name || "A")[0].toUpperCase()}</div>
+        {!sidebarCollapsed && (
+          <div style={{ minWidth: 0 }}>
+            <div style={{ color: palette.ink, fontWeight: 600, fontSize: 13, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{getProfile()?.name || "Admin"}</div>
+            <div style={{ color: palette.muted, fontSize: 11, textTransform: "capitalize" }}>{(getProfile()?.role || "administrator").replace(/_/g, " ")}</div>
+          </div>
+        )}
+      </div>
+
       <div
         style={{
           padding: 12,
-          borderTop: "1px solid rgba(255, 255, 255, 0.12)",
+          borderTop: `1px solid ${palette.border}`,
           flexShrink: 0,
         }}
       >
@@ -208,13 +219,13 @@ useEffect(() => {
           onClick={() => setCollapsed(!collapsed)}
           style={{
             height: 36,
-            color: palette.inkInverse,
+            color: palette.sidebarText,
             fontSize: 13,
             borderRadius: 6,
             transition: "background 0.15s ease",
           }}
           onMouseEnter={(e) => {
-            e.currentTarget.style.background = "rgba(255, 255, 255, 0.08)";
+            e.currentTarget.style.background = palette.sidebarHover;
           }}
           onMouseLeave={(e) => {
             e.currentTarget.style.background = "transparent";
@@ -243,7 +254,7 @@ useEffect(() => {
           bottom: 0,
           zIndex: 100,
           background: palette.sidebarBg,
-          boxShadow: "1px 0 0 rgba(255,255,255,0.04)",
+          boxShadow: `1px 0 0 ${palette.border}, 4px 0 24px rgba(15, 23, 42, 0.05)`,
           borderRight: "none",
         }}
       >
@@ -259,7 +270,7 @@ useEffect(() => {
         open={mobileOpen}
         onClose={() => setMobileOpen(false)}
         size={264}
-        closeIcon={<span style={{ color: palette.inkInverse }}>×</span>}
+        closeIcon={<span style={{ color: palette.ink }}>×</span>}
         styles={{
           body: { padding: 0, background: palette.sidebarBg },
           header: { display: "none" },
@@ -288,13 +299,13 @@ useEffect(() => {
           .mono-menu .ant-menu-submenu-title,
           .mono-menu .ant-menu-item .ant-menu-title-content,
           .mono-menu .ant-menu-submenu-title .ant-menu-title-content {
-            color: #cbd5e1 !important;
+            color: ${palette.sidebarText} !important;
             font-weight: 450;
           }
           .mono-menu .ant-menu-item .anticon,
           .mono-menu .ant-menu-submenu-title .anticon,
           .mono-menu .ant-menu-submenu-arrow {
-            color: #7c8aa0 !important;
+            color: ${palette.sidebarMuted} !important;
           }
           .mono-menu .ant-menu-item .ant-menu-title-content,
           .mono-menu .ant-menu-submenu-title .ant-menu-title-content {
@@ -305,18 +316,18 @@ useEffect(() => {
           }
           .mono-menu .ant-menu-item:hover,
           .mono-menu .ant-menu-submenu-title:hover {
-            background: rgba(255, 255, 255, 0.07) !important;
+            background: ${palette.sidebarHover} !important;
           }
           .mono-menu .ant-menu-item:hover .ant-menu-title-content,
           .mono-menu .ant-menu-submenu-title:hover .ant-menu-title-content {
-            color: #ffffff !important;
+            color: ${palette.primary} !important;
           }
           /* open group: its children sit on a thin rail */
           .mono-menu .ant-menu-sub.ant-menu-inline {
             background: transparent !important;
             margin: 2px 0 6px 18px;
             padding-left: 6px;
-            border-left: 1px solid rgba(255, 255, 255, 0.09);
+            border-left: 1px solid ${palette.border};
           }
           .mono-menu .ant-menu-sub .ant-menu-item {
             height: 36px !important;
@@ -324,21 +335,32 @@ useEffect(() => {
             padding-left: 14px !important;
             font-size: 13px;
           }
-          /* current page: warm tint, orange text, no hard block */
-          .mono-menu .ant-menu-item-selected {
-            background: rgba(249, 115, 22, 0.16) !important;
+          /* current page: blue pill, white text (stays the same on hover) */
+          .mono-menu .ant-menu-item.ant-menu-item-selected,
+          .mono-menu .ant-menu-item.ant-menu-item-selected:hover,
+          .mono-menu .ant-menu-item.ant-menu-item-selected:active {
+            background: ${palette.primary} !important;
             font-weight: 600;
-            box-shadow: inset 3px 0 0 ${palette.primary};
+            box-shadow: 0 6px 16px ${palette.primary}4D;
           }
-          .mono-menu .ant-menu-item-selected .ant-menu-title-content,
-          .mono-menu .ant-menu-item-selected .anticon {
-            color: #fdba74 !important;
+          .mono-menu .ant-menu-item.ant-menu-item-selected,
+          .mono-menu .ant-menu-item.ant-menu-item-selected svg,
+          .mono-menu .ant-menu-item.ant-menu-item-selected .ant-menu-title-content,
+          .mono-menu .ant-menu-item.ant-menu-item-selected:hover .ant-menu-title-content {
+            color: #ffffff !important;
+          }
+          .mono-menu .ant-menu-submenu-selected > .ant-menu-submenu-title,
+          .mono-menu .ant-menu-submenu-selected > .ant-menu-submenu-title .ant-menu-submenu-arrow,
+          .mono-menu .ant-menu-submenu-selected > .ant-menu-submenu-title .ant-menu-title-content {
+            color: ${palette.primary} !important;
+            font-weight: 600;
           }
           .mono-menu .ant-menu-item::after {
             display: none !important;
           }
           .mono-menu .ant-menu-submenu-selected > .ant-menu-submenu-title .ant-menu-title-content {
-            color: #ffffff !important;
+            color: ${palette.primary} !important;
+            font-weight: 600;
           }
           .ant-menu-inline-collapsed .ant-menu-item {
             padding: 0 !important;

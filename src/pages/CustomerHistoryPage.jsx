@@ -549,7 +549,7 @@ const CustomerHistoryPage = () => {
             value: stats.avg_rating ?? 0,
             color: palette.warning,
             icon: Star,
-            iconBackground: "#FFF7ED",
+            iconBackground: palette.fillActive,
           },
         ]}
         loading={loading}

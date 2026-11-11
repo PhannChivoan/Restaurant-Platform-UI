@@ -12,7 +12,7 @@ const icon = (name, color) =>
     iconSize: [34, 34],
     iconAnchor: [17, 32],
   });
-const PICKUP = icon("storefront", "#ea580c");
+const PICKUP = icon("storefront", "#1d4ed8");
 const DROPOFF = icon("home_pin", "#16a34a");
 
 const Fit = ({ points }) => {
@@ -88,7 +88,7 @@ const RiderMap = ({ me, deliveries, focus, onRoute }) => {
       {route && (
         <Polyline
           positions={route.coords}
-          pathOptions={{ color: "#ea580c", weight: 5, opacity: 0.85, dashArray: route.fallback ? "8 8" : undefined }}
+          pathOptions={{ color: "#1d4ed8", weight: 5, opacity: 0.85, dashArray: route.fallback ? "8 8" : undefined }}
         />
       )}
 

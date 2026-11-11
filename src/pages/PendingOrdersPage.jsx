@@ -698,7 +698,9 @@ const PendingOrdersPage = () => {
      FILTERS
   ======================================================= */
 
-  const activeFilterCount = [search, statusFilter, restaurantFilter, dateRange].filter(Boolean).length;
+  // the range starts as [null, null], which is "no date chosen"
+  const hasDateFilter = Boolean(dateRange?.[0] || dateRange?.[1]);
+  const activeFilterCount = [search, statusFilter, restaurantFilter, hasDateFilter].filter(Boolean).length;
 
   const clearAllFilters = () => {
     setSearchInput("");
@@ -933,40 +935,15 @@ const PendingOrdersPage = () => {
 
         {/* TABLE CARD */}
         <Card
-          style={{ marginTop: 14 }}
-          styles={{ body: { padding: 0 } }}
-          title={
-            <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-              <div style={{ width: 32, height: 32, borderRadius: 2, background: "#FFFBEB", color: palette.warning, display: "flex", alignItems: "center", justifyContent: "center" }}>
-                <Clock3 size={15} />
-              </div>
-              <div>
-                <div style={{ fontSize: 14, fontWeight: 600 }}>Kitchen Orders</div>
-                <div style={{ fontSize: 11, color: palette.muted }}>
-                  {totalOrders} orders
-                  {activeFilterCount > 0 && <span style={{ color: palette.primary }}> ({activeFilterCount} filter{activeFilterCount > 1 ? "s" : ""} active)</span>}
-                </div>
-              </div>
-            </div>
-          }
-          extra={
-            <Space size={6}>
-              {selectedRowKeys.length > 0 && (
-                <Button size="small" type="primary" icon={<Zap size={13} />} onClick={handleBatchAccept} style={{ borderRadius: 2 }}>
-                  Accept {selectedRowKeys.length} selected
-                </Button>
-              )}
-              <Button size="small" icon={<Download size={13} />} onClick={() => exportCSV(filteredOrders)} style={{ borderRadius: 2 }}>
-                Export CSV
-              </Button>
-            </Space>
-          }
+          className="module-table-card"
+          style={{ marginTop: 16 }}
+          styles={{ body: { padding: 20 } }}
         >
           {/* FILTERS */}
-          <div style={{ padding: "12px 16px", borderBottom: `1px solid ${palette.border}` }}>
+          <div className="module-toolbar" style={{ marginBottom: 14 }}>
             <div style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap" }}>
               <Input
-                size="small"
+                
                 prefix={<Search size={13} color={palette.faint} />}
                 suffix={searchInput ? <X size={13} style={{ cursor: "pointer" }} onClick={() => { setSearchInput(""); setSearch(""); }} /> : null}
                 placeholder="Search order, restaurant..."
@@ -977,7 +954,7 @@ const PendingOrdersPage = () => {
               />
 
               <Select
-                size="small"
+                
                 allowClear
                 showSearch
                 placeholder="Restaurant"
@@ -989,7 +966,7 @@ const PendingOrdersPage = () => {
               />
 
               <Select
-                size="small"
+                
                 allowClear
                 placeholder="Status"
                 value={statusFilter}
@@ -1005,7 +982,7 @@ const PendingOrdersPage = () => {
               />
 
               <RangePicker
-                size="small"
+                
                 value={dateRange}
                 onChange={(val) => { setDateRange(val); setPage(1); }}
                 allowEmpty={[true, true]}
@@ -1020,7 +997,7 @@ const PendingOrdersPage = () => {
               />
 
               <Select
-                size="small"
+                
                 value={sortBy}
                 onChange={(v) => setSortBy(v)}
                 style={{ width: 160, borderRadius: 2 }}
@@ -1035,7 +1012,7 @@ const PendingOrdersPage = () => {
               />
 
               <Select
-                size="small"
+                
                 value={pageSize}
                 onChange={(v) => { setPageSize(v); setPage(1); }}
                 style={{ width: 115, borderRadius: 2 }}
@@ -1044,10 +1021,18 @@ const PendingOrdersPage = () => {
               />
 
               {activeFilterCount > 0 && (
-                <Button size="small" type="link" icon={<X size={12} />} onClick={clearAllFilters} style={{ padding: 0, color: palette.danger, fontSize: 11 }}>
+                <Button  icon={<X size={12} />} onClick={clearAllFilters} style={{ color: palette.danger }}>
                   Clear all
                 </Button>
               )}
+              {selectedRowKeys.length > 0 && (
+                <Button type="primary" icon={<Zap size={15} />} onClick={handleBatchAccept}>
+                  Accept {selectedRowKeys.length} selected
+                </Button>
+              )}
+              <Button icon={<Download size={15} />} onClick={() => exportCSV(filteredOrders)}>
+                Export CSV
+              </Button>
             </div>
 
             {/* ACTIVE FILTER TAGS */}
@@ -1068,9 +1053,9 @@ const PendingOrdersPage = () => {
                     Status: {formatStatus(statusFilter)}
                   </Tag>
                 )}
-                {dateRange && (
+                {hasDateFilter && (
                   <Tag closable onClose={() => setDateRange(null)} style={{ margin: 0, fontSize: 10, borderRadius: 2 }}>
-                    {dayjs(dateRange[0]).format("DD MMM")} – {dayjs(dateRange[1]).format("DD MMM")}
+                    {dateRange[0] ? dayjs(dateRange[0]).format("DD MMM") : "Any"} – {dateRange[1] ? dayjs(dateRange[1]).format("DD MMM") : "Any"}
                   </Tag>
                 )}
               </div>
@@ -1089,7 +1074,7 @@ const PendingOrdersPage = () => {
             rowKey="id"
             columns={columns}
             dataSource={filteredOrders}
-            size="small"
+            
             scroll={{ x: "max-content" }}
             loading={loading}
             onRow={(record) => ({

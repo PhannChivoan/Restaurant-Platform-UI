@@ -563,7 +563,7 @@ const DeliveryZonesPage = () => {
             value: stats.surge_rules ?? 0,
             color: palette.warning,
             icon: Zap,
-            iconBackground: "#FFF7ED",
+            iconBackground: palette.fillActive,
           },
         ]}
         loading={loading}

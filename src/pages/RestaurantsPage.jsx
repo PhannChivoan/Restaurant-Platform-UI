@@ -918,7 +918,7 @@ const RestaurantsPage = () => {
             value: stats.pending ?? 0,
             color: palette.warning,
             icon: Clock3,
-            iconBackground: "#FFF7ED",
+            iconBackground: palette.fillActive,
           },
           {
             label: "Suspended",

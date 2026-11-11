@@ -1,10 +1,8 @@
-import { Tag } from "antd";
+import StatusBadge from "./StatusBadge";
 
 export const statusColumn = {
   title: "Status",
   dataIndex: "status",
   key: "status",
-  render: (status) => (
-    <Tag color={status === "Active" ? "green" : "orange"}>{status}</Tag>
-  ),
+  render: (status) => <StatusBadge status={status} />,
 };

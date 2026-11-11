@@ -91,7 +91,7 @@ const buildRestaurantCols = (totalRevenue) => [
     render: (v) => <Text strong>{formatCurrency(v)}</Text>,
   },
   {
-    title: "Commission (10%)",
+    title: "Commission",
     dataIndex: "commission",
     key: "commission",
     align: "right",
@@ -115,7 +115,7 @@ const buildRestaurantCols = (totalRevenue) => [
     width: 168,
     render: (_, record) => {
       const pct = totalRevenue > 0
-        ? ((record.gross_revenue || 0) / totalRevenue) * 100
+        ? (Number(record.gross_revenue || 0) / totalRevenue) * 100
         : 0;
       return (
         <Space size={6} align="center">
@@ -136,14 +136,14 @@ const buildRestaurantCols = (totalRevenue) => [
 ];
 
 const exportRevenueCSV = (rows) => {
-  const total = rows.reduce((s, r) => s + (r.gross_revenue || 0), 0);
-  const headers = ["Restaurant", "Gross Revenue", "Commission (10%)", "Net Payout", "Share"];
+  const total = rows.reduce((s, r) => s + Number(r.gross_revenue || 0), 0);
+  const headers = ["Restaurant", "Gross Revenue", "Commission", "Net Payout", "Share"];
   const body = rows.map((r) => [
     r.restaurant || "",
     Number(r.gross_revenue || 0).toFixed(2),
     Number(r.commission || 0).toFixed(2),
     Number(r.net_revenue || 0).toFixed(2),
-    total > 0 ? `${((r.gross_revenue || 0) / total) * 100}%` : "0%",
+    total > 0 ? `${((Number(r.gross_revenue || 0) / total) * 100).toFixed(1)}%` : "0%",
   ]);
   const csv = [headers, ...body]
     .map((row) => row.map((c) => `"${String(c).replace(/"/g, '""')}"`).join(","))
@@ -232,9 +232,9 @@ const RevenuePage = () => {
 
   const activeFilterCount = [dateRange, restaurantFilter].filter(Boolean).length;
 
-  const totalRevenue = revenueData.reduce((s, r) => s + (r.gross_revenue || 0), 0);
-  const totalCommission = revenueData.reduce((s, r) => s + (r.commission || 0), 0);
-  const totalNet = revenueData.reduce((s, r) => s + (r.net_revenue || 0), 0);
+  const totalRevenue = revenueData.reduce((s, r) => s + Number(r.gross_revenue || 0), 0);
+  const totalCommission = revenueData.reduce((s, r) => s + Number(r.commission || 0), 0);
+  const totalNet = revenueData.reduce((s, r) => s + Number(r.net_revenue || 0), 0);
 
   const pieData = [
     { name: "Restaurant Payouts", value: totalNet },
@@ -253,7 +253,7 @@ const RevenuePage = () => {
     <ConfigProvider
       theme={{
         token: { borderRadius: 2, colorBgContainer: palette.bg, colorBorder: palette.border },
-        components: { Table: { headerBg: "#f57c00", headerColor: "#fff", headerBorderRadius: 0 } },
+        components: { Table: { headerBg: palette.primary, headerColor: "#fff", headerBorderRadius: 0 } },
       }}
     >
       <TopProgressBar active={loading || refreshing} label="Revenue data loading" />

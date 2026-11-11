@@ -10,7 +10,7 @@ const { Paragraph, Text, Title } = Typography;
 
 // Curated Material Symbols; any other symbol name can be typed too.
 const ICONS = ["lunch_dining", "local_pizza", "ramen_dining", "soup_kitchen", "set_meal", "rice_bowl", "bakery_dining", "coffee", "nutrition", "storefront", "icecream", "local_cafe", "kebab_dining", "fastfood", "cake", "restaurant", "emoji_food_beverage", "egg_alt", "tapas", "brunch_dining", "local_bar", "cookie"];
-const COLORS = { orange: "#FFEDD5", rose: "#FFE4E6", amber: "#FEF3C7", red: "#FEE2E2", yellow: "#FEF9C3", teal: "#CCFBF1", stone: "#E7E5E4", green: "#DCFCE7", emerald: "#D1FAE5", blue: "#DBEAFE", purple: "#F3E8FF", pink: "#FCE7F3" };
+const COLORS = { orange: "#FFEDD5", rose: "#FFE4E6", amber: "#FEF3C7", red: "#FEE2E2", yellow: "#FEF9C3", teal: "#CCFBF1", stone: "#E7E5E4", green: "#DCFCE7", emerald: "#D1FAE5", blue: "#FFEDD5", purple: "#F3E8FF", pink: "#FCE7F3" };
 
 const IconBadge = ({ icon, color }) => (
   <span style={{ width: 34, height: 34, borderRadius: "50%", background: COLORS[color] ?? COLORS.orange, display: "inline-flex", alignItems: "center", justifyContent: "center", color: palette.ink }}>

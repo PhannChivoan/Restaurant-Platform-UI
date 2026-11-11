@@ -168,7 +168,7 @@ const ActivityLogPage = () => {
   const [roleOptions, setRoleOptions] = useState([]);
   const [eventOptions, setEventOptions] = useState([]);
 
-  const activeFilterCount = [roleFilter, eventFilter, dateRange].filter(Boolean).length;
+  const activeFilterCount = [roleFilter, eventFilter, dateRange?.[0] || dateRange?.[1]].filter(Boolean).length;
 
   /* ─── DATA LOADING ─── */
 

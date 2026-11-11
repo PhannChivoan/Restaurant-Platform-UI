@@ -1046,9 +1046,11 @@ const CompletedOrdersPage = () => {
      ACTIVE FILTER COUNT
   ======================================================= */
 
+  // the range starts as [null, null], which is "no date chosen"
+  const hasDateFilter = Boolean(dateRange?.[0] || dateRange?.[1]);
   const activeFilterCount = [
     search,
-    dateRange,
+    hasDateFilter,
     restaurantFilter,
     riderFilter,
     paymentMethod,
@@ -1310,7 +1312,7 @@ const CompletedOrdersPage = () => {
               value: stats.on_time_delivery || 0,
               suffix: "%",
               icon: Clock3,
-              iconBackground: "#FFF7ED",
+              iconBackground: palette.fillActive,
               color: palette.primary,
               description: "Within 30 min SLA",
             },
@@ -1337,59 +1339,12 @@ const CompletedOrdersPage = () => {
 
         {/* TABLE CARD */}
         <Card
-          style={{ marginTop: 14 }}
-          styles={{ body: { padding: 0 } }}
-          title={
-            <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-              <div
-                style={{
-                  width: 32,
-                  height: 32,
-                  borderRadius: 2,
-                  background: "#F0FDF4",
-                  color: palette.success,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                <CheckCircle2 size={15} />
-              </div>
-              <div>
-                <div style={{ fontSize: 14, fontWeight: 600 }}>
-                  Completed Orders
-                </div>
-                <div style={{ fontSize: 11, color: palette.muted }}>
-                  {totalOrders} orders
-                  {activeFilterCount > 0 && (
-                    <span style={{ color: palette.primary }}>
-                      {" "}
-                      ({activeFilterCount} filter
-                      {activeFilterCount > 1 ? "s" : ""} active)
-                    </span>
-                  )}
-                </div>
-              </div>
-            </div>
-          }
-          extra={
-            <Button
-              size="small"
-              icon={<Download size={13} />}
-              onClick={() => exportCSV(orders)}
-              style={{ borderRadius: 2 }}
-            >
-              Export CSV
-            </Button>
-          }
+          className="module-table-card"
+          style={{ marginTop: 16 }}
+          styles={{ body: { padding: 20 } }}
         >
           {/* FILTERS */}
-          <div
-            style={{
-              padding: "12px 16px",
-              borderBottom: `1px solid ${palette.border}`,
-            }}
-          >
+          <div className="module-toolbar" style={{ marginBottom: 14 }}>
             <div
               style={{
                 display: "flex",
@@ -1399,7 +1354,7 @@ const CompletedOrdersPage = () => {
               }}
             >
               <Input
-                size="small"
+                
                 prefix={<Search size={13} color={palette.faint} />}
                 allowClear
                 placeholder="Search order, restaurant, rider..."
@@ -1409,7 +1364,7 @@ const CompletedOrdersPage = () => {
               />
 
               <DatePicker.RangePicker
-                size="small"
+                
                 value={dateRange}
                 onChange={(val) => {
                   setDateRange(val);
@@ -1439,7 +1394,7 @@ const CompletedOrdersPage = () => {
               />
 
               <Select
-                size="small"
+                
                 allowClear
                 showSearch
                 placeholder="Restaurant"
@@ -1454,7 +1409,7 @@ const CompletedOrdersPage = () => {
               />
 
               <Select
-                size="small"
+                
                 allowClear
                 showSearch
                 placeholder="Rider"
@@ -1469,7 +1424,7 @@ const CompletedOrdersPage = () => {
               />
 
               <Select
-                size="small"
+                
                 allowClear
                 placeholder="Payment"
                 value={paymentMethod}
@@ -1490,7 +1445,7 @@ const CompletedOrdersPage = () => {
               />
 
               <Select
-                size="small"
+                
                 allowClear
                 placeholder="Paid status"
                 value={isPaid}
@@ -1507,7 +1462,7 @@ const CompletedOrdersPage = () => {
               />
 
               <Select
-                size="small"
+                
                 value={sortBy}
                 onChange={(v) => {
                   setSortBy(v);
@@ -1525,15 +1480,17 @@ const CompletedOrdersPage = () => {
 
               {activeFilterCount > 0 && (
                 <Button
-                  size="small"
-                  type="link"
+                  
                   icon={<X size={12} />}
                   onClick={clearAllFilters}
-                  style={{ padding: 0, color: palette.danger, fontSize: 11 }}
+                  style={{ color: palette.danger }}
                 >
                   Clear all
                 </Button>
               )}
+              <Button icon={<Download size={15} />} onClick={() => exportCSV(orders)}>
+                Export CSV
+              </Button>
             </div>
 
             {/* ACTIVE FILTER TAGS */}
@@ -1558,14 +1515,13 @@ const CompletedOrdersPage = () => {
                     Search: {search}
                   </Tag>
                 )}
-                {dateRange && (
+                {hasDateFilter && (
                   <Tag
                     closable
                     onClose={() => setDateRange(null)}
                     style={{ margin: 0, fontSize: 10, borderRadius: 2 }}
                   >
-                    {dayjs(dateRange[0]).format("DD MMM")} –{" "}
-                    {dayjs(dateRange[1]).format("DD MMM")}
+                    {dateRange[0] ? dayjs(dateRange[0]).format("DD MMM") : "Any"} – {dateRange[1] ? dayjs(dateRange[1]).format("DD MMM") : "Any"}
                   </Tag>
                 )}
                 {restaurantFilter && (
@@ -1635,7 +1591,7 @@ const CompletedOrdersPage = () => {
             rowKey="id"
             columns={columns}
             dataSource={orders}
-            size="small"
+            
             scroll={{ x: "max-content" }}
             loading={
               loading && {

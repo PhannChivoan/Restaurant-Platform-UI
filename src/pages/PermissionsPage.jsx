@@ -95,7 +95,7 @@ const PERM_GROUPS = {
   Riders: { color: "#7C3AED", icon: "🛵" },
   "Delivery Zones": { color: "#0891B2", icon: "🗺️" },
   Customers: { color: "#DB2777", icon: "👥" },
-  Promotions: { color: "#EA580C", icon: "🎯" },
+  Promotions: { color: palette.primaryHover, icon: "🎯" },
   Analytics: { color: "#4F46E5", icon: "📊" },
   "Activity Log": { color: "#6B7280", icon: "📜" },
   "Users & Roles": { color: palette.danger, icon: "🔐" },
@@ -907,7 +907,7 @@ const PermissionsPage = () => {
             ),
             color: palette.warning,
             icon: CheckCircle2,
-            iconBackground: "#FFF7ED",
+            iconBackground: palette.fillActive,
           },
         ]}
         loading={loading}

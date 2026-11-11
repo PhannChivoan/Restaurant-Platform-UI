@@ -548,7 +548,7 @@ const MenuModifiersPage = () => {
             value: stats.single ?? 0,
             color: palette.warning,
             icon: ToggleLeft,
-            iconBackground: "#FFF7ED",
+            iconBackground: palette.fillActive,
           },
           {
             label: "Multi select",

@@ -381,7 +381,7 @@ const RedemptionsPage = () => {
             value: formatCurrency(stats.total_discount ?? 0),
             color: palette.warning,
             icon: Package,
-            iconBackground: "#FFF7ED",
+            iconBackground: palette.fillActive,
           },
         ]}
         loading={loading}

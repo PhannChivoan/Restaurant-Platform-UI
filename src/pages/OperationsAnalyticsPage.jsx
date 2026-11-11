@@ -322,7 +322,7 @@ const OperationsAnalyticsPage = () => {
     <ConfigProvider
       theme={{
         token: { borderRadius: 2, colorBgContainer: palette.bg, colorBorder: palette.border },
-        components: { Table: { headerBg: "#f57c00", headerColor: "#fff", headerBorderRadius: 0 } },
+        components: { Table: { headerBg: palette.primary, headerColor: "#fff", headerBorderRadius: 0 } },
       }}
     >
       <TopProgressBar active={loading || refreshing} label="Analytics loading" />

@@ -806,7 +806,7 @@ return (
             value: stats.missing_images ?? 0,
             color: palette.warning,
             icon: ImageIcon,
-            iconBackground: "#FFF7ED",
+            iconBackground: palette.fillActive,
           },
         ]}
         loading={loading}

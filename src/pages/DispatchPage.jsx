@@ -663,7 +663,7 @@ const DispatchPage = () => {
         <Card
           title={
             <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-              <Truck size={18} color="#f57c00" />
+              <Truck size={18} color={palette.primary} />
               <span>Live Deliveries ({totalDeliveries})</span>
             </div>
           }
@@ -750,7 +750,7 @@ const DispatchPage = () => {
               token: { borderRadius: 2, colorBorder: "#f0f0f0" },
               components: {
                 Table: {
-                  headerBg: "#f57c00",
+                  headerBg: palette.primary,
                   headerColor: "#fff",
                   headerBorderRadius: 0,
                 },
@@ -814,7 +814,7 @@ const DispatchPage = () => {
           <Card
             title={
               <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                <Clock3 size={18} color="#f57c00" />
+                <Clock3 size={18} color={palette.primary} />
                 <span>Ready for Dispatch ({readyOrders.length})</span>
               </div>
             }
@@ -882,7 +882,7 @@ const DispatchPage = () => {
           <Card
             title={
               <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                <Bike size={18} color="#f57c00" />
+                <Bike size={18} color={palette.primary} />
                 <span>Available Riders ({availableRiders.length})</span>
               </div>
             }
@@ -945,7 +945,7 @@ const DispatchPage = () => {
         <Card
           title={
             <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-              <Truck size={18} color="#f57c00" />
+              <Truck size={18} color={palette.primary} />
               <span>All Riders ({riders.length})</span>
             </div>
           }

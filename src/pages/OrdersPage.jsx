@@ -1053,7 +1053,7 @@ const OrdersPage = () => {
               key: "rating",
 
               render: (value) => (
-                <span style={{ color: value === "-" ? "#94a3b8" : "#f97316" }}>
+                <span style={{ color: value === "-" ? "#94a3b8" : palette.primary }}>
                   ★ {value === "-" ? value : `${value} / 5`}
                 </span>
               ),

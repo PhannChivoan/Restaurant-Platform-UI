@@ -8,8 +8,7 @@ import {
   Input,
   Row,
   Select,
-  Space,
-  Spin,
+  Skeleton,
   Switch,
   Typography,
   Upload,
@@ -20,19 +19,20 @@ import {
   CreditCard,
   Globe2,
   ImagePlus,
-  Loader2,
+  Info,
   Save,
   Settings2,
   ShieldAlert,
   Store,
 } from "lucide-react";
 import TopProgressBar from "../components/ui/TopProgressBar";
+import PageHeader from "../components/ui/PageHeader";
 import { request } from "../utils/request";
 import { Config } from "../utils/config";
 import { palette } from "../constants/theme";
 import { loadPlatformConfig } from "../utils/platformSettings";
 
-const { Text, Title } = Typography;
+const { Text } = Typography;
 
 // what each option actually drives, shown under the field so it is clear the value
 // is applied to the running system and not only stored
@@ -97,18 +97,28 @@ const PAYMENT_PROVIDER_OPTIONS = [
   { value: "wing", label: "Wing" },
 ];
 
-const SettingHeader = ({ icon: Icon, title, description }) => (
-  <Space align="start" size={12}>
-    <Icon size={20} color={palette.primary} strokeWidth={1.8} />
-    <div>
-      <Text strong>{title}</Text>
-      <div>
-        <Text type="secondary" style={{ fontSize: 12 }}>
-          {description}
-        </Text>
+// card with a coloured icon tile, a title and a one-line description
+const SectionCard = ({ icon: Icon, color = palette.primary, title, description, children }) => (
+  <Card variant="outlined" style={{ height: "100%" }} styles={{ body: { padding: 0 } }}>
+    <div style={{ display: "flex", alignItems: "center", gap: 14, padding: "18px 22px", borderBottom: `1px solid ${palette.border}` }}>
+      <div style={{ width: 44, height: 44, borderRadius: 12, display: "grid", placeItems: "center", flexShrink: 0, color, background: `${color}1A` }}>
+        <Icon size={21} strokeWidth={1.9} />
+      </div>
+      <div style={{ minWidth: 0 }}>
+        <div style={{ fontSize: 16, fontWeight: 700, color: palette.ink, lineHeight: 1.3 }}>{title}</div>
+        <Text type="secondary" style={{ fontSize: 13 }}>{description}</Text>
       </div>
     </div>
-  </Space>
+    <div style={{ padding: "20px 22px 8px" }}>{children}</div>
+  </Card>
+);
+
+// the small "what this drives" note under a field
+const Effect = ({ children }) => (
+  <span style={{ display: "inline-flex", gap: 6, alignItems: "flex-start", fontSize: 12, color: palette.muted, marginTop: 4 }}>
+    <Info size={13} style={{ flexShrink: 0, marginTop: 2 }} />
+    <span>{children}</span>
+  </span>
 );
 
 const SettingSwitch = ({ label, description, name, effect }) => (
@@ -117,25 +127,25 @@ const SettingSwitch = ({ label, description, name, effect }) => (
       display: "flex",
       alignItems: "center",
       justifyContent: "space-between",
-      padding: "10px 0",
-      borderBottom: `1px solid ${palette.border}`,
+      gap: 16,
+      padding: "14px 16px",
+      marginBottom: 12,
+      borderRadius: 12,
+      border: `1px solid ${palette.border}`,
+      background: palette.bgSubtle,
     }}
   >
-    <div style={{ flex: 1, marginRight: 16 }}>
-      <Text style={{ fontSize: 13 }}>{label}</Text>
+    <div style={{ flex: 1, minWidth: 0 }}>
+      <div style={{ fontSize: 14, fontWeight: 600, color: palette.ink }}>{label}</div>
       {description && (
-        <Text type="secondary" style={{ display: "block", fontSize: 12, marginTop: 1 }}>
+        <Text type="secondary" style={{ display: "block", fontSize: 13, marginTop: 1 }}>
           {description}
         </Text>
       )}
-      {effect && (
-        <Text type="secondary" style={{ display: "block", fontSize: 11, marginTop: 2 }}>
-          Applies to: {effect}
-        </Text>
-      )}
+      {effect && <Effect>{effect}</Effect>}
     </div>
     <Form.Item name={name} valuePropName="checked" noStyle>
-      <Switch size="small" />
+      <Switch />
     </Form.Item>
   </div>
 );
@@ -155,9 +165,9 @@ const BrandUpload = ({ label, name, accept, hint, existingUrl, onRemove }) => {
   const displayUrl = preview || (existingUrl ? toMediaUrl(existingUrl) : null);
 
   return (
-    <div style={{ marginBottom: 16 }}>
-      <Text style={{ fontSize: 13, display: "block", marginBottom: 6 }}>{label}</Text>
-      <div style={{ display: "flex", gap: 12, alignItems: "start" }}>
+    <div style={{ padding: 16, borderRadius: 12, border: `1px dashed ${palette.borderStrong}`, background: palette.bgSubtle, height: "100%" }}>
+      <div style={{ fontSize: 14, fontWeight: 600, color: palette.ink, marginBottom: 10 }}>{label}</div>
+      <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
         <Form.Item name={name} valuePropName="fileList" getValueFromEvent={normFile} noStyle>
           <Upload
             listType="picture-card"
@@ -171,9 +181,9 @@ const BrandUpload = ({ label, name, accept, hint, existingUrl, onRemove }) => {
             }}
           >
             {!displayUrl && (
-              <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 2 }}>
-                <ImagePlus size={18} color={palette.faint} />
-                <span style={{ fontSize: 10, color: palette.faint }}>Upload</span>
+              <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 4 }}>
+                <ImagePlus size={20} color={palette.primary} />
+                <span style={{ fontSize: 12, color: palette.muted }}>Upload</span>
               </div>
             )}
           </Upload>
@@ -183,18 +193,19 @@ const BrandUpload = ({ label, name, accept, hint, existingUrl, onRemove }) => {
             src={displayUrl}
             alt={label}
             style={{
-              width: 64,
-              height: 64,
+              width: 72,
+              height: 72,
               objectFit: "contain",
-              borderRadius: 4,
+              borderRadius: 12,
               border: `1px solid ${palette.border}`,
-              padding: 4,
+              background: palette.bg,
+              padding: 6,
             }}
           />
         )}
       </div>
       {hint && (
-        <Text type="secondary" style={{ fontSize: 11 }}>{hint}</Text>
+        <Text type="secondary" style={{ fontSize: 12, display: "block", marginTop: 6 }}>{hint}</Text>
       )}
     </div>
   );
@@ -324,71 +335,72 @@ const fetchSettings = useCallback(async () => {
 
   if (loading) {
     return (
-      <div style={{ display: "flex", justifyContent: "center", alignItems: "center", minHeight: 300 }}>
-        <Spin indicator={<Loader2 size={28} className="animate-spin" color={palette.primary} />} />
+      <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+        <PageHeader icon={Settings2} title="Platform Settings" description="Configure platform identity, branding, ordering defaults, notifications, and payments." />
+        <Row gutter={[16, 16]}>
+          {[0, 1, 2, 3].map((i) => (
+            <Col key={i} xs={24} lg={12}>
+              <Card variant="outlined"><Skeleton active paragraph={{ rows: 5 }} /></Card>
+            </Col>
+          ))}
+        </Row>
       </div>
     );
   }
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 10, minHeight: "auto", width: "100%" }}>
+    <div style={{ display: "flex", flexDirection: "column", gap: 16, minHeight: "auto", width: "100%" }}>
       <TopProgressBar active={saving} label="Saving settings" />
 
-      <div>
-        <Space align="center" size={10}>
-          <Settings2 size={22} color={palette.primary} strokeWidth={1.8} />
-          <Title level={3} style={{ margin: 0 }}>Platform Settings</Title>
-        </Space>
-        <Text type="secondary" style={{ display: "block", marginTop: 8 }}>
-          Configure platform identity, branding, ordering defaults, notifications, and payments.
-        </Text>
-      </div>
+      <PageHeader
+        icon={Settings2}
+        title="Platform Settings"
+        description="Configure platform identity, branding, ordering defaults, notifications, and payments."
+      />
 
-      <Form form={form} layout="vertical" onFinish={handleSave}>
+      <Form form={form} layout="vertical" onFinish={handleSave} requiredMark={false}>
         <Row gutter={[16, 16]}>
           {/* ── Brand Identity ── */}
           <Col xs={24} lg={12}>
-            <Card
-              title={<SettingHeader icon={Store} title="Brand identity" description="Platform brand images and basic information." />}
-              variant="outlined"
-              style={{ borderRadius: 2 }}
-            >
-              <BrandUpload
-                label="Platform logo"
-                name="brand_logo"
-                accept="image/jpeg,image/png,image/webp"
-                hint="Recommended 200x200px. PNG or SVG. Max 2MB."
-                existingUrl={brandLogo}
-                onRemove={() => setBrandLogo(null)}
-              />
-              <BrandUpload
-                label="Favicon"
-                name="brand_favicon"
-                accept="image/jpeg,image/png,image/webp,image/x-icon"
-                hint="16x16 or 32x32px. Used in browser tabs. Max 1MB."
-                existingUrl={brandFavicon}
-                onRemove={() => setBrandFavicon(null)}
-              />
-              <Form.Item label="Platform name" name="platform_name" extra={`Applies to: ${EFFECTS.platform_name}`}>
+            <SectionCard icon={Store} color={palette.primary} title="Brand identity" description="Platform brand images and basic information.">
+              <Row gutter={[12, 12]} style={{ marginBottom: 18 }}>
+                <Col xs={24} sm={12}>
+                  <BrandUpload
+                    label="Platform logo"
+                    name="brand_logo"
+                    accept="image/jpeg,image/png,image/webp"
+                    hint="Recommended 200x200px. PNG or SVG. Max 2MB."
+                    existingUrl={brandLogo}
+                    onRemove={() => setBrandLogo(null)}
+                  />
+                </Col>
+                <Col xs={24} sm={12}>
+                  <BrandUpload
+                    label="Favicon"
+                    name="brand_favicon"
+                    accept="image/jpeg,image/png,image/webp,image/x-icon"
+                    hint="16x16 or 32x32px. Used in browser tabs. Max 1MB."
+                    existingUrl={brandFavicon}
+                    onRemove={() => setBrandFavicon(null)}
+                  />
+                </Col>
+              </Row>
+              <Form.Item label="Platform name" name="platform_name" extra={<Effect>{EFFECTS.platform_name}</Effect>}>
                 <Input placeholder="FoodOrder Platform" />
               </Form.Item>
-              <Form.Item label="Support email" name="support_email" extra={`Applies to: ${EFFECTS.support_email}`}>
+              <Form.Item label="Support email" name="support_email" extra={<Effect>{EFFECTS.support_email}</Effect>}>
                 <Input placeholder="support@foodorder.com" />
               </Form.Item>
-              <Form.Item label="Default timezone" name="timezone" extra={`Applies to: ${EFFECTS.timezone}`}>
+              <Form.Item label="Default timezone" name="timezone" extra={<Effect>{EFFECTS.timezone}</Effect>}>
                 <Select options={TIMEZONE_OPTIONS} />
               </Form.Item>
-            </Card>
+            </SectionCard>
           </Col>
 
           {/* ── Order Defaults ── */}
           <Col xs={24} lg={12}>
-            <Card
-              title={<SettingHeader icon={Globe2} title="Order defaults" description="Defaults when restaurants or customers don't specify." />}
-              variant="outlined"
-              style={{ borderRadius: 2 }}
-            >
-              <Form.Item label="Default currency" name="currency" extra={`Applies to: ${EFFECTS.currency}`}>
+            <SectionCard icon={Globe2} color="#7C3AED" title="Order defaults" description="Defaults when restaurants or customers don't specify.">
+              <Form.Item label="Default currency" name="currency" extra={<Effect>{EFFECTS.currency}</Effect>}>
                 <Select options={CURRENCY_OPTIONS} />
               </Form.Item>
               <Form.Item
@@ -400,7 +412,7 @@ const fetchSettings = useCallback(async () => {
                     <Form.Item
                       label="Exchange rate (riel per 1 US dollar)"
                       name="exchange_rate"
-                      extra={EFFECTS.exchange_rate}
+                      extra={<Effect>{EFFECTS.exchange_rate}</Effect>}
                       rules={[{ required: true, type: "number", min: 1000, max: 10000, message: "Enter a rate between 1,000 and 10,000." }]}
                     >
                       <InputNumber min={1000} max={10000} step={50} precision={0} addonBefore="៛" style={{ width: "100%" }} />
@@ -408,7 +420,7 @@ const fetchSettings = useCallback(async () => {
                   )
                 }
               </Form.Item>
-              <Form.Item label="Preparation time" name="prep_time_minutes" extra={`Applies to: ${EFFECTS.prep_time_minutes}`}>
+              <Form.Item label="Preparation time" name="prep_time_minutes" extra={<Effect>{EFFECTS.prep_time_minutes}</Effect>}>
                 <Select options={PREP_TIME_OPTIONS} />
               </Form.Item>
               <SettingSwitch
@@ -417,16 +429,12 @@ const fetchSettings = useCallback(async () => {
                 effect={EFFECTS.auto_accept_orders}
                 name="auto_accept_orders"
               />
-            </Card>
+            </SectionCard>
           </Col>
 
           {/* ── Notifications ── */}
           <Col xs={24} lg={12}>
-            <Card
-              title={<SettingHeader icon={BellRing} title="Notifications" description="Choose which events notify your team." />}
-              variant="outlined"
-              style={{ borderRadius: 2 }}
-            >
+            <SectionCard icon={BellRing} color={palette.warning} title="Notifications" description="Choose which events notify your team.">
               <SettingSwitch
                 label="New order alerts"
                 description="Notify when a new order is placed."
@@ -445,24 +453,20 @@ const fetchSettings = useCallback(async () => {
                 effect={EFFECTS.refund_alerts}
                 name="refund_alerts"
               />
-            </Card>
+            </SectionCard>
           </Col>
 
           {/* ── Payments ── */}
           <Col xs={24} lg={12}>
-            <Card
-              title={<SettingHeader icon={CreditCard} title="Payments" description="Payment methods and settlement behavior." />}
-              variant="outlined"
-              style={{ borderRadius: 2 }}
-            >
+            <SectionCard icon={CreditCard} color={palette.success} title="Payments" description="Payment methods and settlement behavior.">
               <Form.Item
                 label="Platform commission (%)"
                 name="commission_rate"
-                extra={`No subscription: this % is deducted from the food subtotal of every customer order. New partners accept the rate shown at sign-up. Applies to: ${EFFECTS.commission_rate}`}
+                extra={<Effect>No subscription: this % is deducted from the food subtotal of every customer order. New partners accept the rate shown at sign-up. {EFFECTS.commission_rate}</Effect>}
               >
                 <InputNumber min={0} max={50} step={0.5} addonAfter="%" style={{ width: "100%" }} />
               </Form.Item>
-              <Form.Item label="Default payment provider" name="payment_provider" extra={`Applies to: ${EFFECTS.payment_provider}`}>
+              <Form.Item label="Default payment provider" name="payment_provider" extra={<Effect>{EFFECTS.payment_provider}</Effect>}>
                 <Select options={PAYMENT_PROVIDER_OPTIONS} />
               </Form.Item>
               <SettingSwitch
@@ -477,34 +481,64 @@ const fetchSettings = useCallback(async () => {
                 effect={EFFECTS.auto_settlement}
                 name="auto_settlement"
               />
-            </Card>
+            </SectionCard>
           </Col>
         </Row>
 
         {/* ── Maintenance Mode ── */}
-        <Card variant="outlined" style={{ borderRadius: 2, marginTop: 16 }}>
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-              <ShieldAlert size={18} color={palette.danger} strokeWidth={1.8} />
-              <div>
-                <Text strong style={{ fontSize: 13 }}>Maintenance mode</Text>
-                <Text type="secondary" style={{ display: "block", fontSize: 12 }}>
-                  Pause new orders while keeping operations data accessible.
-                </Text>
-                <Text type="secondary" style={{ display: "block", fontSize: 11, marginTop: 2 }}>
-                  Applies to: {EFFECTS.maintenance_mode}
-                </Text>
-              </div>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            gap: 16,
+            marginTop: 16,
+            padding: "18px 22px",
+            borderRadius: 12,
+            border: `1px solid ${palette.danger}55`,
+            background: `${palette.danger}0F`,
+          }}
+        >
+          <div style={{ display: "flex", alignItems: "center", gap: 14, minWidth: 0 }}>
+            <div style={{ width: 44, height: 44, borderRadius: 12, display: "grid", placeItems: "center", flexShrink: 0, color: palette.danger, background: `${palette.danger}1F` }}>
+              <ShieldAlert size={21} strokeWidth={1.9} />
             </div>
-            <Form.Item name="maintenance_mode" valuePropName="checked" noStyle>
-              <Switch size="small" />
-            </Form.Item>
+            <div style={{ minWidth: 0 }}>
+              <div style={{ fontSize: 16, fontWeight: 700, color: palette.ink }}>Maintenance mode</div>
+              <Text type="secondary" style={{ display: "block", fontSize: 13 }}>
+                Pause new orders while keeping operations data accessible.
+              </Text>
+              <Effect>{EFFECTS.maintenance_mode}</Effect>
+            </div>
           </div>
-        </Card>
+          <Form.Item name="maintenance_mode" valuePropName="checked" noStyle>
+            <Switch />
+          </Form.Item>
+        </div>
 
-        {/* ── Save Button ── */}
-        <div style={{ display: "flex", justifyContent: "flex-end", marginTop: 16 }}>
-          <Button type="primary" icon={<Save size={16} />} htmlType="submit" loading={saving}>
+        {/* ── Save bar ── */}
+        <div
+          style={{
+            position: "sticky",
+            bottom: 16,
+            zIndex: 5,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            gap: 12,
+            flexWrap: "wrap",
+            marginTop: 16,
+            padding: "14px 22px",
+            borderRadius: 12,
+            border: `1px solid ${palette.border}`,
+            background: palette.bg,
+            boxShadow: "0 10px 30px rgba(15, 23, 42, 0.12)",
+          }}
+        >
+          <Text type="secondary" style={{ fontSize: 13 }}>
+            Changes apply across the dashboard and storefront as soon as you save.
+          </Text>
+          <Button type="primary" size="large" icon={<Save size={17} />} htmlType="submit" loading={saving}>
             Save settings
           </Button>
         </div>

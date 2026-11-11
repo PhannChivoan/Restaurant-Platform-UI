@@ -1,9 +1,9 @@
-import { startTransition, useState, useEffect } from "react";
+import { startTransition, useState, useEffect, useLayoutEffect } from "react";
 import { Navigate, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { Layout, ConfigProvider } from "antd";
 import Sidebar from "./Sidebar";
 import Header from "./Header";
-import { palette, antdTheme, fontSans } from "../../constants/theme";
+import { palette, antdTheme, fontSans, themeMode } from "../../constants/theme";
 import {
   getActiveKeyFromPath,
   getOpenKeysForActive,
@@ -126,6 +126,30 @@ const RootLayout = () => {
     }
   };
 
+  // Compact scale: at a 100% browser zoom the admin is drawn at 80%, so it looks the way it does when the
+  // browser itself is zoomed to 80%. The browser zoom is read from outer/inner window width, so the result is the
+  // same on any screen size; once the browser is already at 80% or less nothing more is applied.
+  useLayoutEffect(() => {
+    const root = document.documentElement;
+    root.classList.add("admin-compact");
+    root.dataset.adminTheme = themeMode; // light | dark | orange (see admin.css)
+
+    const applyScale = () => {
+      const browserZoom = window.outerWidth && window.innerWidth ? window.outerWidth / window.innerWidth : 1;
+      const scale = window.innerWidth < 1100 ? 1 : Math.min(1, Math.max(0.8, 0.8 / browserZoom));
+      root.style.setProperty("--admin-zoom", String(Math.round(scale * 1000) / 1000));
+    };
+    applyScale();
+    window.addEventListener("resize", applyScale);
+
+    return () => {
+      window.removeEventListener("resize", applyScale);
+      root.classList.remove("admin-compact");
+      root.style.removeProperty("--admin-zoom");
+      delete root.dataset.adminTheme;
+    };
+  }, []);
+
   const accessToken = getAccessToken();
 
   if (!accessToken) {
@@ -138,7 +162,7 @@ const RootLayout = () => {
         className="admin-shell"
         style={{
           minHeight: "100vh",
-          background: palette.bgSubtle,
+          background: "transparent",
           fontFamily: fontSans,
         }}
       >
@@ -163,7 +187,7 @@ const RootLayout = () => {
             marginLeft: isMobile ? 0 : collapsed ? 64 : 244,
             transition: "margin-left 0.2s ease",
             minHeight: "100vh",
-            background: palette.bgSubtle,
+            background: "transparent",
             minWidth: 0,
           }}
         >
@@ -179,7 +203,7 @@ const RootLayout = () => {
           <Content
             style={{
               padding: isMobile ? "16px" : "28px 32px",
-              background: palette.bgSubtle,
+              background: "transparent",
               minHeight: "calc(100vh - 64px)",
               display: "flex",
               flexDirection: "column",
