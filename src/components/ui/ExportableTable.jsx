@@ -89,7 +89,7 @@ export const TableTools = ({ size, onSize, showSize = true, showExport = true, c
         <Select
           value={size}
           onChange={onSize}
-          options={[...(size && !PAGE_SIZES.includes(size) ? [size] : []), ...PAGE_SIZES.map((v) => ({ value: v, label: `${v} per page` })), { value: 0, label: "All" }]}
+          options={[...(size && !PAGE_SIZES.includes(size) ? [{ value: size, label: `${size} per page` }] : []),...PAGE_SIZES.map((v) => ({ value: v, label: `${v} per page` })), { value: 0, label: "All" }]}
           style={{ width: 170, minWidth: 170 }}
         />
       )}
