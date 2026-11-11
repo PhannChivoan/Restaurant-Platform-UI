@@ -15,7 +15,6 @@ import {
   Row,
   Select,
   Space,
-  Table,
   Tag,
   Timeline,
   Tooltip,
@@ -55,6 +54,7 @@ import { DotsRing } from "../components/ui/dots-ring";
 import { request } from "../utils/request";
 import { palette } from "../constants/theme";
 import Loader from "../components/ui/Loader";
+import Table from "../components/ui/ExportableTable";
 
 const { Text } = Typography;
 const { RangePicker } = DatePicker;
@@ -882,6 +882,7 @@ const PendingOrdersPage = () => {
       <div>
         {/* STATS */}
         <ModulePage
+        tools="size"
           title="Kitchen Queue"
           description="Manage pending orders, track preparation status, and process kitchen workflow."
           icon={Clock3}
@@ -1062,6 +1063,7 @@ const PendingOrdersPage = () => {
 
           {/* TABLE */}
           <Table
+ hideTools
             rowKey="id"
             columns={columns}
             dataSource={filteredOrders}

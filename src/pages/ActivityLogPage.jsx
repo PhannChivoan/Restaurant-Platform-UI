@@ -266,6 +266,7 @@ const ActivityLogPage = () => {
       <TopProgressBar active={loading || refreshing} label="Activity logs loading" />
 
       <ModulePage
+        tools="size"
         title="Activity Log"
         description="Review order transitions, dispatch events, menu edits, and refund approvals."
         icon={History}

@@ -12,7 +12,6 @@ import {
   Select,
   Space,
   Statistic,
-  Table,
   Tag,
   Typography,
   message,
@@ -49,6 +48,7 @@ import ModulePage from "../components/ui/ModulePage";
 import TopProgressBar from "../components/ui/TopProgressBar";
 import { request } from "../utils/request";
 import { palette } from "../constants/theme";
+import Table from "../components/ui/ExportableTable";
 
 const { Text } = Typography;
 const { RangePicker } = DatePicker;
@@ -328,6 +328,7 @@ const OperationsAnalyticsPage = () => {
       <TopProgressBar active={loading || refreshing} label="Analytics loading" />
 
       <ModulePage
+        tools="size"
         title="Operations Analytics"
         description="Monitor order volume, delivery performance, restaurant revenue, and rider efficiency."
         icon={ChartNoAxesCombined}
@@ -605,6 +606,7 @@ const OperationsAnalyticsPage = () => {
                     </BarChart>
                   </ResponsiveContainer>
                   <Table
+ hideTools
                     columns={buildRestaurantCols(totalRevenue)}
                     dataSource={revenueSplit}
                     pagination={false}
@@ -632,7 +634,7 @@ const OperationsAnalyticsPage = () => {
               {riders.length === 0 ? (
                 <Empty description="No rider data yet" style={{ padding: "24px 0" }} />
               ) : (
-                <Table columns={RIDER_COLS} dataSource={riders} pagination={false} size="small" rowKey="rider" />
+                <Table hideTools columns={RIDER_COLS} dataSource={riders} pagination={false} size="small" rowKey="rider" />
               )}
             </Card>
           </Col>

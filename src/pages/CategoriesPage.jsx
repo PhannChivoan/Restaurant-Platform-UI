@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
-import { Alert, Button, Form, Input, InputNumber, Modal, Popconfirm, Select, Space, Switch, Table, Tag, Typography, message } from "antd";
+import { Alert, Button, Form, Input, InputNumber, Modal, Popconfirm, Select, Space, Switch, Tag, Typography, message } from "antd";
+import Table from "../components/ui/ExportableTable";
 import { Pencil, Plus, Tags, Trash2 } from "lucide-react";
 
 import { palette } from "../constants/theme";

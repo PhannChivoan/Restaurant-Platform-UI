@@ -188,7 +188,8 @@ const ProductPage = () => {
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
   const [refreshKey, setRefreshKey] = useState(0);
-  const limit = 12;
+  const [limitSetting, setLimitSetting] = useState(10); // 0 = all (as many as the server allows per page)
+  const limit = limitSetting || 5000;
 
   // ─── Filters state ───────────────────────────────
   const [searchInput, setSearchInput] = useState("");
@@ -260,6 +261,28 @@ const ProductPage = () => {
   /* =========================================================
      DATA LOADING
   ========================================================= */
+
+  // every record matching the current filters, all pages (Export CSV)
+  const exportAllRows = async () => {
+    const all = [];
+    for (let pg = 1; pg <= 200; pg++) {
+      const params = new URLSearchParams();
+      params.set("limit", "5000");
+      params.set("page", String(pg));
+      if (search) params.set("search", search);
+      if (restaurantFilter)
+        params.set("restaurant_id", String(restaurantFilter));
+      if (categoryFilter) params.set("category_id", String(categoryFilter));
+      if (availabilityFilter) params.set("is_available", availabilityFilter);
+      if (featuredFilter) params.set("is_featured", featuredFilter);
+
+      const res = await request(`menu-items?${params.toString()}`, "GET");
+      const data = Array.isArray(res?.data) ? res.data : [];
+      all.push(...data);
+      if (data.length < 5000) break;
+    }
+    return all;
+  };
 
   const loadItems = async (manual = false) => {
     if (manual) {
@@ -361,6 +384,7 @@ const loadReferenceData = async () => {
 
     return () => clearTimeout(timer);
   }, [
+    limit,
     refreshKey,
     page,
     search,
@@ -777,6 +801,12 @@ return (
     <TopProgressBar active={loading || refreshing} label="Menu items loading" />
 
     <ModulePage
+        fetchAll={exportAllRows}
+        pageSizeValue={limitSetting}
+        onPageSizeChange={(v) => {
+          setLimitSetting(v);
+          setPage(1);
+        }}
         title="Menu & Items"
         description="Manage menu items, pricing, images, modifiers, and real-time availability across all restaurants."
         icon={UtensilsCrossed}

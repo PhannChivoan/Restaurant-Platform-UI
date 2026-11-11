@@ -10,7 +10,6 @@ import {
   Row,
   Select,
   Space,
-  Table,
   Typography,
   message,
 } from "antd";
@@ -45,6 +44,7 @@ import ModulePage from "../components/ui/ModulePage";
 import TopProgressBar from "../components/ui/TopProgressBar";
 import { request } from "../utils/request";
 import { palette } from "../constants/theme";
+import Table from "../components/ui/ExportableTable";
 
 const { Text } = Typography;
 const { RangePicker } = DatePicker;
@@ -299,6 +299,7 @@ const DeliveryPerformancePage = () => {
       <TopProgressBar active={loading || refreshing} label="Delivery performance loading" />
 
       <ModulePage
+        tools="size"
         title="Delivery Performance"
         description="Monitor delivery times against SLA targets, identify slow zones, and track on-time performance."
         icon={TimerReset}
@@ -514,6 +515,7 @@ const DeliveryPerformancePage = () => {
           }
         >
           <Table
+ hideTools
             columns={buildZoneCols(totalDelivered)}
             dataSource={zones}
             loading={loading}

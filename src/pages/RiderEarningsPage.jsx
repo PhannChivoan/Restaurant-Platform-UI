@@ -744,6 +744,7 @@ const RiderEarningsPage = () => {
     >
       <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
         <ModulePage
+        tools="size"
           title="Rider Earnings"
           description="Track rider earnings from delivered trips and manage rider profiles."
           icon={WalletCards}

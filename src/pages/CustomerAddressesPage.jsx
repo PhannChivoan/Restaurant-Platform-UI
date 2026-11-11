@@ -15,7 +15,6 @@ import {
   Select,
   Space,
   Switch,
-  Table,
   Tag,
   Tooltip,
   Typography,
@@ -46,6 +45,7 @@ import TopProgressBar from "../components/ui/TopProgressBar";
 import { DotsRing } from "../components/ui/dots-ring";
 import { request } from "../utils/request";
 import { palette } from "../constants/theme";
+import Table from "../components/ui/ExportableTable";
 
 const { Text } = Typography;
 

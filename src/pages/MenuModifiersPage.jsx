@@ -69,7 +69,8 @@ const MenuModifiersPage = () => {
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
   const [refreshKey, setRefreshKey] = useState(0);
-  const limit = 15;
+  const [limitSetting, setLimitSetting] = useState(10); // 0 = all (as many as the server allows per page)
+  const limit = limitSetting || 5000;
 
   // ─── Filters state ───────────────────────────────
   const [searchInput, setSearchInput] = useState("");
@@ -99,6 +100,24 @@ const MenuModifiersPage = () => {
   /* =========================================================
      DATA LOADING
   ========================================================= */
+
+  // every record matching the current filters, all pages (Export CSV)
+  const exportAllRows = async () => {
+    const all = [];
+    for (let pg = 1; pg <= 200; pg++) {
+      const params = new URLSearchParams();
+      params.set("limit", "5000");
+      params.set("page", String(pg));
+      if (search) params.set("search", search);
+      if (restaurantFilter) params.set("restaurant_id", restaurantFilter);
+
+      const res = await request(`modifier-groups?${params.toString()}`, "GET");
+      const data = Array.isArray(res?.data) ? res.data : [];
+      all.push(...data);
+      if (data.length < 5000) break;
+    }
+    return all;
+  };
 
   const loadGroups = async (manual = false) => {
     if (manual) setRefreshing(true);
@@ -152,7 +171,7 @@ const MenuModifiersPage = () => {
       loadGroups();
     }, 0);
     return () => clearTimeout(timer);
-  }, [refreshKey, page, search, restaurantFilter]);
+  }, [refreshKey, page, limit, search, restaurantFilter]);
 
   useEffect(() => {
     loadRestaurants();
@@ -533,6 +552,12 @@ const MenuModifiersPage = () => {
       />
 
       <ModulePage
+        fetchAll={exportAllRows}
+        pageSizeValue={limitSetting}
+        onPageSizeChange={(v) => {
+          setLimitSetting(v);
+          setPage(1);
+        }}
         title="Modifier Groups"
         description="Manage toppings, extras, portion sizes, and required item choices across restaurants."
         icon={ListPlus}

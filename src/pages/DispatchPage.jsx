@@ -12,7 +12,6 @@ import {
   Modal,
   Select,
   Space,
-  Table,
   Tag,
   Tooltip,
 } from "antd";
@@ -35,6 +34,7 @@ import { request } from "../utils/request";
 import dayjs from "dayjs";
 import { DotsRing } from "@/components/ui/dots-ring";
 import { palette } from "@/constants/theme";
+import Table from "../components/ui/ExportableTable";
 
 const formatStatus = (status = "") =>
   status.charAt(0).toUpperCase() + status.slice(1).replaceAll("_", " ");

@@ -15,7 +15,6 @@ import {
   Select,
   Space,
   Switch,
-  Table,
   Tag,
   Tooltip,
   Typography,
@@ -54,6 +53,7 @@ import { DotsRing } from "../components/ui/dots-ring";
 import { request } from "../utils/request";
 import { Config } from "../utils/config";
 import { palette } from "../constants/theme";
+import Table from "../components/ui/ExportableTable";
 
 const { Text } = Typography;
 
@@ -816,6 +816,7 @@ const CustomersPage = () => {
       />
 
       <ModulePage
+        tools="size"
         title="Customers"
         description="Manage customer accounts, addresses, order history, loyalty points, and account restrictions."
         icon={UsersRound}

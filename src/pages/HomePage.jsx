@@ -5,7 +5,6 @@ import {
   Row,
   Space,
   Statistic,
-  Table,
   Tag,
   Typography,
 } from "antd";
@@ -19,6 +18,7 @@ import {
   TimerReset,
 } from "lucide-react";
 import { palette } from "../constants/theme";
+import Table from "../components/ui/ExportableTable";
 
 const { Text, Title } = Typography;
 

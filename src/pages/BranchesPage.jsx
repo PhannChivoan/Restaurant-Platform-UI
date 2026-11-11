@@ -135,7 +135,8 @@ const BranchesPage = () => {
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
   const [refreshKey, setRefreshKey] = useState(0);
-  const limit = 12;
+  const [limitSetting, setLimitSetting] = useState(10); // 0 = all (as many as the server allows per page)
+  const limit = limitSetting || 5000;
 
   // ─── Filters state ───────────────────────────────
   const [searchInput, setSearchInput] = useState("");
@@ -163,6 +164,27 @@ const BranchesPage = () => {
   /* =========================================================
      DATA LOADING
   ========================================================= */
+
+  // every record matching the current filters, all pages (Export CSV)
+  const exportAllRows = async () => {
+    const all = [];
+    for (let pg = 1; pg <= 200; pg++) {
+      const params = new URLSearchParams();
+      params.set("limit", "5000");
+      params.set("page", String(pg));
+      if (search) params.set("search", search);
+      if (statusFilter) params.set("status", statusFilter);
+      if (restaurantFilter) {
+        params.set("restaurant_id", String(restaurantFilter));
+      }
+
+      const res = await request(`branches?${params.toString()}`, "GET");
+      const data = Array.isArray(res?.data) ? res.data : [];
+      all.push(...data);
+      if (data.length < 5000) break;
+    }
+    return all;
+  };
 
   const loadBranches = async (manual = false) => {
     if (manual) {
@@ -228,7 +250,7 @@ const BranchesPage = () => {
     }, 0);
 
     return () => clearTimeout(timer);
-  }, [refreshKey, page, search, statusFilter, restaurantFilter]);
+  }, [refreshKey, page, limit, search, statusFilter, restaurantFilter]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -591,6 +613,12 @@ const BranchesPage = () => {
       <TopProgressBar active={loading || refreshing} label="Branches loading" />
 
       <ModulePage
+        fetchAll={exportAllRows}
+        pageSizeValue={limitSetting}
+        onPageSizeChange={(v) => {
+          setLimitSetting(v);
+          setPage(1);
+        }}
         title="Branch Operations"
         description="Manage branch hours, holiday closures, service status, and locations across all restaurant partners."
         icon={Building2}

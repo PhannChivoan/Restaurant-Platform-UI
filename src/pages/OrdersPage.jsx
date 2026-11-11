@@ -800,6 +800,7 @@ const OrdersPage = () => {
     >
       <>
         <ModulePage
+        tools="none"
           title="Orders & Kitchen"
           description="Review incoming orders and monitor the platform order lifecycle."
           icon={ShoppingBag}

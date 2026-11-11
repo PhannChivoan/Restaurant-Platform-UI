@@ -1,4 +1,6 @@
-import { Alert, Card, Col, ConfigProvider, Row, Table } from "antd";
+import { Alert, Card, Col, ConfigProvider, Row } from "antd";
+import { Table } from "antd";
+import { TableTools, useTablePaging } from "./ExportableTable";
 import { palette } from "../../constants/theme";
 import TopProgressBar from "./TopProgressBar";
 import PageHeader from "./PageHeader";
@@ -19,7 +21,14 @@ const ModulePage = ({
   toolbar,
   expandable,
   rowSelection,
+  exportName,
+  fetchAll,
+  pageSizeValue,
+  onPageSizeChange,
+  tools = "both", // "both" | "size" (page has its own export) | "none" (page has both)
 }) => {
+  const paging = useTablePaging(pagination, rows.length, Boolean(onPageSizeChange));
+  const name = exportName || String(title || "export").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
   const loadingActive =
     typeof loading === "object"
       ? Boolean(loading?.spinning)
@@ -49,7 +58,23 @@ const ModulePage = ({
 
       {columns.length > 0 && (
         <Card variant="outlined" className="module-table-card" styles={{ body: { padding: 20 } }}>
-          {toolbar && <div className="module-toolbar" style={{ marginBottom: 14 }}>{toolbar}</div>}
+          {(toolbar || tools !== "none") && (
+            <div className="module-toolbar" style={{ marginBottom: 14 }}>
+              {toolbar}
+              {tools !== "none" && (
+                <TableTools
+                  size={onPageSizeChange ? pageSizeValue : paging.size}
+                  onSize={onPageSizeChange || paging.apply}
+                  showSize={Boolean(onPageSizeChange) || !paging.serverPaged}
+                  showExport={tools === "both"}
+                  columns={columns}
+                  rows={rows}
+                  exportName={name}
+                  fetchAll={fetchAll}
+                />
+              )}
+            </div>
+          )}
           {error && <Alert type="error" showIcon title={error} style={{ marginBottom: 14 }} />}
           <ConfigProvider
             theme={{
@@ -74,7 +99,7 @@ const ModulePage = ({
               columns={columns}
               dataSource={rows}
               loading={loading}
-              pagination={pagination ? { showTotal: (total, range) => `Showing ${range[0]}–${range[1]} of ${total} records`, ...pagination } : pagination}
+              pagination={paging.pagination}
               size="middle"
               locale={{ emptyText: <EmptyState title="No records found" description="Nothing matches yet. New activity will appear here." compact /> }}
               rowKey={(record) => record.key ?? record.id}

@@ -12,7 +12,6 @@ import {
   Row,
   Select,
   Space,
-  Table,
   Tag,
   Timeline,
   Tooltip,
@@ -44,6 +43,7 @@ import { request } from "../utils/request";
 import { palette } from "../constants/theme";
 import Loader from "../components/ui/Loader";
 import { DotsRing } from "@/components/ui/dots-ring";
+import Table from "../components/ui/ExportableTable";
 
 /* =========================================================
    HELPERS
@@ -1276,6 +1276,7 @@ const CompletedOrdersPage = () => {
       <div>
         {/* STATS HEADER */}
         <ModulePage
+        tools="none"
           title="Completed Orders"
           description="Review fulfilled orders, delivery performance, and completed revenue."
           icon={CheckCircle2}
@@ -1577,6 +1578,7 @@ const CompletedOrdersPage = () => {
 
           {/* TABLE */}
           <Table
+ hideTools
             rowKey="id"
             columns={columns}
             dataSource={orders}

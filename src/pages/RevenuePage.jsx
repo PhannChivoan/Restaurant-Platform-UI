@@ -11,7 +11,6 @@ import {
   Row,
   Select,
   Space,
-  Table,
   Typography,
   message,
 } from "antd";
@@ -47,6 +46,7 @@ import ModulePage from "../components/ui/ModulePage";
 import TopProgressBar from "../components/ui/TopProgressBar";
 import { request } from "../utils/request";
 import { palette } from "../constants/theme";
+import Table from "../components/ui/ExportableTable";
 
 const { Text } = Typography;
 const { RangePicker } = DatePicker;
@@ -259,6 +259,7 @@ const RevenuePage = () => {
       <TopProgressBar active={loading || refreshing} label="Revenue data loading" />
 
       <ModulePage
+        tools="size"
         title="Revenue Reports"
         description="Review restaurant revenue splits, commission totals, payouts, and financial trends."
         icon={Banknote}
@@ -534,6 +535,7 @@ const RevenuePage = () => {
           }
         >
           <Table
+ hideTools
             columns={buildRestaurantCols(totalRevenue)}
             dataSource={revenueData}
             loading={loading}

@@ -540,3 +540,14 @@ html.admin-compact .ant-card-body > .ant-table-wrapper:only-child .ant-table-con
   padding: 14px 20px; border-radius: 12px; box-shadow: 0 10px 30px rgba(15, 23, 42, 0.12);
 }
 @media (max-width: 991px) { .landing-row { grid-template-columns: 1fr; gap: 12px; } }
+
+/* Export button above a table */
+.table-export-bar { display: flex; justify-content: flex-end; margin-bottom: 8px; }
+.table-export-bar .ant-btn { display: inline-flex; align-items: center; gap: 6px; }
+
+/* One filter row on every module: filters, rows-per-page + Export CSV right after them, the primary action last on the right */
+@media (min-width: 769px) {
+  .module-toolbar > div { display: contents !important; }
+  .module-toolbar .ant-btn-primary { order: 5; margin-left: auto !important; }
+}
+.module-toolbar .table-tools .ant-select { flex: 0 0 170px; width: 170px !important; }

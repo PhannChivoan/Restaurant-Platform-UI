@@ -82,7 +82,8 @@ const MenuCategoriesPage = () => {
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
   const [refreshKey, setRefreshKey] = useState(0);
-  const limit = 15;
+  const [limitSetting, setLimitSetting] = useState(10); // 0 = all (as many as the server allows per page)
+  const limit = limitSetting || 5000;
 
   // ─── Filters state ───────────────────────────────
   const [searchInput, setSearchInput] = useState("");
@@ -107,6 +108,25 @@ const MenuCategoriesPage = () => {
   /* =========================================================
      DATA LOADING
   ========================================================= */
+
+  // every record matching the current filters, all pages (Export CSV)
+  const exportAllRows = async () => {
+    const all = [];
+    for (let pg = 1; pg <= 200; pg++) {
+      const params = new URLSearchParams();
+      params.set("limit", "5000");
+      params.set("page", String(pg));
+      if (search) params.set("search", search);
+      if (restaurantFilter) params.set("restaurant_id", restaurantFilter);
+      if (statusFilter !== "") params.set("is_active", statusFilter);
+
+      const res = await request(`menu-categories?${params.toString()}`, "GET");
+      const data = Array.isArray(res?.data) ? res.data : [];
+      all.push(...data);
+      if (data.length < 5000) break;
+    }
+    return all;
+  };
 
   const loadCategories = async (manual = false) => {
     if (manual) {
@@ -165,7 +185,7 @@ const MenuCategoriesPage = () => {
       loadCategories();
     }, 0);
     return () => clearTimeout(timer);
-  }, [refreshKey, page, search, restaurantFilter, statusFilter]);
+  }, [refreshKey, page, limit, search, restaurantFilter, statusFilter]);
 
   useEffect(() => {
     loadRestaurants();
@@ -485,6 +505,12 @@ const MenuCategoriesPage = () => {
       />
 
       <ModulePage
+        fetchAll={exportAllRows}
+        pageSizeValue={limitSetting}
+        onPageSizeChange={(v) => {
+          setLimitSetting(v);
+          setPage(1);
+        }}
         title="Menu Categories"
         description="Organize restaurant menus into browsable categories. Reorder, activate, and manage per-restaurant selections."
         icon={Tags}
