@@ -11,7 +11,6 @@ import {
   Input,
   Row,
   Select,
-  Skeleton,
   Space,
   Table,
   Tag,
@@ -43,6 +42,7 @@ import dayjs from "dayjs";
 import ModulePage from "../components/ui/ModulePage";
 import { request } from "../utils/request";
 import { palette } from "../constants/theme";
+import Loader from "../components/ui/Loader";
 import { DotsRing } from "@/components/ui/dots-ring";
 
 /* =========================================================
@@ -122,17 +122,6 @@ const exportCSV = (orders) => {
    DRAWER LOADING SKELETON
 ========================================================= */
 
-const DrawerSkeleton = () => (
-  <div
-    style={{ padding: 20, display: "flex", flexDirection: "column", gap: 16 }}
-  >
-    {[1, 2, 3, 4, 5].map((i) => (
-      <Card key={i} size="small" style={{ borderRadius: 2 }}>
-        <Skeleton active paragraph={{ rows: i === 1 ? 2 : 3 }} title={i <= 2} />
-      </Card>
-    ))}
-  </div>
-);
 
 /* =========================================================
    ORDER DETAIL DRAWER
@@ -259,7 +248,7 @@ const OrderDetailDrawer = ({ order, open, onClose, loading, navigate }) => {
         </Tag>
       }
     >
-      {loading && <DrawerSkeleton />}
+      {loading && <Loader label="Loading order…" minHeight={320} />}
 
       {!loading && order && (
         <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>

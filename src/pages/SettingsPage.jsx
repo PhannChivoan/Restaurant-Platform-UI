@@ -8,7 +8,6 @@ import {
   Input,
   Row,
   Select,
-  Skeleton,
   Switch,
   Typography,
   Upload,
@@ -27,6 +26,7 @@ import {
 } from "lucide-react";
 import TopProgressBar from "../components/ui/TopProgressBar";
 import PageHeader from "../components/ui/PageHeader";
+import Loader from "../components/ui/Loader";
 import { request } from "../utils/request";
 import { Config } from "../utils/config";
 import { palette } from "../constants/theme";
@@ -337,13 +337,7 @@ const fetchSettings = useCallback(async () => {
     return (
       <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
         <PageHeader icon={Settings2} title="Platform Settings" description="Configure platform identity, branding, ordering defaults, notifications, and payments." />
-        <Row gutter={[16, 16]}>
-          {[0, 1, 2, 3].map((i) => (
-            <Col key={i} xs={24} lg={12}>
-              <Card variant="outlined"><Skeleton active paragraph={{ rows: 5 }} /></Card>
-            </Col>
-          ))}
-        </Row>
+        <Card variant="outlined"><Loader label="Loading settings…" minHeight={360} /></Card>
       </div>
     );
   }

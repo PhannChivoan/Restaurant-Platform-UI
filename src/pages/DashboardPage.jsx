@@ -1,10 +1,11 @@
 import { formatMoney } from "../utils/platformSettings";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Alert, Card, Col, Empty, Progress, Row, Segmented, Skeleton, Space, Tag, Typography } from "antd";
+import { Alert, Card, Col, Empty, Progress, Row, Segmented, Space, Tag, Typography } from "antd";
 import { LayoutDashboard, Bike, ChefHat, CircleDollarSign, ShoppingBag, Store, TimerReset, TrendingUp, ArrowRight, Sparkles, Activity } from "lucide-react";
 import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip as RTooltip, XAxis, YAxis } from "recharts";
 import PageHeader from "../components/ui/PageHeader";
+import Loader from "../components/ui/Loader";
 import StatCard from "../components/ui/StatCard";
 import { getProfile } from "../store/access_token";
 
@@ -115,7 +116,7 @@ const DashboardPage = () => {
     return (
       <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
         <Title level={3} style={{ margin: 0 }}>Operations overview</Title>
-        {error ? <Alert type="error" showIcon title={error} /> : <Skeleton active paragraph={{ rows: 8 }} />}
+        {error ? <Alert type="error" showIcon title={error} /> : <Card variant="outlined"><Loader label="Loading the dashboard…" minHeight={360} /></Card>}
       </div>
     );
   }

@@ -521,3 +521,8 @@ html.admin-compact .ant-card-body > .ant-table-wrapper:only-child .ant-table-con
   html.admin-compact .ant-table-wrapper .ant-table-thead > tr > th { padding: 10px 12px !important; }
   html.admin-compact .ant-table-wrapper .ant-table-tbody > tr > td { padding: 11px 12px !important; }
 }
+
+/* ===== loading indicator (replaces skeleton placeholders) ===== */
+.app-loader { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; width: 100%; padding: 24px; }
+.app-loader-label { font-size: 13.5px; font-weight: 500; color: var(--tx3); }
+.ant-table-wrapper .ant-spin-container::after { background: var(--sf); }

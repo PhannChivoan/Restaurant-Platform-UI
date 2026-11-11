@@ -4,7 +4,7 @@ import TopProgressBar from "./TopProgressBar";
 import PageHeader from "./PageHeader";
 import StatCard from "./StatCard";
 import EmptyState from "./EmptyState";
-import TableSkeleton from "./TableSkeleton";
+import Loader from "./Loader";
 
 const ModulePage = ({
   title,
@@ -68,7 +68,7 @@ const ModulePage = ({
             }}
           >
             {loadingActive && rows.length === 0 ? (
-              <TableSkeleton />
+              <Loader label={`Loading ${String(title || "records").toLowerCase()}…`} />
             ) : (
             <Table
               columns={columns}

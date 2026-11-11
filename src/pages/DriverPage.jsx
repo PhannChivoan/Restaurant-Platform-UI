@@ -5,6 +5,7 @@ import { Bike, CheckCircle2, ClipboardList, MapPin, Navigation, Phone, Store, Wa
 
 import { palette } from "../constants/theme";
 import { request } from "../utils/request";
+import Loader from "../components/ui/Loader";
 import DriverCamera from "./driver/DriverCamera";
 import RiderMap from "./driver/RiderMap";
 import { googleMapsUrl, hasPoint } from "./driver/mapUtils";
@@ -188,7 +189,11 @@ const DriverPage = () => {
         </Card>
       )}
 
-      {rows === null && !error && <Card loading variant="outlined" style={{ borderRadius: 2 }} />}
+      {rows === null && !error && (
+        <Card variant="outlined">
+          <Loader label="Loading your deliveries…" minHeight={260} />
+        </Card>
+      )}
       {rows?.length === 0 && (
         <Card variant="outlined" style={{ borderRadius: 2 }}>
           <Empty description={tab === "active" ? "No deliveries assigned yet. New orders appear here automatically." : "No completed deliveries yet."} />

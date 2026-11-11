@@ -15,6 +15,7 @@ import { useBranchId } from "../../utils/branchStore";
 import useAccessWindow from "../../hooks/useAccessWindow";
 import AccessWindowBlock from "../ui/AccessWindowBlock";
 import PermissionEnforcer from "./PermissionEnforcer";
+import { Spinner } from "../ui/Loader";
 import { setPermissionState } from "../../utils/permissionsStore";
 import { ShieldOff } from "lucide-react";
 import { loadAdminBootstrap, resetAdminBootstrap } from "../../utils/adminBootstrap";
@@ -157,7 +158,7 @@ const RootLayout = () => {
   }
 
   return (
-    <ConfigProvider theme={antdTheme}>
+    <ConfigProvider theme={antdTheme} spin={{ indicator: <Spinner size={32} /> }}>
       <Layout
         className="admin-shell"
         style={{
